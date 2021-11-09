@@ -6,19 +6,19 @@ class IngredientsCategory extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <h2 className={styles.title}>{this.state.title}</h2>
-        <ul>
-          {this.state.cards.map(card => (
-            <li>
-              <img src={card.image} alt={card.name} className={styles.image} />
-              <p className={styles.price}>
-                <CurrencyIcon type="primary" />
-                {card.price}
-              </p>
-              <p className={styles.name}>{card.name}</p>
-            </li>
-          ))}
-        </ul>
+        <h2 className={styles.title}>{this.props.title}</h2>
+          <ul>
+            {this.props.cards.map(card => (
+              <li key={card._id}>
+                <img src={card.image} alt={card.name} className={styles.image} />
+                <p className={styles.price}>
+                  <CurrencyIcon type="primary" />
+                  {card.price}
+                </p>
+                <p className={styles.name}>{card.name}</p>
+              </li>
+            ))}
+          </ul>
       </div>
     );
   }

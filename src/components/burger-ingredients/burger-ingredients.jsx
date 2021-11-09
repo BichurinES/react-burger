@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientsCategory from '../burger-ingredients/burger-ingredients';
-//import { ingredientsData } from '../../utils/constants';
+import IngredientsCategory from '../ingredients-category/ingredients-category';
+import { ingredientsData } from '../../utils/constants';
 import styles from './burger-ingredients.module.css';
 
 class BurgerIngredients extends React.Component {
@@ -32,7 +32,7 @@ class BurgerIngredients extends React.Component {
           </Tab>
         </div>
         <div className={styles.content}>
-          <IngredientsCategory title="Булки"  />
+          <IngredientsCategory title="Булки" cards={ingredientsData}  />
         </div>
       </section>
     );
