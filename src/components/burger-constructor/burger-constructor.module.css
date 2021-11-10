@@ -1,0 +1,36 @@
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.order-list-main {
+  max-height: 464px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.order-list-main::-webkit-scrollbar-track {
+  margin-bottom: 1px;
+}
+
+.info-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.price {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.price > svg {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}

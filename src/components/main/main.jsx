@@ -1,5 +1,6 @@
 import React from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 import styles from './main.module.css';
 
 class Main extends React.Component {
@@ -7,6 +8,7 @@ class Main extends React.Component {
     return (
       <main className={`${styles.main}`}>
         <BurgerIngredients />
+        <BurgerConstructor />
       </main>
     );
   }

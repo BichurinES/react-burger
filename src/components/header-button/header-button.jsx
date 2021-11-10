@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './header-button.module.css';
 
 class HeaderButton extends React.Component {
@@ -10,6 +11,16 @@ class HeaderButton extends React.Component {
       </button>
     );
   }
+}
+
+HeaderButton.defaultProps = {
+  inactive: false,
+}; 
+
+HeaderButton.propTypes = {
+  inactive: PropTypes.bool,
+  text: PropTypes.string.isRequired,
+  children: PropTypes.element,
 }
 
 export default HeaderButton;

@@ -1,0 +1,11 @@
+.list-item {
+  position: relative;
+  scroll-snap-align: start;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
