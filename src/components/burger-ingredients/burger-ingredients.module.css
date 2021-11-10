@@ -1,3 +1,16 @@
+.container {
+  max-width: 600px;
+}
+
 .tab {
   display: flex;
+}
+
+.content {
+  max-height: 71.6vh;
+  overflow-y: scroll;
+}
+
+.content::-webkit-scrollbar-track {
+  margin-bottom: 52px;
 }
