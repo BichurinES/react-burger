@@ -23,8 +23,8 @@ class Ingredient extends React.Component {
 }
 
 Ingredient.propTypes = {
-  card: ingredientType,
-  i: PropTypes.number,
+  card: ingredientType.isRequired,
+  i: PropTypes.number.isRequired,
 }
 
 export default Ingredient;

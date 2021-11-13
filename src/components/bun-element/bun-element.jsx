@@ -22,7 +22,7 @@ class BunElement extends React.Component {
 BunElement.propTypes = {
   className: PropTypes.string,
   pos: PropTypes.string.isRequired,
-  card: ingredientType,
+  card: ingredientType.isRequired,
 }
 
 export default BunElement;

@@ -20,7 +20,7 @@ class MainElement extends React.Component {
 }
 
 MainElement.propTypes = {
-  card: ingredientType,
+  card: ingredientType.isRequired,
 }
 
 export default MainElement;

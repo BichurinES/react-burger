@@ -44,5 +44,4 @@ class BurgerIngredients extends React.Component {
   }
 }
 
-
 export default BurgerIngredients;
