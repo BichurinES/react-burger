@@ -1,0 +1,15 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+@media screen and (max-width: 1300px) {
+  .main {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0;
+  }
+}
