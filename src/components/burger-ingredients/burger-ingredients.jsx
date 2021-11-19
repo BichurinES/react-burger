@@ -5,43 +5,36 @@ import { ingredientsData } from '../../utils/constants';
 import { filterIngredients } from '../../utils/utils';
 import styles from './burger-ingredients.module.css';
 
-class BurgerIngredients extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 'bun',
-    };
-  }
+const filteredData = filterIngredients(ingredientsData, ['bun', 'sauce', 'main']);
 
-  handleTabClick = (value) => {
-    this.setState({current: value})
-  }
+function BurgerIngredients() {
+  const [current, setCurrent] = React.useState('bun');
 
-  render() {
-    const filteredData = filterIngredients(ingredientsData, ['bun', 'sauce', 'main']);
+  const handleTabClick = (value) => {
+    setCurrent(value);
+  };
 
-    return (
-      <section className={`${styles.container} pt-10`}>
-        <h1 className="text text_type_main-large">Соберите бургер</h1>
-        <div className={`${styles.tab} mt-5 mb-10`}>
-          <Tab value="bun" active={this.state.current === 'bun'} onClick={this.handleTabClick}>
-            Булки
-          </Tab>
-          <Tab value="sauce" active={this.state.current === 'sauce'} onClick={this.handleTabClick}>
-            Соусы
-          </Tab>
-          <Tab value="main" active={this.state.current === 'main'} onClick={this.handleTabClick}>
-            Начинки
-          </Tab>
-        </div>
-        <div className={styles.content}>
-          <IngredientsCategory title="Булки" cards={filteredData.bun} />
-          <IngredientsCategory title="Соусы" cards={filteredData.sauce} />
-          <IngredientsCategory title="Начинки" cards={filteredData.main} />
-        </div>
-      </section>
-    );
-  }
+  return (
+    <section className={`${styles.container} pt-10`}>
+      <h1 className="text text_type_main-large">Соберите бургер</h1>
+      <div className={`${styles.tab} mt-5 mb-10`}>
+        <Tab value="bun" active={current === 'bun'} onClick={handleTabClick}>
+          Булки
+        </Tab>
+        <Tab value="sauce" active={current === 'sauce'} onClick={handleTabClick}>
+          Соусы
+        </Tab>
+        <Tab value="main" active={current === 'main'} onClick={handleTabClick}>
+          Начинки
+        </Tab>
+      </div>
+      <div className={styles.content}>
+        <IngredientsCategory title="Булки" cards={filteredData.bun} />
+        <IngredientsCategory title="Соусы" cards={filteredData.sauce} />
+        <IngredientsCategory title="Начинки" cards={filteredData.main} />
+      </div>
+    </section>
+  );
 }
 
 export default BurgerIngredients;
