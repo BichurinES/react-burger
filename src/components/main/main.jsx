@@ -1,14 +1,20 @@
+import React from 'react';
+import styles from './main.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import styles from './main.module.css';
+import filteredIngredientsType from '../../types/filtered-ingredients-type';
 
-function Main() {
+function Main(props) {
   return (
     <main className={`${styles.main}`}>
-      <BurgerIngredients />
-      <BurgerConstructor />
+      <BurgerIngredients {...props}  />
+      <BurgerConstructor {...props} />
     </main>
   );
+}
+
+Main.propTypes = {
+  filteredIngredients: filteredIngredientsType.isRequired,
 }
 
 export default Main;
