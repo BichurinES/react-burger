@@ -5,8 +5,12 @@ import BunElement from '../bun-element/bun-element';
 import MainElement from '../main-element/main-element';
 import styles from './burger-constructor.module.css';
 
-function BurgerConstructor({ filteredIngredients }) {
+function BurgerConstructor({ filteredIngredients, openPopup }) {
   const [totalPrice, setTotalPrice] = React.useState(0);
+
+  const clickOrderBtn = (e) => {
+    openPopup('orderDetail', '034536');
+  }
   
   React.useEffect(() => {
     Object.keys(filteredIngredients).length &&
@@ -34,7 +38,7 @@ function BurgerConstructor({ filteredIngredients }) {
           <span className="mr-2">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </p>
-        <Button type="primary" size="large">Оформить заказ</Button>
+        <Button type="primary" size="large" onClick={clickOrderBtn}>Оформить заказ</Button>
       </div>
     </section>
   );

@@ -1,0 +1,23 @@
+.image {
+  width: 520px;
+  height: 240px;
+  object-fit: contain;
+}
+
+.nutrition {
+  display: flex;
+  list-style: none;
+}
+
+.component {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 112px;
+  margin-right: 20px;
+}
+
+.component:last-child {
+  margin-right: 0;
+}

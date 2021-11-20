@@ -3,9 +3,13 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import ingredientType from '../../types/ingredient-type';
 import styles from './ingredient.module.css';
 
-function Ingredient({ card, i }) {
+function Ingredient({ card, i, openPopup }) {
+  const handleCardClick = () => {
+    openPopup('ingredientDetail', card);
+  }
+
   return (
-    <li className={styles.card}>
+    <li className={styles.card} onClick={handleCardClick}>
       <img src={card.image} alt={card.name} className={styles.image} />
       <p className={`${styles.price} text text_type_digits-default mt-2 mb-2`}>
         <span className="mr-2">{card.price}</span>

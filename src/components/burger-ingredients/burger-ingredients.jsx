@@ -5,7 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import { filtrationKeys } from '../../utils/constants';
 
-function BurgerIngredients({ filteredIngredients }) {
+function BurgerIngredients({ filteredIngredients, openPopup }) {
   const [current, setCurrent] = React.useState(filtrationKeys[0]);
   
   const handleTabClick = (value) => {
@@ -27,9 +27,9 @@ function BurgerIngredients({ filteredIngredients }) {
         </Tab>
       </div>
       <div className={styles.content}>
-        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]]} />
-        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]]} />
-        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]]} />
+        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]]} openPopup={openPopup} />
+        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]]} openPopup={openPopup} />
+        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]]} openPopup={openPopup} />
       </div>
     </section>
   );
