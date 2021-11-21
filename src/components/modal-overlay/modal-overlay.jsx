@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal-overlay.module.css';
 
@@ -23,6 +24,11 @@ function ModalOverlay({ children, closeAllPopups }) {
       {children}
     </div>
   );
+}
+
+ModalOverlay.propTypes = {
+  children: PropTypes.node.isRequired,
+  closeAllPopups: PropTypes.func.isRequired,
 }
 
 export default ModalOverlay;

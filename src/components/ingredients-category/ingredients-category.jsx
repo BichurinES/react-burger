@@ -21,6 +21,7 @@ const IngredientsCategory = React.forwardRef(({ cards, title, openPopup }, ref) 
 IngredientsCategory.propTypes = {
   cards: ingredientsListType,
   title: PropTypes.string.isRequired,
+  openPopup: PropTypes.func.isRequired,
 }
 
 export default IngredientsCategory;

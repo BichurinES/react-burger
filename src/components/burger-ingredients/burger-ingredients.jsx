@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import filteredIngredientsType from '../../types/filtered-ingredients-type';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -56,6 +57,7 @@ function BurgerIngredients({ filteredIngredients, openPopup }) {
 
 BurgerIngredients.propTypes = {
   filteredIngredients: filteredIngredientsType.isRequired,
+  openPopup: PropTypes.func.isRequired,
 }
 
 export default BurgerIngredients;

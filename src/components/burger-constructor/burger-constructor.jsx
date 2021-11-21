@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import filteredIngredientsType from '../../types/filtered-ingredients-type';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import BunElement from '../bun-element/bun-element';
@@ -46,6 +47,7 @@ function BurgerConstructor({ filteredIngredients, openPopup }) {
 
 BurgerConstructor.propTypes = {
   filteredIngredients: filteredIngredientsType.isRequired,
+  openPopup: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor;

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ingredientType from '../../types/ingredient-type';
 import styles from './ingredient-details.module.css';
 import Modal from '../modal/modal';
 
@@ -27,6 +29,11 @@ function IngredientDetails({ ingredient, closeAllPopups }) {
       </ul>
     </Modal>
   )
+}
+
+IngredientDetails.propTypes = {
+  ingredient: ingredientType.isRequired,
+  closeAllPopups: PropTypes.func.isRequired,
 }
 
 export default IngredientDetails;

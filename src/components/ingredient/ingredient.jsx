@@ -26,6 +26,7 @@ function Ingredient({ card, i, openPopup }) {
 Ingredient.propTypes = {
   card: ingredientType.isRequired,
   i: PropTypes.number.isRequired,
+  openPopup: PropTypes.func.isRequired,
 }
 
 export default Ingredient;
