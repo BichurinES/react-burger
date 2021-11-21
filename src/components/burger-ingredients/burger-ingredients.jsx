@@ -7,9 +7,28 @@ import { filtrationKeys } from '../../utils/constants';
 
 function BurgerIngredients({ filteredIngredients, openPopup }) {
   const [current, setCurrent] = React.useState(filtrationKeys[0]);
-  
+  const bunRef = React.useRef(null);
+  const sauceRef = React.useRef(null);
+  const mainRef = React.useRef(null);
   const handleTabClick = (value) => {
+    let currentCategory = '';
     setCurrent(value);
+
+    switch(value) {
+      case 'bun':
+        currentCategory = bunRef.current;
+        break;
+      case 'sauce':
+        currentCategory = sauceRef.current;
+        break;
+      case 'main':
+        currentCategory = mainRef.current;
+        break;
+      default:
+        currentCategory = '';
+    }
+
+    currentCategory && currentCategory.scrollIntoView();
   };
 
   return (
@@ -27,9 +46,9 @@ function BurgerIngredients({ filteredIngredients, openPopup }) {
         </Tab>
       </div>
       <div className={styles.content}>
-        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]]} openPopup={openPopup} />
-        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]]} openPopup={openPopup} />
-        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]]} openPopup={openPopup} />
+        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]]} openPopup={openPopup} ref={bunRef} />
+        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]]} openPopup={openPopup} ref={sauceRef} />
+        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]]} openPopup={openPopup} ref={mainRef} />
       </div>
     </section>
   );
