@@ -47,9 +47,9 @@ function BurgerIngredients({ filteredIngredients, openPopup }) {
         </Tab>
       </div>
       <div className={styles.content}>
-        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]]} openPopup={openPopup} ref={bunRef} />
-        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]]} openPopup={openPopup} ref={sauceRef} />
-        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]]} openPopup={openPopup} ref={mainRef} />
+        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]] || []} openPopup={openPopup} ref={bunRef} />
+        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]] || []} openPopup={openPopup} ref={sauceRef} />
+        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]] || []} openPopup={openPopup} ref={mainRef} />
       </div>
     </section>
   );

@@ -7,7 +7,7 @@ import Modal from '../modal/modal';
 function IngredientDetails({ ingredient, closeAllPopups }) {
   return (
     <Modal title={"Детали ингредиента"} closeAllPopups={closeAllPopups}>
-      <img src={ingredient.image_large} alt="Изображение ингредиента" className={styles.image} />
+      <img src={ingredient.image_large} alt={ingredient.name} className={styles.image} />
       <h3 className="text text_type_main-medium mt-4 mb-8">{ingredient.name}</h3>
       <ul className={`${styles.nutrition} text text_type_main-default text_color_inactive mb-15`}>
         <li className={styles.component}>

@@ -5,7 +5,7 @@ import styles from './ingredient.module.css';
 
 function Ingredient({ card, i, openPopup }) {
   const handleCardClick = () => {
-    openPopup('ingredientDetail', card);
+    openPopup(card);
   }
 
   return (

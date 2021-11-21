@@ -8,12 +8,13 @@ const IngredientsCategory = React.forwardRef(({ cards, title, openPopup }, ref) 
   return (
     <div className={styles.container}>
       <h2 className="text text_type_main-medium" ref={ref}>{title}</h2>
-        <ul className={`${styles.list} mt-6 mb-10 ml-4 mr-4`}>
-          {
-            cards &&
-            cards.map((card, i) => <Ingredient key={card._id} i={i} card={card} openPopup={openPopup} />)
-          }
-        </ul>
+        {
+          cards && (
+            <ul className={`${styles.list} mt-6 mb-10 ml-4 mr-4`}>
+              {cards.map((card, i) => <Ingredient key={card._id} i={i} card={card} openPopup={openPopup} />)}
+            </ul>
+          )
+        }
     </div>
   );
 });

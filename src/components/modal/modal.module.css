@@ -26,6 +26,6 @@
   margin: 0;
 }
 
-.button {
+.header>svg {
   cursor: pointer;
 }

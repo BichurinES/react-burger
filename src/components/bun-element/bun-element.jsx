@@ -1,20 +1,16 @@
 import PropTypes from 'prop-types';
-import ingredientType from '../../types/ingredient-type';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BunElement({ className, pos, card }) {
+function BunElement({ className, pos, name, price, image }) {
   return (
     <li className={className}>
-      {
-        card &&
-        <ConstructorElement
-          type={pos}
-          isLocked={true}
-          text={card.name + (pos === 'top' ? ' (верх)' : ' (низ)')}
-          price={card.price}
-          thumbnail={card["image_mobile"]}
-        />
-      }
+      <ConstructorElement
+        type={pos}
+        isLocked={true}
+        text={name + (pos === 'top' ? ' (верх)' : ' (низ)')}
+        price={price}
+        thumbnail={image}
+      />
     </li>
   );
 }
@@ -22,7 +18,9 @@ function BunElement({ className, pos, card }) {
 BunElement.propTypes = {
   className: PropTypes.string,
   pos: PropTypes.string.isRequired,
-  card: ingredientType,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
 }
 
 export default BunElement;
