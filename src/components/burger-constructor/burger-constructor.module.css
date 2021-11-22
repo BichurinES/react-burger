@@ -8,6 +8,8 @@
 }
 
 .order-list-main {
+  height: calc(100vh - 536px);
+  min-height: 80px;
   max-height: 464px;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;

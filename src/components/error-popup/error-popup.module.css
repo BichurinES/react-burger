@@ -1,0 +1,14 @@
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border: red solid 3px;
+  border-radius: 50%;
+}
+
+.error > svg {
+  width: 70px;
+  height: 70px;
+}
