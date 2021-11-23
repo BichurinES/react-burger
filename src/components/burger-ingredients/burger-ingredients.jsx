@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import filteredIngredientsType from '../../types/filtered-ingredients-type';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import { filtrationKeys } from '../../utils/constants';
 
-function BurgerIngredients({ filteredIngredients, openPopup }) {
+function BurgerIngredients({ filteredIngredients }) {
   const [current, setCurrent] = React.useState(filtrationKeys[0]);
   const bunRef = React.useRef(null);
   const sauceRef = React.useRef(null);
@@ -47,9 +46,9 @@ function BurgerIngredients({ filteredIngredients, openPopup }) {
         </Tab>
       </div>
       <div className={styles.content}>
-        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]] || []} openPopup={openPopup} ref={bunRef} />
-        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]] || []} openPopup={openPopup} ref={sauceRef} />
-        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]] || []} openPopup={openPopup} ref={mainRef} />
+        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]] || []} ref={bunRef} />
+        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]] || []} ref={sauceRef} />
+        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]] || []} ref={mainRef} />
       </div>
     </section>
   );
@@ -57,7 +56,6 @@ function BurgerIngredients({ filteredIngredients, openPopup }) {
 
 BurgerIngredients.propTypes = {
   filteredIngredients: filteredIngredientsType.isRequired,
-  openPopup: PropTypes.func.isRequired,
 }
 
 export default BurgerIngredients;

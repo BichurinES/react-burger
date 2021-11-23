@@ -3,9 +3,9 @@ import styles from './error-popup.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 
-function ErrorPopup({ content, closeAllPopups }) {
+function ErrorPopup({ content }) {
   return (
-    <Modal closeAllPopups={closeAllPopups}>
+    <Modal>
       <div className={styles.error}>
         <CloseIcon type="error" />
       </div>
@@ -16,7 +16,6 @@ function ErrorPopup({ content, closeAllPopups }) {
 
 ErrorPopup.propTypes = {
   content: PropTypes.string.isRequired,
-  closeAllPopups: PropTypes.func.isRequired,
 }
 
 export default ErrorPopup;

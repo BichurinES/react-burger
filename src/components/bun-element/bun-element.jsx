@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './bun-element.module.css';
 
 function BunElement({ className, pos, name, price, image }) {
   return (
-    <li className={className}>
+    <li className={`${className} ${styles['list-item']}`}>
       <ConstructorElement
         type={pos}
         isLocked={true}

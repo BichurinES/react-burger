@@ -7,9 +7,11 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import ErrorPopup from '../error-popup/error-popup';
 import { ingredientsURL, filtrationKeys } from '../../utils/constants';
 import { filterIngredients } from '../../utils/utils';
+import { BurgerConstructorContext, PopupControlContext } from '../../contexts/appContext';
 
 function App() {
   const [filteredIngredients, setFilteredIngredients] = React.useState({});
+  const [burger, setBurger] = React.useState({});
   const [orderDetails, setOrderDetails] = React.useState({
     isOpen: false,
     content: '',
@@ -68,24 +70,32 @@ function App() {
           throw new Error(res.message)
         }
       })
-      .then(res => setFilteredIngredients(filterIngredients(res.data, filtrationKeys)))
+      .then(res => {
+        const filteredRes = filterIngredients(res.data, filtrationKeys);
+        setFilteredIngredients(filteredRes);
+        setBurger({ bun: filteredRes.bun[0], main: [...filteredRes.sauce, ...filteredRes.main] });
+      })
       .catch(err => openErrorPopup(err.message));
   }, []);
 
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <Main filteredIngredients={filteredIngredients} openOrderDetails={openOrderDetails} openIngredientDetails={openIngredientDetails} />
-      {orderDetails.isOpen && (
-        <OrderDetails orderId={orderDetails.content} closeAllPopups={closeAllPopups} />
-      )}
-      {ingredientDetails.isOpen && (
-        <IngredientDetails ingredient={ingredientDetails.content} closeAllPopups={closeAllPopups} />
-      )}
-      {errorPopup.isOpen && (
-        <ErrorPopup content={errorPopup.content} closeAllPopups={closeAllPopups} />
-      )}
-    </div>
+    <BurgerConstructorContext.Provider value={{burger, setBurger}}>
+      <PopupControlContext.Provider value={{openOrderDetails, openIngredientDetails, openErrorPopup, closeAllPopups}}>
+        <div className={styles.app}>
+          <AppHeader />
+          <Main filteredIngredients={filteredIngredients} />
+          {orderDetails.isOpen && (
+            <OrderDetails orderId={orderDetails.content} />
+          )}
+          {ingredientDetails.isOpen && (
+            <IngredientDetails {...ingredientDetails.content} />
+          )}
+          {errorPopup.isOpen && (
+            <ErrorPopup content={errorPopup.content} />
+          )}
+        </div>
+      </PopupControlContext.Provider>
+    </BurgerConstructorContext.Provider>
   );
 }
 

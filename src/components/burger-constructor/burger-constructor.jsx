@@ -1,32 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import filteredIngredientsType from '../../types/filtered-ingredients-type';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import BunElement from '../bun-element/bun-element';
 import MainElement from '../main-element/main-element';
 import styles from './burger-constructor.module.css';
+import { BurgerConstructorContext, PopupControlContext } from '../../contexts/appContext';
 
-function BurgerConstructor({ filteredIngredients, openPopup }) {
+function BurgerConstructor() {
   const [totalPrice, setTotalPrice] = React.useState(0);
-  const defaultBun = React.useMemo(() => filteredIngredients.bun ? filteredIngredients.bun[0] : [], 
-    [filteredIngredients]
+  const { burger } = React.useContext(BurgerConstructorContext);
+  const { openOrderDetails } = React.useContext(PopupControlContext);
+  const defaultBun = React.useMemo(() => burger.bun ? burger.bun : {}, 
+    [burger]
   );
 
   const clickOrderBtn = () => {
-    openPopup('034536');
+    openOrderDetails('034536');
   }
   
   React.useEffect(() => {
-    Object.keys(filteredIngredients).length &&
+    Object.keys(burger).length &&
     setTotalPrice(
-      [defaultBun, ...filteredIngredients.main, defaultBun].reduce(((sum, item) => sum += item.price), 0)
+      [defaultBun, ...burger.main, defaultBun].reduce(((sum, item) => sum += item.price), 0)
     );
-  }, [filteredIngredients, defaultBun]);
+  }, [burger, defaultBun]);
 
   return (
     <section className={`pt-25 pl-4`}>
       {
-        Object.keys(filteredIngredients).length &&
+        Object.keys(burger).length &&
         (
           <ul className={`${styles["order-list"]}`}>
             <BunElement
@@ -37,9 +38,10 @@ function BurgerConstructor({ filteredIngredients, openPopup }) {
               image={defaultBun["image_mobile"]}
             />
             <ul className={`${styles["order-list"]} ${styles["order-list-main"]} pr-2`}>
-              {filteredIngredients.main.map(card => (
+              {burger.main.map(card => (
                 <MainElement
                   key={card._id}
+                  id={card._id}
                   name={card.name}
                   price={card.price}
                   image={card["image_mobile"]}
@@ -65,11 +67,6 @@ function BurgerConstructor({ filteredIngredients, openPopup }) {
       </div>
     </section>
   );
-}
-
-BurgerConstructor.propTypes = {
-  filteredIngredients: filteredIngredientsType.isRequired,
-  openPopup: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor;

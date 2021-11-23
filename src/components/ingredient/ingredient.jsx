@@ -1,11 +1,15 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../types/ingredient-type';
 import styles from './ingredient.module.css';
+import { PopupControlContext } from '../../contexts/appContext';
 
-function Ingredient({ card, i, openPopup }) {
+function Ingredient({ card, i }) {
+  const { openOrderDetails } = React.useContext(PopupControlContext);
+
   const handleCardClick = () => {
-    openPopup(card);
+    openOrderDetails(card);
   }
 
   return (
@@ -26,7 +30,6 @@ function Ingredient({ card, i, openPopup }) {
 Ingredient.propTypes = {
   card: ingredientType.isRequired,
   i: PropTypes.number.isRequired,
-  openPopup: PropTypes.func.isRequired,
 }
 
 export default Ingredient;

@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {  } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal-overlay.module.css';
+import { PopupControlContext } from '../../contexts/appContext';
 
-function ModalOverlay({ children, closeAllPopups }) {
+function ModalOverlay({ children }) {
+  const { closeAllPopups } = React.useContext(PopupControlContext);
+
   const handleOverlayClick = (e) => {
     e.target === e.currentTarget && closeAllPopups();
   }
@@ -17,7 +20,6 @@ function ModalOverlay({ children, closeAllPopups }) {
 
 ModalOverlay.propTypes = {
   children: PropTypes.node.isRequired,
-  closeAllPopups: PropTypes.func.isRequired,
 }
 
 export default ModalOverlay;
