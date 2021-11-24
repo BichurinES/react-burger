@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './main-element.module.css';
@@ -7,7 +7,7 @@ import { BurgerConstructorContext } from '../../contexts/appContext';
 function MainElement({
   name, price, image, id,
 }) {
-  const { burger, setBurger } = React.useContext(BurgerConstructorContext);
+  const { burger, setBurger } = useContext(BurgerConstructorContext);
 
   const handleDeleteElement = () => {
     setBurger({

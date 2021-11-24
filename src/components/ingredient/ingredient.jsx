@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../types/ingredient-type';
@@ -6,7 +6,7 @@ import styles from './ingredient.module.css';
 import { PopupControlContext } from '../../contexts/appContext';
 
 function Ingredient({ card, i }) {
-  const { openIngredientDetails } = React.useContext(PopupControlContext);
+  const { openIngredientDetails } = useContext(PopupControlContext);
 
   const handleCardClick = () => {
     openIngredientDetails(card);

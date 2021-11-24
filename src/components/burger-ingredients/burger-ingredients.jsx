@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import filteredIngredientsType from '../../types/filtered-ingredients-type';
@@ -6,11 +6,11 @@ import IngredientsCategory from '../ingredients-category/ingredients-category';
 
 function BurgerIngredients({ filteredIngredients }) {
   const { bun, sauce, main } = filteredIngredients;
-  const [current, setCurrent] = React.useState('bun');
+  const [current, setCurrent] = useState('bun');
 
-  const bunRef = React.useRef(null);
-  const sauceRef = React.useRef(null);
-  const mainRef = React.useRef(null);
+  const bunRef = useRef(null);
+  const sauceRef = useRef(null);
+  const mainRef = useRef(null);
 
   const handleTabClick = (value) => {
     let currentCategory = '';

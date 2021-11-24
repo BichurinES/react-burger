@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useState, useContext, useMemo, useEffect,
+} from 'react';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import BunElement from '../bun-element/bun-element';
 import MainElement from '../main-element/main-element';
@@ -6,16 +8,16 @@ import styles from './burger-constructor.module.css';
 import { BurgerConstructorContext, PopupControlContext } from '../../contexts/appContext';
 
 function BurgerConstructor() {
-  const [totalPrice, setTotalPrice] = React.useState(0);
-  const { burger } = React.useContext(BurgerConstructorContext);
-  const { openOrderDetails } = React.useContext(PopupControlContext);
-  const currentBun = React.useMemo(() => (burger.bun ? burger.bun : {}), [burger]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const { burger } = useContext(BurgerConstructorContext);
+  const { openOrderDetails } = useContext(PopupControlContext);
+  const currentBun = useMemo(() => (burger.bun ? burger.bun : {}), [burger]);
 
   const clickOrderBtn = () => {
     openOrderDetails('034536');
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (Object.keys(burger).length) {
       setTotalPrice(
         [currentBun, ...burger.main, currentBun].reduce(((sum, item) => {

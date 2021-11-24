@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
@@ -10,17 +10,17 @@ import { filterIngredients } from '../../utils/utils';
 import { BurgerConstructorContext, PopupControlContext } from '../../contexts/appContext';
 
 function App() {
-  const [filteredIngredients, setFilteredIngredients] = React.useState({});
-  const [burger, setBurger] = React.useState({});
-  const [orderDetails, setOrderDetails] = React.useState({
+  const [filteredIngredients, setFilteredIngredients] = useState({});
+  const [burger, setBurger] = useState({});
+  const [orderDetails, setOrderDetails] = useState({
     isOpen: false,
     content: '',
   });
-  const [ingredientDetails, setIngredientDetails] = React.useState({
+  const [ingredientDetails, setIngredientDetails] = useState({
     isOpen: false,
     content: {},
   });
-  const [errorPopup, setErrorPopup] = React.useState({
+  const [errorPopup, setErrorPopup] = useState({
     isOpen: false,
     content: '',
   });
@@ -61,7 +61,7 @@ function App() {
     });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(INGREDIENTS_API_URL)
       .then((res) => {
         if (res.status === 200) {
@@ -79,11 +79,11 @@ function App() {
   }, []);
 
   return (
-    <BurgerConstructorContext.Provider value={React.useMemo(() => (
+    <BurgerConstructorContext.Provider value={useMemo(() => (
       { burger, setBurger }), [burger])}
     >
       <PopupControlContext.Provider value={
-          React.useMemo(() => ({
+          useMemo(() => ({
             openOrderDetails,
             openIngredientDetails,
             openErrorPopup,

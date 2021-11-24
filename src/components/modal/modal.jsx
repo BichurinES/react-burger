@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,11 +9,11 @@ import { PopupControlContext } from '../../contexts/appContext';
 const modalRoot = document.getElementById('react-modals');
 
 function Modal({ children, title }) {
-  const { closeAllPopups } = React.useContext(PopupControlContext);
+  const { closeAllPopups } = useContext(PopupControlContext);
 
   const handleEscPress = (e) => e.key === 'Escape' && closeAllPopups();
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('keydown', handleEscPress);
     return () => {
       document.removeEventListener('keydown', handleEscPress);

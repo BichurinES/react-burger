@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styles from './modal-overlay.module.css';
 import { PopupControlContext } from '../../contexts/appContext';
 
 function ModalOverlay({ children }) {
-  const { closeAllPopups } = React.useContext(PopupControlContext);
+  const { closeAllPopups } = useContext(PopupControlContext);
 
   const handleOverlayClick = (e) => e.target === e.currentTarget && closeAllPopups();
 
