@@ -29,21 +29,21 @@ function App() {
     setOrderDetails({
       isOpen: true,
       content,
-    })
+    });
   }
 
   function openIngredientDetails(content) {
     setIngredientDetails({
       isOpen: true,
       content,
-    })
+    });
   }
 
   function openErrorPopup(content) {
     setErrorPopup({
       isOpen: true,
       content,
-    })
+    });
   }
 
   function closeAllPopups() {
@@ -63,26 +63,34 @@ function App() {
 
   React.useEffect(() => {
     fetch(INGREDIENTS_API_URL)
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
           return res.json();
-        } else {
-          throw new Error(res.message)
         }
+        throw new Error(res.message);
       })
-      .then(res => {
-        const filteredRes = filterIngredients(res.data),
-              defaultBun = filteredRes.bun[0];
-        
+      .then((res) => {
+        const filteredRes = filterIngredients(res.data);
+        const defaultBun = filteredRes.bun[0];
         setFilteredIngredients(filteredRes);
         setBurger({ bun: defaultBun, main: [...filteredRes.sauce, ...filteredRes.main] });
       })
-      .catch(err => openErrorPopup(err.message));
+      .catch((err) => openErrorPopup(err.message));
   }, []);
 
   return (
-    <BurgerConstructorContext.Provider value={{burger, setBurger}}>
-      <PopupControlContext.Provider value={{openOrderDetails, openIngredientDetails, openErrorPopup, closeAllPopups}}>
+    <BurgerConstructorContext.Provider value={React.useMemo(() => (
+      { burger, setBurger }), [burger])}
+    >
+      <PopupControlContext.Provider value={
+          React.useMemo(() => ({
+            openOrderDetails,
+            openIngredientDetails,
+            openErrorPopup,
+            closeAllPopups,
+          }))
+        }
+      >
         <div className={styles.app}>
           <AppHeader />
           <Main filteredIngredients={filteredIngredients} />

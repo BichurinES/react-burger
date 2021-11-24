@@ -1,7 +1,7 @@
 import React from 'react';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import filteredIngredientsType from '../../types/filtered-ingredients-type';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 
 function BurgerIngredients({ filteredIngredients }) {
@@ -16,7 +16,7 @@ function BurgerIngredients({ filteredIngredients }) {
     let currentCategory = '';
     setCurrent(value);
 
-    switch(value) {
+    switch (value) {
       case 'bun':
         currentCategory = bunRef.current;
         break;
@@ -30,20 +30,20 @@ function BurgerIngredients({ filteredIngredients }) {
         currentCategory = '';
     }
 
-    currentCategory && currentCategory.scrollIntoView();
+    return currentCategory && currentCategory.scrollIntoView();
   };
 
   return (
     <section className={`${styles.container} pt-10`}>
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <div className={`${styles.tab} mt-5 mb-10`}>
-        <Tab value="bun" active={current === "bun"} onClick={handleTabClick}>
+        <Tab value="bun" active={current === 'bun'} onClick={handleTabClick}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === "sauce"} onClick={handleTabClick}>
+        <Tab value="sauce" active={current === 'sauce'} onClick={handleTabClick}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === "main"} onClick={handleTabClick}>
+        <Tab value="main" active={current === 'main'} onClick={handleTabClick}>
           Начинки
         </Tab>
       </div>
@@ -58,6 +58,6 @@ function BurgerIngredients({ filteredIngredients }) {
 
 BurgerIngredients.propTypes = {
   filteredIngredients: filteredIngredientsType.isRequired,
-}
+};
 
 export default BurgerIngredients;

@@ -11,15 +11,13 @@ const modalRoot = document.getElementById('react-modals');
 function Modal({ children, title }) {
   const { closeAllPopups } = React.useContext(PopupControlContext);
 
-  const handleEscPress = (e) => {
-    e.key === 'Escape' && closeAllPopups();
-  }
+  const handleEscPress = (e) => e.key === 'Escape' && closeAllPopups();
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleEscPress);
     return () => {
-      document.removeEventListener('keydown', handleEscPress)
-    }
+      document.removeEventListener('keydown', handleEscPress);
+    };
   });
 
   return ReactDOM.createPortal(
@@ -31,15 +29,14 @@ function Modal({ children, title }) {
         </header>
         {children}
       </div>
-    </ModalOverlay>
-    ,
-    modalRoot
+    </ModalOverlay>,
+    modalRoot,
   );
 }
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
-}
+};
 
 export default Modal;

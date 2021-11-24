@@ -1,6 +1,7 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './error-popup.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './error-popup.module.css';
 import Modal from '../modal/modal';
 
 function ErrorPopup({ content }) {
@@ -11,11 +12,11 @@ function ErrorPopup({ content }) {
       </div>
       <h3 className={`${styles.title} text text_type_main-large mt-10 mb-25`}>{content || 'Ошибка сервера'}</h3>
     </Modal>
-  )
+  );
 }
 
 ErrorPopup.propTypes = {
   content: PropTypes.string.isRequired,
-}
+};
 
 export default ErrorPopup;
