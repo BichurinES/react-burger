@@ -5,7 +5,7 @@ import Main from '../main/main';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ErrorPopup from '../error-popup/error-popup';
-import { ingredientsURL, filtrationKeys } from '../../utils/constants';
+import { ingredientsURL } from '../../utils/constants';
 import { filterIngredients } from '../../utils/utils';
 import { BurgerConstructorContext, PopupControlContext } from '../../contexts/appContext';
 
@@ -71,7 +71,7 @@ function App() {
         }
       })
       .then(res => {
-        const filteredRes = filterIngredients(res.data, filtrationKeys);
+        const filteredRes = filterIngredients(res.data);
         setFilteredIngredients(filteredRes);
         setBurger({ bun: filteredRes.bun[0], main: [...filteredRes.sauce, ...filteredRes.main] });
       })

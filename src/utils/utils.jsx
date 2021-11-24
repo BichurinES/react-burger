@@ -1,6 +1,5 @@
-export function filterIngredients(data, keys) {
+export function filterIngredients(data) {
   const res = {};
-  keys.forEach(key => res[key] = []);
-  data.forEach(item => res.hasOwnProperty(item.type) && res[item.type].push(item));
+  data.forEach(item => res[item.type] ? res[item.type].push(item) : res[item.type] = [item]);
   return res;
 }
