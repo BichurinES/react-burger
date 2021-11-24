@@ -5,7 +5,7 @@ import Main from '../main/main';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ErrorPopup from '../error-popup/error-popup';
-import { INGREDIENTS_API_URL } from '../../utils/constants';
+import { getData } from '../../utils/normaApi';
 import { filterIngredients } from '../../utils/utils';
 import { BurgerConstructorContext, PopupControlContext } from '../../contexts/appContext';
 
@@ -62,13 +62,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(INGREDIENTS_API_URL)
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-        throw new Error(res.message);
-      })
+    getData()
       .then((res) => {
         const filteredRes = filterIngredients(res.data);
         const defaultBun = filteredRes.bun[0];
