@@ -9,7 +9,7 @@ function BurgerConstructor() {
   const [totalPrice, setTotalPrice] = React.useState(0);
   const { burger } = React.useContext(BurgerConstructorContext);
   const { openOrderDetails } = React.useContext(PopupControlContext);
-  const defaultBun = React.useMemo(() => burger.bun ? burger.bun : {}, 
+  const currentBun = React.useMemo(() => burger.bun ? burger.bun : {}, 
     [burger]
   );
 
@@ -20,10 +20,10 @@ function BurgerConstructor() {
   React.useEffect(() => {
     Object.keys(burger).length &&
     setTotalPrice(
-      [defaultBun, ...burger.main, defaultBun].reduce(((sum, item) => sum += item.price), 0)
+      [currentBun, ...burger.main, currentBun].reduce(((sum, item) => sum += item.price), 0)
     );
-  }, [burger, defaultBun]);
-
+  }, [burger, currentBun]);
+  
   return (
     <section className={`pt-25 pl-4`}>
       {
@@ -33,27 +33,31 @@ function BurgerConstructor() {
             <BunElement
               className="pl-8"
               pos="top"
-              name={defaultBun.name}
-              price={defaultBun.price}
-              image={defaultBun["image_mobile"]}
+              name={currentBun.name}
+              price={currentBun.price}
+              image={currentBun["image_mobile"]}
             />
-            <ul className={`${styles["order-list"]} ${styles["order-list-main"]} pr-2`}>
-              {burger.main.map(card => (
-                <MainElement
-                  key={card._id}
-                  id={card._id}
-                  name={card.name}
-                  price={card.price}
-                  image={card["image_mobile"]}
-                />
-              ))}
-            </ul>
+            {
+              burger.main.length ? (
+                <ul className={`${styles["order-list"]} ${styles["order-list-main"]} pr-2`}>
+                  {burger.main.map(card => (
+                    <MainElement
+                      key={card._id}
+                      id={card._id}
+                      name={card.name}
+                      price={card.price}
+                      image={card["image_mobile"]}
+                    />
+                  ))}
+                </ul>
+              ) : null
+            }
             <BunElement
               className="pl-8"
               pos="bottom"
-              name={defaultBun.name}
-              price={defaultBun.price}
-              image={defaultBun["image_mobile"]}
+              name={currentBun.name}
+              price={currentBun.price}
+              image={currentBun["image_mobile"]}
             />
           </ul>
         )
