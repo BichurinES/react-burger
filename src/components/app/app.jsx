@@ -5,7 +5,7 @@ import Main from '../main/main';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ErrorPopup from '../error-popup/error-popup';
-import { ingredientsURL } from '../../utils/constants';
+import { INGREDIENTS_API_URL } from '../../utils/constants';
 import { filterIngredients } from '../../utils/utils';
 import { BurgerConstructorContext, PopupControlContext } from '../../contexts/appContext';
 
@@ -62,7 +62,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    fetch(ingredientsURL)
+    fetch(INGREDIENTS_API_URL)
       .then(res => {
         if (res.status === 200) {
           return res.json();
@@ -71,9 +71,11 @@ function App() {
         }
       })
       .then(res => {
-        const filteredRes = filterIngredients(res.data);
+        const filteredRes = filterIngredients(res.data),
+              defaultBun = filteredRes.bun[0];
+        
         setFilteredIngredients(filteredRes);
-        setBurger({ bun: filteredRes.bun[0], main: [...filteredRes.sauce, ...filteredRes.main] });
+        setBurger({ bun: defaultBun, main: [...filteredRes.sauce, ...filteredRes.main] });
       })
       .catch(err => openErrorPopup(err.message));
   }, []);
