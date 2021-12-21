@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { PopupControlContext } from '../../contexts/appContext';
 
 const modalRoot = document.getElementById('react-modals');
 
-function Modal({ children, title, closeAllPopups }) {
-  const handleEscPress = (e) => {
-    e.key === 'Escape' && closeAllPopups();
-  }
+function Modal({ children, title }) {
+  const { closeAllPopups } = useContext(PopupControlContext);
 
-  React.useEffect(() => {
+  const handleEscPress = (e) => e.key === 'Escape' && closeAllPopups();
+
+  useEffect(() => {
     document.addEventListener('keydown', handleEscPress);
     return () => {
-      document.removeEventListener('keydown', handleEscPress)
-    }
+      document.removeEventListener('keydown', handleEscPress);
+    };
   });
 
   return ReactDOM.createPortal(
@@ -28,16 +29,14 @@ function Modal({ children, title, closeAllPopups }) {
         </header>
         {children}
       </div>
-    </ModalOverlay>
-    ,
-    modalRoot
+    </ModalOverlay>,
+    modalRoot,
   );
 }
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
-  closeAllPopups: PropTypes.func.isRequired,
-}
+};
 
 export default Modal;

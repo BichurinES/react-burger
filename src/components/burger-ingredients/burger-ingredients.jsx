@@ -1,21 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef } from 'react';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import filteredIngredientsType from '../../types/filtered-ingredients-type';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
-import { filtrationKeys } from '../../utils/constants';
 
-function BurgerIngredients({ filteredIngredients, openPopup }) {
-  const [current, setCurrent] = React.useState(filtrationKeys[0]);
-  const bunRef = React.useRef(null);
-  const sauceRef = React.useRef(null);
-  const mainRef = React.useRef(null);
+function BurgerIngredients({ filteredIngredients }) {
+  const { bun, sauce, main } = filteredIngredients;
+  const [current, setCurrent] = useState('bun');
+
+  const bunRef = useRef(null);
+  const sauceRef = useRef(null);
+  const mainRef = useRef(null);
+
   const handleTabClick = (value) => {
     let currentCategory = '';
     setCurrent(value);
 
-    switch(value) {
+    switch (value) {
       case 'bun':
         currentCategory = bunRef.current;
         break;
@@ -29,27 +30,27 @@ function BurgerIngredients({ filteredIngredients, openPopup }) {
         currentCategory = '';
     }
 
-    currentCategory && currentCategory.scrollIntoView();
+    return currentCategory && currentCategory.scrollIntoView();
   };
 
   return (
     <section className={`${styles.container} pt-10`}>
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <div className={`${styles.tab} mt-5 mb-10`}>
-        <Tab value="bun" active={current === filtrationKeys[0]} onClick={handleTabClick}>
+        <Tab value="bun" active={current === 'bun'} onClick={handleTabClick}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === filtrationKeys[1]} onClick={handleTabClick}>
+        <Tab value="sauce" active={current === 'sauce'} onClick={handleTabClick}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === filtrationKeys[2]} onClick={handleTabClick}>
+        <Tab value="main" active={current === 'main'} onClick={handleTabClick}>
           Начинки
         </Tab>
       </div>
       <div className={styles.content}>
-        <IngredientsCategory title="Булки" cards={filteredIngredients[filtrationKeys[0]] || []} openPopup={openPopup} ref={bunRef} />
-        <IngredientsCategory title="Соусы" cards={filteredIngredients[filtrationKeys[1]] || []} openPopup={openPopup} ref={sauceRef} />
-        <IngredientsCategory title="Начинки" cards={filteredIngredients[filtrationKeys[2]] || []} openPopup={openPopup} ref={mainRef} />
+        <IngredientsCategory title="Булки" cards={bun || []} ref={bunRef} />
+        <IngredientsCategory title="Соусы" cards={sauce || []} ref={sauceRef} />
+        <IngredientsCategory title="Начинки" cards={main || []} ref={mainRef} />
       </div>
     </section>
   );
@@ -57,7 +58,6 @@ function BurgerIngredients({ filteredIngredients, openPopup }) {
 
 BurgerIngredients.propTypes = {
   filteredIngredients: filteredIngredientsType.isRequired,
-  openPopup: PropTypes.func.isRequired,
-}
+};
 
 export default BurgerIngredients;

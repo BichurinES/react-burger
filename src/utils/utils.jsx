@@ -1,6 +1,7 @@
-export function filterIngredients(data, keys) {
+// eslint-disable-next-line import/prefer-default-export
+export function filterIngredients(data) {
   const res = {};
-  keys.forEach(key => res[key] = []);
-  data.forEach(item => res.hasOwnProperty(item.type) && res[item.type].push(item));
+  // eslint-disable-next-line no-return-assign
+  data.forEach((item) => (res[item.type] ? res[item.type].push(item) : res[item.type] = [item]));
   return res;
 }

@@ -8,10 +8,10 @@
 }
 
 .order-list-main {
-  height: calc(100vh - 536px);
+  width: 100%;
   min-height: 80px;
   max-height: 464px;
-  overflow-y: scroll;
+  overflow-y: auto;
   scroll-snap-type: y mandatory;
 }
 
@@ -35,4 +35,16 @@
   width: 36px;
   height: 36px;
   object-fit: contain;
+}
+
+@media screen and (max-height: 950px) {
+  .order-list-main {
+    max-height: 275px;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .order-list-main {
+    max-height: 180px;
+  }
 }

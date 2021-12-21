@@ -4,11 +4,15 @@
   align-items: center;
   width: 150px;
   height: 150px;
-  border: red solid 3px;
+  border: red solid 4px;
   border-radius: 50%;
 }
 
 .error > svg {
   width: 70px;
   height: 70px;
+}
+
+.title {
+  text-align: center;
 }

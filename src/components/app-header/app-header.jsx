@@ -1,4 +1,7 @@
-import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import React from 'react';
+import {
+  Logo, ProfileIcon, BurgerIcon, ListIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderButton from '../header-button/header-button';
 import styles from './app-header.module.css';
 
@@ -12,15 +15,15 @@ function AppHeader() {
               <HeaderButton inactive={false} text="Конструктор"><BurgerIcon type="primary" /></HeaderButton>
             </li>
             <li>
-              <HeaderButton inactive={true} text="Лента заказов"><ListIcon type="secondary" /></HeaderButton>
+              <HeaderButton inactive text="Лента заказов"><ListIcon type="secondary" /></HeaderButton>
             </li>
           </ul>
         </nav>
         <div className={styles.logo}>
           <Logo />
         </div>
-        
-        <HeaderButton inactive={true} text="Личный кабинет"><ProfileIcon type="secondary" /></HeaderButton>
+
+        <HeaderButton inactive text="Личный кабинет"><ProfileIcon type="secondary" /></HeaderButton>
       </div>
     </header>
   );
