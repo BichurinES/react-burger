@@ -1,16 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { PopupControlContext } from '../../contexts/appContext';
+import { CLOSE_ALL_POPUPS } from '../../services/actions/popups';
 
 const modalRoot = document.getElementById('react-modals');
 
 function Modal({ children, title }) {
-  const { closeAllPopups } = useContext(PopupControlContext);
+  const dispatch = useDispatch();
 
+  const closeAllPopups = () => dispatch({ type: CLOSE_ALL_POPUPS });
   const handleEscPress = (e) => e.key === 'Escape' && closeAllPopups();
 
   useEffect(() => {
@@ -21,7 +23,7 @@ function Modal({ children, title }) {
   });
 
   return ReactDOM.createPortal(
-    <ModalOverlay closeAllPopups={closeAllPopups}>
+    <ModalOverlay>
       <div className={`${styles.modal} pl-10 pt-10 pr-10`}>
         <header className={`${styles.header}`}>
           <h2 className={`${styles.title} text text_type_main-large`}>{title}</h2>

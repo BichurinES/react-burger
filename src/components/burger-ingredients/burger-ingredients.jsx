@@ -1,16 +1,25 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import filteredIngredientsType from '../../types/filtered-ingredients-type';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
+import { filterIngredients } from '../../utils/utils';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 
-function BurgerIngredients({ filteredIngredients }) {
-  const { bun, sauce, main } = filteredIngredients;
+function BurgerIngredients() {
+  const { ingredients } = useSelector((state) => state.ingredients);
+
+  const dispatch = useDispatch();
+  const { bun, sauce, main } = filterIngredients(ingredients);
   const [current, setCurrent] = useState('bun');
 
   const bunRef = useRef(null);
   const sauceRef = useRef(null);
   const mainRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, []);
 
   const handleTabClick = (value) => {
     let currentCategory = '';
@@ -55,9 +64,5 @@ function BurgerIngredients({ filteredIngredients }) {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  filteredIngredients: filteredIngredientsType.isRequired,
-};
 
 export default BurgerIngredients;

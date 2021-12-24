@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './modal-overlay.module.css';
-import { PopupControlContext } from '../../contexts/appContext';
+import { CLOSE_ALL_POPUPS } from '../../services/actions/popups';
 
 function ModalOverlay({ children }) {
-  const { closeAllPopups } = useContext(PopupControlContext);
+  const dispatch = useDispatch();
 
-  const handleOverlayClick = (e) => e.target === e.currentTarget && closeAllPopups();
+  const handleOverlayClick = (e) => e.target === e.currentTarget
+    && dispatch({ type: CLOSE_ALL_POPUPS });
 
   return (
     <div className={styles.overlay} onMouseDown={handleOverlayClick}>

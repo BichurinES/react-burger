@@ -25,5 +25,6 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['error', { variables: false }],
     'react/function-component-definition': [2, { namedComponents: 'function-declaration' }],
     'no-underscore-dangle': 'off',
+    'no-param-reassign': [2, { props: false }],
   },
 };

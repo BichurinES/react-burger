@@ -10,7 +10,7 @@ const IngredientsCategory = forwardRef(({ cards, title }, ref) => (
     {
       cards && (
         <ul className={`${styles.list} mt-6 mb-10 ml-4 mr-4`}>
-          {cards.map((card, i) => <Ingredient key={card._id} i={i} card={card} />)}
+          {cards.map((card) => <Ingredient key={card._id} card={card} />)}
         </ul>
       )
     }

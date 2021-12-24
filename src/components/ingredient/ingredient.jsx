@@ -1,18 +1,21 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../types/ingredient-type';
 import styles from './ingredient.module.css';
-import { PopupControlContext } from '../../contexts/appContext';
+import { OPEN_INGREDIENT_DETAILS } from '../../services/actions/popups';
 
-function Ingredient({ card, i }) {
-  const { openIngredientDetails } = useContext(PopupControlContext);
+function Ingredient({ card }) {
+  const dispatch = useDispatch();
 
   const handleCardClick = () => {
-    openIngredientDetails(card);
+    dispatch({
+      type: OPEN_INGREDIENT_DETAILS,
+      payload: card,
+    });
   };
 
-  const handleCardKeyDown = (e) => e.key === 'Enter' && openIngredientDetails(card);
+  const handleCardKeyDown = (e) => e.key === 'Enter' && handleCardClick();
 
   return (
     <li className={styles.card}>
@@ -23,9 +26,15 @@ function Ingredient({ card, i }) {
           <CurrencyIcon type="primary" />
         </p>
         <p className={`${styles.name} text text_type_main-default`}>{card.name}</p>
-        <div className={`${styles.counter} ${i === 0 ? styles.counter_active : null}`}>
-          <Counter count={1} size="default" />
-        </div>
+        {
+          card.qty
+            ? (
+              <div className="styles.counter styles.counter_active">
+                <Counter count={card.qty} size="default" />
+              </div>
+            )
+            : null
+        }
       </div>
     </li>
   );
@@ -33,7 +42,6 @@ function Ingredient({ card, i }) {
 
 Ingredient.propTypes = {
   card: ingredientType.isRequired,
-  i: PropTypes.number.isRequired,
 };
 
 export default Ingredient;
