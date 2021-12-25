@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import BunElement from '../bun-element/bun-element';
 import MainElement from '../main-element/main-element';
@@ -15,6 +16,25 @@ function BurgerConstructor() {
   } = useSelector((state) => state.burgerConstructor);
   const { ingredients } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
+  const [{ isOver }, dropTarget] = useDrop({
+    accept: 'ingredients',
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+    drop(card) {
+      onDropHandler(card);
+    },
+  });
+
+  const onDropHandler = (item) => {
+    if (item._id === bun._id) {
+      return item;
+    }
+    if (item.type === 'bun') {
+      return dispatch({ type: REPLACE_BUN_IN_CONSTRUCTOR, payload: item });
+    }
+    return dispatch({ type: ADD_INGREDIENT_TO_CONSTRUCTOR, payload: item });
+  };
 
   const clickOrderBtn = () => {
     dispatch(getOrderDetails([bun, ...main].map((ingr) => ingr._id)));
@@ -26,23 +46,11 @@ function BurgerConstructor() {
         type: REPLACE_BUN_IN_CONSTRUCTOR,
         payload: ingredients.find((elem) => elem.type === 'bun'),
       });
-      dispatch({
-        type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-        payload: ingredients.find((elem) => elem.type === 'sauce'),
-      });
-      dispatch({
-        type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-        payload: ingredients.find((elem) => elem.type === 'main'),
-      });
-      dispatch({
-        type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-        payload: ingredients.find((elem) => elem.type === 'main'),
-      });
     }
-  }, [ingredients]);
+  }, []);
 
   return (
-    <section className="pt-25 pl-4">
+    <section className={`${isOver && styles.constructor_active} mt-10 pt-15 pb-15 pl-4 pr-4`} ref={dropTarget}>
       {
         totalPrice
           ? (

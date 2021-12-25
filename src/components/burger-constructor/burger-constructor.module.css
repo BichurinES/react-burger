@@ -1,3 +1,21 @@
+.constructor_active {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.constructor_active::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #2F2F37;
+  opacity: .7;
+}
+
 .order-list {
   display: flex;
   flex-direction: column;
@@ -37,13 +55,19 @@
   object-fit: contain;
 }
 
+@media screen and (max-height: 1050px) {
+  .order-list-main {
+    max-height: 370px;
+  }
+}
+
 @media screen and (max-height: 950px) {
   .order-list-main {
     max-height: 275px;
   }
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 850px) {
   .order-list-main {
     max-height: 180px;
   }

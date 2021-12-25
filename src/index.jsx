@@ -14,14 +14,6 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
 
 const enchancer = composeEnhancers(applyMiddleware(thunk));
 
-// const initialState = {
-//   ingredients: {},
-//   burgerConstructorIngredients: {},
-//   viewedIngredient: {},
-//   orderData: {},
-//   openedPopup: {},
-// };
-
 const store = createStore(rootReducer, enchancer);
 
 ReactDOM.render(

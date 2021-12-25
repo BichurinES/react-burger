@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../types/ingredient-type';
 import styles from './ingredient.module.css';
@@ -7,6 +8,10 @@ import { OPEN_INGREDIENT_DETAILS } from '../../services/actions/popups';
 
 function Ingredient({ card }) {
   const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: 'ingredients',
+    item: card,
+  });
 
   const handleCardClick = () => {
     dispatch({
@@ -18,7 +23,7 @@ function Ingredient({ card }) {
   const handleCardKeyDown = (e) => e.key === 'Enter' && handleCardClick();
 
   return (
-    <li className={styles.card}>
+    <li className={styles.card} ref={dragRef}>
       <div role="button" tabIndex={0} onClick={handleCardClick} onKeyDown={handleCardKeyDown}>
         <img src={card.image} alt={card.name} className={styles.image} />
         <p className={`${styles.price} text text_type_digits-default mt-2 mb-2`}>

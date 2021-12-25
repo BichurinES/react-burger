@@ -1,5 +1,6 @@
 import { getIngredientsRequest } from '../normaApi';
 import { OPEN_ERROR_POPUP } from './popups';
+import { REPLACE_BUN_IN_CONSTRUCTOR } from './burger-constructor';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -16,6 +17,10 @@ export const getIngredients = () => (dispatch) => {
       dispatch({
         type: GET_INGREDIENTS_SUCCESS,
         payload: res.data,
+      });
+      dispatch({
+        type: REPLACE_BUN_IN_CONSTRUCTOR,
+        payload: res.data.find((item) => item.type === 'bun'),
       });
     })
     .catch((err) => {
