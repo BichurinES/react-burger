@@ -14,7 +14,7 @@ import ModalLoader from '../modal-loader/modal-loader';
 
 function BurgerConstructor() {
   const {
-    main, bun, totalPrice,
+    main, draggingMain, bun, totalPrice,
   } = useSelector((state) => state.burgerConstructor);
   const { orderRequest } = useSelector((store) => store.popups);
   const dispatch = useDispatch();
@@ -45,6 +45,8 @@ function BurgerConstructor() {
     dispatch(getOrderDetails([bun, ...main].map((ingr) => ingr._id)));
   };
 
+  const targetList = draggingMain.length ? draggingMain : main;
+
   return (
     <section className={`${isOver && styles.constructor_active} mt-10 pt-15 pb-15 pl-4 pr-4`} ref={dropTarget}>
       {
@@ -61,7 +63,7 @@ function BurgerConstructor() {
               {
                 main.length ? (
                   <ul className={`${styles['order-list']} ${styles['order-list-main']} pr-2`}>
-                    {main.map((card) => (
+                    {targetList.map((card) => (
                       <MainElement
                         key={card._cartId}
                         _id={card._id}

@@ -4,6 +4,10 @@
   scroll-snap-align: start;
 }
 
+.list-item_dragging {
+  opacity: .3;
+}
+
 .icon {
   position: absolute;
   top: 50%;
