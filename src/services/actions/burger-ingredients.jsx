@@ -14,13 +14,18 @@ export const getIngredients = () => (dispatch) => {
   });
   getIngredientsRequest()
     .then((res) => {
+      const defaultBun = res.data.find((item) => item.type === 'bun');
       dispatch({
         type: GET_INGREDIENTS_SUCCESS,
         payload: res.data,
       });
       dispatch({
+        type: INCREASE_INGREDIENT,
+        payload: defaultBun,
+      });
+      dispatch({
         type: REPLACE_BUN_IN_CONSTRUCTOR,
-        payload: res.data.find((item) => item.type === 'bun'),
+        payload: defaultBun,
       });
     })
     .catch((err) => {
