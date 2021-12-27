@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import styles from './modal-overlay.module.css';
 import { CLOSE_ALL_POPUPS } from '../../services/actions/popups';
 
-function ModalOverlay({ children }) {
+function ModalOverlay({ children, isLockApp }) {
   const dispatch = useDispatch();
 
-  const handleOverlayClick = (e) => e.target === e.currentTarget
+  const handleOverlayClick = (e) => e.target === e.currentTarget && !isLockApp
     && dispatch({ type: CLOSE_ALL_POPUPS });
 
   return (
@@ -18,7 +18,12 @@ function ModalOverlay({ children }) {
   );
 }
 
+ModalOverlay.defaultProps = {
+  isLockApp: false,
+};
+
 ModalOverlay.propTypes = {
+  isLockApp: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
 

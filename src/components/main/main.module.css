@@ -5,6 +5,11 @@
   gap: 40px;
 }
 
+.main_loader { 
+  align-items: center;
+  height: calc(100vh - 88px);
+}
+
 @media screen and (max-width: 1300px) {
   .main {
     flex-direction: column;

@@ -9,12 +9,14 @@ import {
   ADD_INGREDIENT_TO_CONSTRUCTOR, REPLACE_BUN_IN_CONSTRUCTOR,
 } from '../../services/actions/burger-constructor';
 import { getOrderDetails } from '../../services/actions/popups';
+import ModalLoader from '../modal-loader/modal-loader';
 
 function BurgerConstructor() {
   const {
     main, bun, totalPrice,
   } = useSelector((state) => state.burgerConstructor);
   const { ingredients } = useSelector((state) => state.ingredients);
+  const { orderRequest } = useSelector((store) => store.popups);
   const dispatch = useDispatch();
   const [{ isOver }, dropTarget] = useDrop({
     accept: 'ingredients',
@@ -94,8 +96,9 @@ function BurgerConstructor() {
           <span className="mr-2">{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </p>
-        <Button type="primary" size="large" onClick={clickOrderBtn}>Оформить заказ</Button>
+        <Button type="primary" size="large" onClick={clickOrderBtn} disabled={orderRequest}>{orderRequest ? 'Оформляем...' : 'Оформить заказ'}</Button>
       </div>
+      {orderRequest && <ModalLoader />}
     </section>
   );
 }
