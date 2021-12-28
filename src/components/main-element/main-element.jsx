@@ -45,13 +45,14 @@ function MainElement({
       const hoverIndex = draggingMain.findIndex((ingred) => ingred._cartId === _cartId);
 
       const hoverBoundingRect = ref.current.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverBottomBound = (hoverBoundingRect.bottom - hoverBoundingRect.top) * 0.3;
+      const hoverTopBound = (hoverBoundingRect.bottom - hoverBoundingRect.top) * 0.7;
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (
-        (index < hoverIndex && hoverClientY >= hoverMiddleY)
-        || (index > hoverIndex && hoverClientY <= hoverMiddleY)
+        (index < hoverIndex && hoverClientY >= hoverBottomBound)
+        || (index > hoverIndex && hoverClientY <= hoverTopBound)
       ) {
         dispatch({
           type: REPLACE_ITEMS_IN_DRAGGING_CONTAINER,
