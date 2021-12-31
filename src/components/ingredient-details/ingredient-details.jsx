@@ -2,7 +2,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
-import Modal from '../modal/modal';
 
 function IngredientDetails() {
   const {
@@ -15,7 +14,7 @@ function IngredientDetails() {
   } = useSelector((state) => state.popups.ingredientDetailsContent);
 
   return (
-    <Modal title="Детали ингредиента">
+    <>
       <img src={image_large} alt={name} className={styles.image} />
       <h3 className="text text_type_main-medium mt-4 mb-8">{name}</h3>
       <ul className={`${styles.nutrition} text text_type_main-default text_color_inactive mb-15`}>
@@ -36,7 +35,7 @@ function IngredientDetails() {
           <span className="text text_type_digits-default">{carbohydrates}</span>
         </li>
       </ul>
-    </Modal>
+    </>
   );
 }
 

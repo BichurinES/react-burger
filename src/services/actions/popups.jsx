@@ -1,11 +1,13 @@
-import { sendOrder } from '../../utils/normaApi';
+import { sendOrder } from '../norma-api';
 
 export const OPEN_INGREDIENT_DETAILS = 'OPEN_INGREDIENT_DETAILS';
+export const CLOSE_INGREDIENT_DETAILS = 'CLOSE_INGREDIENT_DETAILS';
 export const GET_ORDER_DETAILS_REQUEST = 'GET_ORDER_DETAILS_REQUEST';
 export const GET_ORDER_DETAILS_SUCCESS = 'GET_ORDER_DETAILS_SUCCESS';
 export const GET_ORDER_DETAILS_FAILED = 'GET_ORDER_DETAILS_FAILED';
+export const CLOSE_ORDER_DETAILS = 'CLOSE_ORDER_DETAILS';
 export const OPEN_ERROR_POPUP = 'OPEN_ERROR_POPUP';
-export const CLOSE_ALL_POPUPS = 'CLOSE_ALL_POPUPS';
+export const CLOSE_ERROR_POPUP = 'CLOSE_ERROR_POPUP';
 
 export const getOrderDetails = (ingredients) => (dispatch) => {
   dispatch({ type: GET_ORDER_DETAILS_REQUEST });

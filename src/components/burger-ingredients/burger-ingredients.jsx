@@ -3,10 +3,18 @@ import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
-import { filterIngredients } from '../../utils/utils';
 
 function BurgerIngredients() {
   const { ingredients } = useSelector((state) => state.ingredients);
+
+  function filterIngredients(data) {
+    const res = {};
+    // eslint-disable-next-line no-return-assign
+    data.forEach((item) => (res[item.type]
+      ? res[item.type].push(item)
+      : res[item.type] = [item]));
+    return res;
+  }
 
   const { bun, sauce, main } = filterIngredients(ingredients);
   const [current, setCurrent] = useState('bun');

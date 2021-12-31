@@ -1,12 +1,12 @@
-import { getIngredientsRequest } from '../normaApi';
+import { getIngredientsRequest } from '../norma-api';
 import { OPEN_ERROR_POPUP } from './popups';
-import { REPLACE_BUN_IN_CONSTRUCTOR } from './burger-constructor';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const INCREASE_INGREDIENT = 'INCREASE_INGREDIENT';
 export const DECREASE_INGREDIENT = 'DECREASE_INGREDIENT';
+export const RESET_INGREDIENT_COUNT = 'RESET_INGREDIENT_COUNT';
 
 export const getIngredients = () => (dispatch) => {
   dispatch({
@@ -14,18 +14,9 @@ export const getIngredients = () => (dispatch) => {
   });
   getIngredientsRequest()
     .then((res) => {
-      const defaultBun = res.data.find((item) => item.type === 'bun');
       dispatch({
         type: GET_INGREDIENTS_SUCCESS,
         payload: res.data,
-      });
-      dispatch({
-        type: INCREASE_INGREDIENT,
-        payload: defaultBun,
-      });
-      dispatch({
-        type: REPLACE_BUN_IN_CONSTRUCTOR,
-        payload: defaultBun,
       });
     })
     .catch((err) => {

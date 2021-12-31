@@ -1,4 +1,3 @@
-import uniqid from 'uniqid';
 import {
   UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER,
   ADD_INGREDIENT_TO_CONSTRUCTOR,
@@ -7,11 +6,12 @@ import {
   COPY_CONSTRUCTOR_TO_DRAGGING_CONTAINER,
   REPLACE_ITEMS_IN_DRAGGING_CONTAINER,
   RESET_DRAGGING_CONTAINER,
+  RESET_CONSTRUCTOR,
 } from '../actions/burger-constructor';
 
 const initialState = {
-  main: [],
-  draggingMain: [],
+  mainIngredients: [],
+  draggingMainIngredients: [],
   bun: {},
   totalPrice: 0,
 };
@@ -21,21 +21,20 @@ export default function burgerConstructorReducer(state = initialState, { type, p
     case UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER: {
       return {
         ...state,
-        main: [...state.draggingMain],
+        mainIngredients: [...state.draggingMainIngredients],
       };
     }
     case ADD_INGREDIENT_TO_CONSTRUCTOR: {
-      const cartIngredient = { ...payload, _cartId: uniqid() };
       return {
         ...state,
-        main: [...state.main, cartIngredient],
-        totalPrice: state.totalPrice + cartIngredient.price,
+        mainIngredients: [...state.mainIngredients, payload],
+        totalPrice: state.totalPrice + payload.price,
       };
     }
     case REMOVE_INGREDIENT_FROM_CONSTRUCTOR: {
       return {
         ...state,
-        main: state.main.filter((ingredient) => (
+        mainIngredients: state.mainIngredients.filter((ingredient) => (
           ingredient._cartId !== payload._cartId
         )),
         totalPrice: state.totalPrice - payload.price,
@@ -53,22 +52,27 @@ export default function burgerConstructorReducer(state = initialState, { type, p
     case COPY_CONSTRUCTOR_TO_DRAGGING_CONTAINER: {
       return {
         ...state,
-        draggingMain: [...state.main],
+        draggingMainIngredients: [...state.mainIngredients],
       };
     }
     case REPLACE_ITEMS_IN_DRAGGING_CONTAINER: {
       const { initialIndex, targetIndex } = payload;
-      const newDrraggingMain = [...state.draggingMain];
+      const newDrraggingMain = [...state.draggingMainIngredients];
       newDrraggingMain.splice(targetIndex, 0, ...newDrraggingMain.splice(initialIndex, 1));
       return {
         ...state,
-        draggingMain: newDrraggingMain,
+        draggingMainIngredients: newDrraggingMain,
       };
     }
     case RESET_DRAGGING_CONTAINER: {
       return {
         ...state,
-        draggingMain: [...initialState.draggingMain],
+        draggingMainIngredients: [...initialState.draggingMainIngredients],
+      };
+    }
+    case RESET_CONSTRUCTOR: {
+      return {
+        ...initialState,
       };
     }
     default: {

@@ -8,27 +8,21 @@ function createRequest(url, reqObj) {
   };
 
   return fetch(
-    NORMA_API_URL + url,
+    url,
     { method: reqObj.method, body: JSON.stringify(reqObj.body), headers },
   )
     .then((res) => {
-      if (res.status === 200) {
+      if (res.ok) {
         return res.json();
       }
-      throw new Error(res.message);
-    })
-    .then((data) => {
-      if (data.success) {
-        return data;
-      }
-      throw new Error(DEFAULT_REQUEST_ERR_MSG);
+      throw new Error(res.message || DEFAULT_REQUEST_ERR_MSG);
     });
 }
 
 export function getIngredientsRequest() {
-  return createRequest(INGREDIENTS_URL, { method: 'GET' });
+  return createRequest(NORMA_API_URL + INGREDIENTS_URL, { method: 'GET' });
 }
 
 export function sendOrder(ingredientsId) {
-  return createRequest(ORDERS_URL, { method: 'POST', body: ingredientsId });
+  return createRequest(NORMA_API_URL + ORDERS_URL, { method: 'POST', body: ingredientsId });
 }

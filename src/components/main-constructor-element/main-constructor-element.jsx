@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './main-element.module.css';
+import styles from './main-constructor-element.module.css';
 import {
   UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
@@ -14,10 +14,10 @@ import {
 } from '../../services/actions/burger-constructor';
 import { DECREASE_INGREDIENT } from '../../services/actions/burger-ingredients';
 
-function MainElement({
+function MainConstructorElement({
   name, price, image, _cartId, _id,
 }) {
-  const { main, draggingMain } = useSelector((state) => state.burgerConstructor);
+  const { draggingMainIngredients } = useSelector((state) => state.burgerConstructor);
   const ref = useRef(null);
   const dispatch = useDispatch();
 
@@ -28,6 +28,13 @@ function MainElement({
       return { _cartId };
     },
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
+    end(item, monitor) {
+      const didDrop = monitor.didDrop();
+      if (didDrop) {
+        dispatch({ type: UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER });
+      }
+      dispatch({ type: RESET_DRAGGING_CONTAINER });
+    },
   });
 
   const [, drop] = useDrop({
@@ -41,12 +48,12 @@ function MainElement({
         return;
       }
 
-      const index = draggingMain.findIndex((ingred) => ingred._cartId === item._cartId);
-      const hoverIndex = draggingMain.findIndex((ingred) => ingred._cartId === _cartId);
+      const index = draggingMainIngredients.findIndex((ingred) => ingred._cartId === item._cartId);
+      const hoverIndex = draggingMainIngredients.findIndex((ingred) => ingred._cartId === _cartId);
 
       const hoverBoundingRect = ref.current.getBoundingClientRect();
-      const hoverBottomBound = (hoverBoundingRect.bottom - hoverBoundingRect.top) * 0.3;
-      const hoverTopBound = (hoverBoundingRect.bottom - hoverBoundingRect.top) * 0.7;
+      const hoverBottomBound = (hoverBoundingRect.bottom - hoverBoundingRect.top) * 0.2;
+      const hoverTopBound = (hoverBoundingRect.bottom - hoverBoundingRect.top) * 0.8;
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
@@ -62,10 +69,6 @@ function MainElement({
           },
         });
       }
-    },
-    drop() {
-      dispatch({ type: UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER });
-      dispatch({ type: RESET_DRAGGING_CONTAINER });
     },
   });
 
@@ -95,7 +98,7 @@ function MainElement({
   );
 }
 
-MainElement.propTypes = {
+MainConstructorElement.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
@@ -103,4 +106,4 @@ MainElement.propTypes = {
   _id: PropTypes.string.isRequired,
 };
 
-export default MainElement;
+export default MainConstructorElement;

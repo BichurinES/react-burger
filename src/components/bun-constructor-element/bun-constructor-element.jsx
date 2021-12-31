@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './bun-element.module.css';
+import styles from './bun-constructor-element.module.css';
 
-function BunElement({
+function BunConstructorElement({
   className,
   pos,
   name,
@@ -23,11 +23,11 @@ function BunElement({
   );
 }
 
-BunElement.defaultProps = {
+BunConstructorElement.defaultProps = {
   className: null,
 };
 
-BunElement.propTypes = {
+BunConstructorElement.propTypes = {
   className: PropTypes.string,
   pos: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -35,4 +35,4 @@ BunElement.propTypes = {
   image: PropTypes.string.isRequired,
 };
 
-export default BunElement;
+export default BunConstructorElement;

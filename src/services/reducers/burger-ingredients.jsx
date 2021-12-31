@@ -4,6 +4,7 @@ import {
   GET_INGREDIENTS_FAILED,
   INCREASE_INGREDIENT,
   DECREASE_INGREDIENT,
+  RESET_INGREDIENT_COUNT,
 } from '../actions/burger-ingredients';
 
 const initialState = {
@@ -53,6 +54,15 @@ export default function burgerIngredientsReducer(state = initialState, { type, p
           if (ingredient._id === payload._id) {
             ingredient.qty = !ingredient.qty ? 0 : ingredient.qty - 1;
           }
+          return ingredient;
+        }),
+      };
+    }
+    case RESET_INGREDIENT_COUNT: {
+      return {
+        ...state,
+        ingredients: state.ingredients.map((ingredient) => {
+          if (ingredient.qty > 0) ingredient.qty = 0;
           return ingredient;
         }),
       };

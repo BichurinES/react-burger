@@ -1,19 +1,14 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { CLOSE_ALL_POPUPS } from '../../services/actions/popups';
 
 const modalRoot = document.getElementById('react-modals');
 
-function Modal({ children, title }) {
-  const dispatch = useDispatch();
-
-  const closeAllPopups = () => dispatch({ type: CLOSE_ALL_POPUPS });
-  const handleEscPress = (e) => e.key === 'Escape' && closeAllPopups();
+function Modal({ children, title, handleClosePopup }) {
+  const handleEscPress = (e) => e.key === 'Escape' && handleClosePopup();
 
   useEffect(() => {
     document.addEventListener('keydown', handleEscPress);
@@ -23,11 +18,11 @@ function Modal({ children, title }) {
   });
 
   return ReactDOM.createPortal(
-    <ModalOverlay>
+    <ModalOverlay handleClosePopup={handleClosePopup}>
       <div className={`${styles.modal} pl-10 pt-10 pr-10`}>
         <header className={`${styles.header}`}>
           <h2 className={`${styles.title} text text_type_main-large`}>{title}</h2>
-          <CloseIcon type="primary" onClick={closeAllPopups} />
+          <CloseIcon type="primary" onClick={handleClosePopup} />
         </header>
         {children}
       </div>
@@ -39,6 +34,7 @@ function Modal({ children, title }) {
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
+  handleClosePopup: PropTypes.func.isRequired,
 };
 
 export default Modal;
