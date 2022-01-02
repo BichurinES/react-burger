@@ -10,6 +10,6 @@ export const RESET_DRAGGING_CONTAINER = 'RESET_DRAGGING_CONTAINER';
 export const RESET_CONSTRUCTOR = 'RESET_CONSTRUCTOR';
 
 export const addIngredient = (item) => ({
-  type: 'ADD_INGREDIENT_TO_CONSTRUCTOR',
+  type: ADD_INGREDIENT_TO_CONSTRUCTOR,
   payload: { ...item, _cartId: uniqid() },
 });

@@ -20,9 +20,9 @@ function createRequest(url, reqObj) {
 }
 
 export function getIngredientsRequest() {
-  return createRequest(NORMA_API_URL + INGREDIENTS_URL, { method: 'GET' });
+  return createRequest(`${NORMA_API_URL}${INGREDIENTS_URL}`, { method: 'GET' });
 }
 
 export function sendOrder(ingredientsId) {
-  return createRequest(NORMA_API_URL + ORDERS_URL, { method: 'POST', body: ingredientsId });
+  return createRequest(`${NORMA_API_URL}${ORDERS_URL}`, { method: 'POST', body: ingredientsId });
 }

@@ -16,12 +16,13 @@ function ModalOverlay({ children, isLockApp, handleClosePopup }) {
 
 ModalOverlay.defaultProps = {
   isLockApp: false,
+  handleClosePopup: () => {},
 };
 
 ModalOverlay.propTypes = {
   isLockApp: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  handleClosePopup: PropTypes.func.isRequired,
+  handleClosePopup: PropTypes.func,
 };
 
 export default ModalOverlay;
