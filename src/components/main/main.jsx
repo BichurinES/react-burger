@@ -1,20 +1,23 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './main.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import filteredIngredientsType from '../../types/filtered-ingredients-type';
+import Loader from '../loader/loader';
 
-function Main(props) {
+function Main() {
+  const { ingredientsRequest } = useSelector((store) => store.ingredients);
+
   return (
-    <main className={`${styles.main}`}>
-      <BurgerIngredients {...props} />
-      <BurgerConstructor />
+    <main className={`${styles.main} ${ingredientsRequest && styles.main_loader}`}>
+      {ingredientsRequest ? <Loader /> : (
+        <>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </>
+      )}
     </main>
   );
 }
-
-Main.propTypes = {
-  filteredIngredients: filteredIngredientsType.isRequired,
-};
 
 export default Main;

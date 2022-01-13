@@ -1,21 +1,61 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import filteredIngredientsType from '../../types/filtered-ingredients-type';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 
-function BurgerIngredients({ filteredIngredients }) {
-  const { bun, sauce, main } = filteredIngredients;
+function BurgerIngredients() {
+  const { ingredients } = useSelector((state) => state.ingredients);
+
+  function filterIngredients(data) {
+    const res = {};
+    // eslint-disable-next-line no-return-assign
+    data.forEach((item) => (res[item.type]
+      ? res[item.type].push(item)
+      : res[item.type] = [item]));
+    return res;
+  }
+
+  const { bun, sauce, main } = filterIngredients(ingredients);
   const [current, setCurrent] = useState('bun');
 
   const bunRef = useRef(null);
   const sauceRef = useRef(null);
   const mainRef = useRef(null);
+  const contentRef = useRef(null);
+
+  const handleScroll = () => {
+    window.requestAnimationFrame(() => {
+      const boundingRectY = [
+        {
+          type: 'bun',
+          top: bunRef.current.getBoundingClientRect().top,
+        },
+        {
+          type: 'sauce',
+          top: sauceRef.current.getBoundingClientRect().top,
+        },
+        {
+          type: 'main',
+          top: mainRef.current.getBoundingClientRect().top,
+        },
+      ];
+
+      const closestCategory = boundingRectY.find((category, index, array) => (
+        category.top >= 0 || index === array.length - 1
+      ));
+      setCurrent(closestCategory.type);
+    });
+  };
+
+  useEffect(() => {
+    contentRef.current.addEventListener('scroll', handleScroll);
+    return () => contentRef.current.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleTabClick = (value) => {
     let currentCategory = '';
     setCurrent(value);
-
     switch (value) {
       case 'bun':
         currentCategory = bunRef.current;
@@ -47,7 +87,7 @@ function BurgerIngredients({ filteredIngredients }) {
           Начинки
         </Tab>
       </div>
-      <div className={styles.content}>
+      <div className={styles.content} ref={contentRef}>
         <IngredientsCategory title="Булки" cards={bun || []} ref={bunRef} />
         <IngredientsCategory title="Соусы" cards={sauce || []} ref={sauceRef} />
         <IngredientsCategory title="Начинки" cards={main || []} ref={mainRef} />
@@ -55,9 +95,5 @@ function BurgerIngredients({ filteredIngredients }) {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  filteredIngredients: filteredIngredientsType.isRequired,
-};
 
 export default BurgerIngredients;

@@ -1,13 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './modal-overlay.module.css';
-import { PopupControlContext } from '../../contexts/appContext';
 
-function ModalOverlay({ children }) {
-  const { closeAllPopups } = useContext(PopupControlContext);
-
-  const handleOverlayClick = (e) => e.target === e.currentTarget && closeAllPopups();
+function ModalOverlay({ children, isLockApp, handleClosePopup }) {
+  const handleOverlayClick = (e) => e.target === e.currentTarget && !isLockApp
+    && handleClosePopup();
 
   return (
     <div className={styles.overlay} onMouseDown={handleOverlayClick}>
@@ -16,8 +14,15 @@ function ModalOverlay({ children }) {
   );
 }
 
+ModalOverlay.defaultProps = {
+  isLockApp: false,
+  handleClosePopup: () => {},
+};
+
 ModalOverlay.propTypes = {
+  isLockApp: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  handleClosePopup: PropTypes.func,
 };
 
 export default ModalOverlay;
