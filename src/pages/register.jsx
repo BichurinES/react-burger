@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
-import Main from '../components/main/main';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import CredentialsForm from '../components/credentials-form/credentials-form';
+import { signUp } from '../services/actions/register';
 
 function Register() {
+  const dispatch = useDispatch();
+  const { registerRequest } = useSelector((state) => state.register);
+  const history = useHistory();
+  const { state } = useLocation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function onSubmit() {
-    JSON.stringify({ name, email, password });
+  function onSubmit(evt) {
+    evt.preventDefault();
+    dispatch(signUp({ name, email, password }))
+      .then((res) => {
+        if (res) {
+          history.replace(state?.from || '/');
+        }
+      });
   }
 
   const formConfig = {
@@ -47,9 +59,7 @@ function Register() {
   };
 
   return (
-    <Main>
-      <CredentialsForm {...formConfig} />
-    </Main>
+    <CredentialsForm {...formConfig} isLoading={registerRequest} />
   );
 }
 

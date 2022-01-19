@@ -6,6 +6,10 @@
   border-radius: 40px;
   background-color: inherit;
   font-style: 0;
-  color: #F2F2F3;
+  text-decoration: none;
   cursor: pointer;
+}
+
+.link_active {
+  color: #f2f2f3;
 }

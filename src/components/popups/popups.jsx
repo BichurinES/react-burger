@@ -1,47 +1,69 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { Route, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ErrorPopup from '../error-popup/error-popup';
-import {
-  CLOSE_INGREDIENT_DETAILS,
-  CLOSE_ORDER_DETAILS,
-  CLOSE_ERROR_POPUP,
-} from '../../services/actions/popups';
+import { CLOSE_ORDER_DETAILS, CLOSE_ERROR_POPUP, CLOSE_SUCCESS_POPUP } from '../../services/actions/popups';
+import SuccessPopup from '../success-popup/success-popup';
 
-function Popups() {
+function Popups({ background }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const {
-    isIngredientDetailsOpen,
-    isOrderDetailsOpen,
-    isErrorPopupOpen,
+    isOrderDetailsOpen, isErrorPopupOpen, isSuccessPopupOpen,
   } = useSelector((state) => state.popups);
 
-  const isPopupOpen = isIngredientDetailsOpen || isOrderDetailsOpen || isErrorPopupOpen;
-  const title = isIngredientDetailsOpen ? 'Детали ингредиента' : '';
-  const handleClosePopup = (
-    isIngredientDetailsOpen ? () => dispatch({ type: CLOSE_INGREDIENT_DETAILS })
-      : isOrderDetailsOpen ? () => dispatch({ type: CLOSE_ORDER_DETAILS })
-        : isErrorPopupOpen ? () => dispatch({ type: CLOSE_ERROR_POPUP })
-          : null
+  const handleCloseRoutePopup = useCallback(
+    () => {
+      history.replace({ ...background, state: null });
+    },
+    [history, background],
   );
+
+  const handleClosePopup = useCallback(
+    () => {
+      dispatch({ type: CLOSE_ORDER_DETAILS });
+      dispatch({ type: CLOSE_ERROR_POPUP });
+      dispatch({ type: CLOSE_SUCCESS_POPUP });
+    },
+    [],
+  );
+
+  const isPopupOpen = useMemo(
+    () => isOrderDetailsOpen || isErrorPopupOpen || isSuccessPopupOpen,
+    [isOrderDetailsOpen, isErrorPopupOpen, isSuccessPopupOpen],
+  );
+
+  if (background) {
+    return (
+      <Route path="/ingredients/:id">
+        <Modal title="Детали ингредиента" handleClosePopup={handleCloseRoutePopup}>
+          <IngredientDetails />
+        </Modal>
+      </Route>
+    );
+  }
 
   return isPopupOpen
     ? (
-      <Modal title={title} handleClosePopup={handleClosePopup}>
-        {isOrderDetailsOpen && (
-          <OrderDetails />
-        )}
-        {isIngredientDetailsOpen && (
-          <IngredientDetails />
-        )}
-        {isErrorPopupOpen && (
-          <ErrorPopup />
-        )}
+      <Modal handleClosePopup={handleClosePopup}>
+        {isOrderDetailsOpen && <OrderDetails />}
+        {isErrorPopupOpen && <ErrorPopup />}
+        {isSuccessPopupOpen && <SuccessPopup />}
       </Modal>
     )
     : null;
 }
+
+Popups.defaultProps = {
+  background: null,
+};
+
+Popups.propTypes = {
+  background: PropTypes.objectOf(PropTypes.any),
+};
 
 export default Popups;

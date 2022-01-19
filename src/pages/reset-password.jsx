@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
-import Main from '../components/main/main';
+import { useHistory, Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 import CredentialsForm from '../components/credentials-form/credentials-form';
+import { resetPassword } from '../services/actions/reset-password';
 
 function ResetPassword() {
-  const [email, setEmail] = useState('');
+  const dispatch = useDispatch();
+  const { resetPasswordRequest } = useSelector((state) => state.resetPassword);
+  const history = useHistory();
+  const [token, setToken] = useState('');
   const [password, setPassword] = useState('');
+  const passwordResetAccess = Cookies.get('passwordResetAccess');
 
-  function onSubmit() {
-    JSON.stringify({ email, password });
+  function onSubmit(evt) {
+    evt.preventDefault();
+    dispatch(resetPassword({ token, password }))
+      .then((res) => {
+        if (res) {
+          history.replace('/login');
+        }
+      });
   }
 
   const formConfig = {
@@ -24,10 +37,10 @@ function ResetPassword() {
       {
         type: 'text',
         placeholder: 'Введите код из письма',
-        value: email,
-        name: 'email',
+        value: token,
+        name: 'token',
         size: 'default',
-        onChange: (e) => setEmail(e.target.value),
+        onChange: (e) => setToken(e.target.value),
       },
     ],
     buttonText: 'Сохранить',
@@ -37,11 +50,9 @@ function ResetPassword() {
     onSubmit,
   };
 
-  return (
-    <Main>
-      <CredentialsForm {...formConfig} />
-    </Main>
-  );
+  return passwordResetAccess
+    ? (<CredentialsForm {...formConfig} isLoading={resetPasswordRequest} />)
+    : (<Redirect to="/forgot-password" />);
 }
 
 export default ResetPassword;

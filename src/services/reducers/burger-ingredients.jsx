@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   ingredients: [],
-  ingredientsRequest: true,
+  ingredientsRequest: false,
   ingredientsFailed: false,
 };
 

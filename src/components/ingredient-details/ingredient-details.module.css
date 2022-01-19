@@ -4,6 +4,10 @@
   object-fit: contain;
 }
 
+.title {
+  text-align: center;
+}
+
 .nutrition {
   display: flex;
   list-style: none;

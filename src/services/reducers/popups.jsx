@@ -1,40 +1,26 @@
 import {
-  OPEN_INGREDIENT_DETAILS,
-  CLOSE_INGREDIENT_DETAILS,
   GET_ORDER_DETAILS_REQUEST,
   GET_ORDER_DETAILS_SUCCESS,
   GET_ORDER_DETAILS_FAILED,
   CLOSE_ORDER_DETAILS,
   OPEN_ERROR_POPUP,
   CLOSE_ERROR_POPUP,
+  OPEN_SUCCESS_POPUP,
+  CLOSE_SUCCESS_POPUP,
 } from '../actions/popups';
 
 const initialState = {
-  isIngredientDetailsOpen: false,
-  ingredientDetailsContent: {},
   orderRequest: false,
   isOrderDetailsOpen: false,
   orderDetailsContent: {},
   isErrorPopupOpen: false,
   errorPopupContent: {},
+  isSuccessPopupOpen: false,
+  successPopupContent: {},
 };
 
 export default function popupsReducer(state = initialState, { type, payload } = {}) {
   switch (type) {
-    case OPEN_INGREDIENT_DETAILS: {
-      return {
-        ...state,
-        isIngredientDetailsOpen: true,
-        ingredientDetailsContent: payload,
-      };
-    }
-    case CLOSE_INGREDIENT_DETAILS: {
-      return {
-        ...state,
-        isIngredientDetailsOpen: initialState.isIngredientDetailsOpen,
-        ingredientDetailsContent: initialState.ingredientDetailsContent,
-      };
-    }
     case GET_ORDER_DETAILS_REQUEST: {
       return {
         ...state,
@@ -72,8 +58,22 @@ export default function popupsReducer(state = initialState, { type, payload } = 
     case CLOSE_ERROR_POPUP: {
       return {
         ...state,
-        isErrorPopupOpen: initialState.isOrderDetailsOpen,
-        errorPopupContent: initialState.orderDetailsContent,
+        isErrorPopupOpen: initialState.isErrorPopupOpen,
+        errorPopupContent: initialState.errorPopupContent,
+      };
+    }
+    case OPEN_SUCCESS_POPUP: {
+      return {
+        ...state,
+        isSuccessPopupOpen: true,
+        successPopupContent: payload,
+      };
+    }
+    case CLOSE_SUCCESS_POPUP: {
+      return {
+        ...state,
+        isSuccessPopupOpen: initialState.isSuccessPopupOpen,
+        successPopupContent: initialState.successPopupContent,
       };
     }
     default: {

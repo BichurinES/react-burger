@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
-import Main from '../components/main/main';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import CredentialsForm from '../components/credentials-form/credentials-form';
+import { signIn } from '../services/actions/login';
 
 function Login() {
+  const dispatch = useDispatch();
+  const { loginRequest } = useSelector((state) => state.login);
+  const history = useHistory();
+  const { state } = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function onSubmit() {
-    JSON.stringify({ email, password });
+  function onSubmit(evt) {
+    evt.preventDefault();
+    dispatch(signIn({ email, password }))
+      .then((res) => {
+        if (res) {
+          history.replace(state?.from || '/');
+        }
+      });
   }
 
   const formConfig = {
@@ -39,9 +51,7 @@ function Login() {
   };
 
   return (
-    <Main>
-      <CredentialsForm {...formConfig} />
-    </Main>
+    <CredentialsForm {...formConfig} isLoading={loginRequest} />
   );
 }
 

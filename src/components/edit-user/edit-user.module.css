@@ -1,0 +1,15 @@
+.form > div {
+  margin-bottom: 24px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+
+@media screen and (min-width: 1024px) {
+  .form > div > div {
+    width: 480px;
+  }
+}

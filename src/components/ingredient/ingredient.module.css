@@ -5,6 +5,8 @@
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
+  color: #F2F2F3;
+  text-decoration: none;
 }
 
 .image {
@@ -17,7 +19,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #F2F2F3;
 }
 
 .name {

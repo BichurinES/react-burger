@@ -23,7 +23,7 @@ export const getIngredients = () => (dispatch) => {
       dispatch({ type: GET_INGREDIENTS_FAILED });
       dispatch({
         type: OPEN_ERROR_POPUP,
-        payload: err.message,
+        payload: err,
       });
     });
 };

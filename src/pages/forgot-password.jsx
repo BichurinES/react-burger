@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
-import Main from '../components/main/main';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import CredentialsForm from '../components/credentials-form/credentials-form';
+import { sendResetEmail } from '../services/actions/forgot-password';
 
 function ForgotPassword() {
+  const dispatch = useDispatch();
+  const { forgotPasswordRequest } = useSelector((state) => state.forgotPassword);
+  const history = useHistory();
   const [email, setEmail] = useState('');
 
-  function onSubmit() {
-    JSON.stringify({ email });
+  function onSubmit(evt) {
+    evt.preventDefault();
+    dispatch(sendResetEmail({ email }))
+      .then((res) => {
+        if (res) {
+          history.push('/reset-password');
+        }
+      });
   }
 
   const formConfig = {
@@ -29,9 +40,7 @@ function ForgotPassword() {
   };
 
   return (
-    <Main>
-      <CredentialsForm {...formConfig} />
-    </Main>
+    <CredentialsForm {...formConfig} isLoading={forgotPasswordRequest} />
   );
 }
 

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -17,8 +18,11 @@ import {
   CONSTRUCTOR_LOADING_BUTTON_TEXT,
 } from '../../utils/constants';
 import ModalLoader from '../modal-loader/modal-loader';
+import useToken from '../../services/token';
 
 function BurgerConstructor() {
+  const { refreshToken } = useToken();
+  const history = useHistory();
   const {
     mainIngredients, draggingMainIngredients, bun, totalPrice,
   } = useSelector((state) => state.burgerConstructor);
@@ -59,7 +63,10 @@ function BurgerConstructor() {
   }, [orderDetailsContent]);
 
   const clickOrderBtn = () => {
-    dispatch(getOrderDetails([bun, ...mainIngredients].map((ingr) => ingr._id)));
+    if (refreshToken) {
+      return dispatch(getOrderDetails([bun, ...mainIngredients].map((ingr) => ingr._id)));
+    }
+    return history.push('/login');
   };
 
   const targetList = draggingMainIngredients.length ? draggingMainIngredients : mainIngredients;

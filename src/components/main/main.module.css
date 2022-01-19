@@ -2,7 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  max-width: 1280px;
+  box-sizing: border-box;
   gap: 40px;
+  margin: 0 auto;
 }
 
 .main_loader { 

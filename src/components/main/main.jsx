@@ -5,7 +5,7 @@ import Loader from '../loader/loader';
 
 function Main({ children, isLoading }) {
   return (
-    <main className={`${styles.main} ${isLoading && styles.main_loader}`}>
+    <main className={`${styles.main} ${isLoading && styles.main_loader} pl-5 pr-5`}>
       {isLoading ? <Loader /> : children}
     </main>
   );

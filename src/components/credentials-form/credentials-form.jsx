@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './credentials-form.module.css';
 import PasswordPlaceholderInput from '../password-placeholder-input/password-placeholder-input';
+import ModalLoader from '../modal-loader/modal-loader';
 
 function CredentialsForm({
-  title, inputs, buttonText, navs, onSubmit,
+  title, inputs, buttonText, navs, onSubmit, isLoading,
 }) {
   return (
     <section className={styles.container}>
@@ -48,6 +49,7 @@ function CredentialsForm({
           <Link className={`${styles.link} ml-2`} to={linkTo}>{linkText}</Link>
         </p>
       ))}
+      {isLoading && <ModalLoader />}
     </section>
   );
 }
@@ -75,6 +77,7 @@ CredentialsForm.propTypes = {
     linkText: PropTypes.string.isRequired,
   })),
   onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default CredentialsForm;
