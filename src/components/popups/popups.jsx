@@ -6,7 +6,7 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ErrorPopup from '../error-popup/error-popup';
-import { CLOSE_ORDER_DETAILS, CLOSE_ERROR_POPUP, CLOSE_SUCCESS_POPUP } from '../../services/actions/popups';
+import { closeOrderDetails, closeErrorPopup, closeSuccessPopup } from '../../services/actions/popups';
 import SuccessPopup from '../success-popup/success-popup';
 
 function Popups({ background }) {
@@ -25,9 +25,9 @@ function Popups({ background }) {
 
   const handleClosePopup = useCallback(
     () => {
-      dispatch({ type: CLOSE_ORDER_DETAILS });
-      dispatch({ type: CLOSE_ERROR_POPUP });
-      dispatch({ type: CLOSE_SUCCESS_POPUP });
+      dispatch(closeOrderDetails());
+      dispatch(closeErrorPopup());
+      dispatch(closeSuccessPopup());
     },
     [],
   );

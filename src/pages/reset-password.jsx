@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Cookies from 'js-cookie';
 import CredentialsForm from '../components/credentials-form/credentials-form';
 import { resetPassword } from '../services/actions/reset-password';
 
@@ -9,9 +8,11 @@ function ResetPassword() {
   const dispatch = useDispatch();
   const { resetPasswordRequest } = useSelector((state) => state.resetPassword);
   const history = useHistory();
+  const location = useLocation();
+  const passwordResetAccess = location.state?.from?.pathname === '/forgot-password';
+
   const [token, setToken] = useState('');
   const [password, setPassword] = useState('');
-  const passwordResetAccess = Cookies.get('passwordResetAccess');
 
   function onSubmit(evt) {
     evt.preventDefault();

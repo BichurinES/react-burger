@@ -2,7 +2,7 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
-} from '../actions/forgot-password';
+} from '../../utils/action-types';
 
 const initialState = {
   forgotPasswordRequest: false,
@@ -33,7 +33,7 @@ export default function forgotPasswordReducer(state = initialState, { type } = {
       };
     }
     default: {
-      return { ...state };
+      return state;
     }
   }
 }

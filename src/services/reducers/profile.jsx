@@ -10,7 +10,7 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
-} from '../actions/profile';
+} from '../../utils/action-types';
 
 const initialState = {
   user: {},
@@ -99,7 +99,7 @@ export default function profileReducer(state = initialState, { type, payload } =
       };
     }
     default: {
-      return { ...state };
+      return state;
     }
   }
 }

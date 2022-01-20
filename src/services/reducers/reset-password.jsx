@@ -2,7 +2,7 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
-} from '../actions/reset-password';
+} from '../../utils/action-types';
 
 const initialState = {
   resetPasswordRequest: false,
@@ -32,7 +32,7 @@ export default function resetPasswordReducer(state = initialState, { type } = {}
       };
     }
     default: {
-      return { ...state };
+      return state;
     }
   }
 }

@@ -2,7 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-} from '../actions/login';
+} from '../../utils/action-types';
 
 const initialState = {
   loginRequest: false,
@@ -32,7 +32,7 @@ export default function loginReducer(state = initialState, { type } = {}) {
       };
     }
     default: {
-      return { ...state };
+      return state;
     }
   }
 }

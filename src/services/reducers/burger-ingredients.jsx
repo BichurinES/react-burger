@@ -4,8 +4,8 @@ import {
   GET_INGREDIENTS_FAILED,
   INCREASE_INGREDIENT,
   DECREASE_INGREDIENT,
-  RESET_INGREDIENT_COUNT,
-} from '../actions/burger-ingredients';
+  RESET_INGREDIENTS_COUNT,
+} from '../../utils/action-types';
 
 const initialState = {
   ingredients: [],
@@ -15,27 +15,6 @@ const initialState = {
 
 export default function burgerIngredientsReducer(state = initialState, { type, payload } = {}) {
   switch (type) {
-    case GET_INGREDIENTS_REQUEST: {
-      return {
-        ...state,
-        ingredientsRequest: true,
-        ingredientsFailed: false,
-      };
-    }
-    case GET_INGREDIENTS_SUCCESS: {
-      return {
-        ...state,
-        ingredientsRequest: false,
-        ingredients: payload,
-      };
-    }
-    case GET_INGREDIENTS_FAILED: {
-      return {
-        ...state,
-        ingredientsRequest: false,
-        ingredientsFailed: true,
-      };
-    }
     case INCREASE_INGREDIENT: {
       return {
         ...state,
@@ -58,13 +37,34 @@ export default function burgerIngredientsReducer(state = initialState, { type, p
         }),
       };
     }
-    case RESET_INGREDIENT_COUNT: {
+    case RESET_INGREDIENTS_COUNT: {
       return {
         ...state,
         ingredients: state.ingredients.map((ingredient) => {
           if (ingredient.qty > 0) ingredient.qty = 0;
           return ingredient;
         }),
+      };
+    }
+    case GET_INGREDIENTS_REQUEST: {
+      return {
+        ...state,
+        ingredientsRequest: true,
+        ingredientsFailed: false,
+      };
+    }
+    case GET_INGREDIENTS_SUCCESS: {
+      return {
+        ...state,
+        ingredientsRequest: false,
+        ingredients: payload,
+      };
+    }
+    case GET_INGREDIENTS_FAILED: {
+      return {
+        ...state,
+        ingredientsRequest: false,
+        ingredientsFailed: true,
       };
     }
     default: {

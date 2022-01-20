@@ -1,11 +1,12 @@
 import { loginRequest } from '../norma-api';
-import { OPEN_ERROR_POPUP } from './popups';
-import { SET_USER } from './profile';
+import { openErrorPopup } from './popups';
+import { setUser } from './profile';
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+} from '../../utils/action-types';
 import useToken from '../token';
-
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILED = 'LOGIN_FAILED';
 
 export const signIn = (form) => (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
@@ -14,15 +15,12 @@ export const signIn = (form) => (dispatch) => {
     .then((data) => {
       const { user, accessToken, refreshToken } = data;
       addTokens({ accessToken, refreshToken });
-      dispatch({ type: SET_USER, payload: user });
+      dispatch(setUser(user));
       dispatch({ type: LOGIN_SUCCESS });
       return data;
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAILED });
-      dispatch({
-        type: OPEN_ERROR_POPUP,
-        payload: err,
-      });
+      dispatch(openErrorPopup(err));
     });
 };

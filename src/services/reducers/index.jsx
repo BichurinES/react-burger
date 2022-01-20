@@ -8,7 +8,6 @@ import loginReducer from './login';
 import forgotPasswordReducer from './forgot-password';
 import resetPasswordReducer from './reset-password';
 
-// eslint-disable-next-line import/prefer-default-export
 export const rootReducer = combineReducers({
   ingredients: burgerIngredientsReducer,
   burgerConstructor: burgerConstructorReducer,

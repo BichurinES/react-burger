@@ -2,7 +2,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
-} from '../actions/register';
+} from '../../utils/action-types';
 
 const initialState = {
   registerRequest: false,
@@ -32,7 +32,7 @@ export default function registerReducer(state = initialState, { type } = {}) {
       };
     }
     default: {
-      return { ...state };
+      return state;
     }
   }
 }

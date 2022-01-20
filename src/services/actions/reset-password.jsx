@@ -1,29 +1,22 @@
-import Cookies from 'js-cookie';
 import { resetPasswordRequest } from '../norma-api';
-import { OPEN_ERROR_POPUP, OPEN_SUCCESS_POPUP } from './popups';
-
-export const RESET_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST';
-export const RESET_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
-export const RESET_PASSWORD_FAILED = 'FORGOT_PASSWORD_FAILED';
+import { openErrorPopup, openSuccessPopup } from './popups';
+import {
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILED,
+} from '../../utils/action-types';
 
 export const resetPassword = (form) => (dispatch) => {
   dispatch({ type: RESET_PASSWORD_REQUEST });
   return resetPasswordRequest(form)
     .then((data) => {
       dispatch({ type: RESET_PASSWORD_SUCCESS });
-      dispatch({
-        type: OPEN_SUCCESS_POPUP,
-        payload: data,
-      });
-      Cookies.remove('passwordResetAccess');
+      dispatch(openSuccessPopup(data));
       return data;
     })
     .catch((err) => {
       dispatch({ type: RESET_PASSWORD_FAILED });
-      dispatch({
-        type: OPEN_ERROR_POPUP,
-        payload: err,
-      });
+      dispatch(openErrorPopup(err));
       return err;
     });
 };

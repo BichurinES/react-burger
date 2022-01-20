@@ -54,9 +54,9 @@ function App() {
             <ProtectedRoute path="/profile">
               <Profile />
             </ProtectedRoute>
-            <ProtectedRoute path="/ingredients/:id">
+            <Route path="/ingredients/:id">
               <Ingredients />
-            </ProtectedRoute>
+            </Route>
             <Route>
               <NotFound />
             </Route>

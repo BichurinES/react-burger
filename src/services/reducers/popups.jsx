@@ -7,7 +7,7 @@ import {
   CLOSE_ERROR_POPUP,
   OPEN_SUCCESS_POPUP,
   CLOSE_SUCCESS_POPUP,
-} from '../actions/popups';
+} from '../../utils/action-types';
 
 const initialState = {
   orderRequest: false,
