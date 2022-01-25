@@ -8,7 +8,7 @@ import {
   REPLACE_ITEMS_IN_DRAGGING_CONTAINER,
   RESET_DRAGGING_CONTAINER,
   RESET_CONSTRUCTOR,
-} from '../../utils/action-types';
+} from './action-types';
 
 export const addIngredientToConstructor = (ingredient) => ({
   type: ADD_INGREDIENT_TO_CONSTRUCTOR,

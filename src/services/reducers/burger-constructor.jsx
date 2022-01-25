@@ -7,7 +7,7 @@ import {
   REPLACE_ITEMS_IN_DRAGGING_CONTAINER,
   RESET_DRAGGING_CONTAINER,
   RESET_CONSTRUCTOR,
-} from '../../utils/action-types';
+} from '../actions/action-types';
 
 const initialState = {
   mainIngredients: [],

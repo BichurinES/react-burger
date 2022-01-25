@@ -5,7 +5,7 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
-} from '../../utils/action-types';
+} from './action-types';
 import useToken from '../token';
 
 export const sendResetEmail = () => (dispatch) => {

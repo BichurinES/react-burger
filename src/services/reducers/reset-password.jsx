@@ -2,7 +2,7 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
-} from '../../utils/action-types';
+} from '../actions/action-types';
 
 const initialState = {
   resetPasswordRequest: false,

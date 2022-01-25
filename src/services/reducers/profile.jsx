@@ -10,7 +10,7 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
-} from '../../utils/action-types';
+} from '../actions/action-types';
 
 const initialState = {
   user: {},

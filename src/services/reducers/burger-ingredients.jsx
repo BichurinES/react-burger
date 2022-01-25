@@ -5,7 +5,7 @@ import {
   INCREASE_INGREDIENT,
   DECREASE_INGREDIENT,
   RESET_INGREDIENTS_COUNT,
-} from '../../utils/action-types';
+} from '../actions/action-types';
 
 const initialState = {
   ingredients: [],

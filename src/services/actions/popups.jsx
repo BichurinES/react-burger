@@ -8,7 +8,7 @@ import {
   CLOSE_ERROR_POPUP,
   OPEN_SUCCESS_POPUP,
   CLOSE_SUCCESS_POPUP,
-} from '../../utils/action-types';
+} from './action-types';
 
 export const closeOrderDetails = () => ({
   type: CLOSE_ORDER_DETAILS,

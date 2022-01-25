@@ -5,7 +5,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-} from '../../utils/action-types';
+} from './action-types';
 import useToken from '../token';
 
 export const signIn = (form) => (dispatch) => {

@@ -2,7 +2,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
-} from '../../utils/action-types';
+} from '../actions/action-types';
 
 const initialState = {
   registerRequest: false,

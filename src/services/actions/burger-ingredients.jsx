@@ -7,7 +7,7 @@ import {
   INCREASE_INGREDIENT,
   DECREASE_INGREDIENT,
   RESET_INGREDIENTS_COUNT,
-} from '../../utils/action-types';
+} from './action-types';
 
 export const increaseIngredient = (ingredient) => ({
   type: INCREASE_INGREDIENT,

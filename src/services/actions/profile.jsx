@@ -12,7 +12,7 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
-} from '../../utils/action-types';
+} from './action-types';
 import useToken from '../token';
 
 export const setUser = (user) => ({

@@ -5,7 +5,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
-} from '../../utils/action-types';
+} from './action-types';
 import useToken from '../token';
 
 export const signUp = (form) => (dispatch) => {

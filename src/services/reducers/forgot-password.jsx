@@ -2,7 +2,7 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
-} from '../../utils/action-types';
+} from '../actions/action-types';
 
 const initialState = {
   forgotPasswordRequest: false,
