@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './main-constructor-element.module.css';
 import {
-  UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER,
-  REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-  COPY_CONSTRUCTOR_TO_DRAGGING_CONTAINER,
-  REPLACE_ITEMS_IN_DRAGGING_CONTAINER,
-  RESET_DRAGGING_CONTAINER,
+  updateConstructorFromDraggingContainer,
+  removeIngredientFromConstructor,
+  copyConstructorToDraggingContainer,
+  replaceItemsInDraggingContainer,
+  resetDraggingContainer,
 } from '../../services/actions/burger-constructor';
-import { DECREASE_INGREDIENT } from '../../services/actions/burger-ingredients';
+import { decreaseIngredient } from '../../services/actions/burger-ingredients';
 
 function MainConstructorElement({
   name, price, image, _cartId, _id,
@@ -24,16 +24,16 @@ function MainConstructorElement({
   const [{ isDragging }, drag] = useDrag({
     type: 'constructor',
     item: () => {
-      dispatch({ type: COPY_CONSTRUCTOR_TO_DRAGGING_CONTAINER });
+      dispatch(copyConstructorToDraggingContainer());
       return { _cartId };
     },
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
     end(item, monitor) {
       const didDrop = monitor.didDrop();
       if (didDrop) {
-        dispatch({ type: UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER });
+        dispatch(updateConstructorFromDraggingContainer());
       }
-      dispatch({ type: RESET_DRAGGING_CONTAINER });
+      dispatch(resetDraggingContainer());
     },
   });
 
@@ -61,26 +61,17 @@ function MainConstructorElement({
         (index < hoverIndex && hoverClientY >= hoverBottomBound)
         || (index > hoverIndex && hoverClientY <= hoverTopBound)
       ) {
-        dispatch({
-          type: REPLACE_ITEMS_IN_DRAGGING_CONTAINER,
-          payload: {
-            initialIndex: index,
-            targetIndex: hoverIndex,
-          },
-        });
+        dispatch(replaceItemsInDraggingContainer({
+          initialIndex: index,
+          targetIndex: hoverIndex,
+        }));
       }
     },
   });
 
   const handleDeleteElement = () => {
-    dispatch({
-      type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
-      payload: { _cartId, price },
-    });
-    dispatch({
-      type: DECREASE_INGREDIENT,
-      payload: { _id },
-    });
+    dispatch(removeIngredientFromConstructor({ _cartId, price }));
+    dispatch(decreaseIngredient({ _id }));
   };
   drag(drop(ref));
 

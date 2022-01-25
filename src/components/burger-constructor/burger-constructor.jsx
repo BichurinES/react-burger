@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,10 +7,10 @@ import BunConstructorElement from '../bun-constructor-element/bun-constructor-el
 import MainConstructorElement from '../main-constructor-element/main-constructor-element';
 import styles from './burger-constructor.module.css';
 import {
-  addIngredient, REPLACE_BUN_IN_CONSTRUCTOR, RESET_CONSTRUCTOR,
+  addIngredientToConstructor, replaceBunInConstructor, resetConstructor,
 } from '../../services/actions/burger-constructor';
-import { INCREASE_INGREDIENT, DECREASE_INGREDIENT, RESET_INGREDIENT_COUNT } from '../../services/actions/burger-ingredients';
-import { getOrderDetails, OPEN_ERROR_POPUP } from '../../services/actions/popups';
+import { increaseIngredient, decreaseIngredient, resetIngredientsCount } from '../../services/actions/burger-ingredients';
+import { getOrderDetails, openErrorPopup } from '../../services/actions/popups';
 import {
   BUN_REQUIRED_ERR_MSG,
   CONSTRUCTOR_DEFAULT_TEXT,
@@ -17,8 +18,11 @@ import {
   CONSTRUCTOR_LOADING_BUTTON_TEXT,
 } from '../../utils/constants';
 import ModalLoader from '../modal-loader/modal-loader';
+import useToken from '../../services/token';
 
 function BurgerConstructor() {
+  const { refreshToken } = useToken();
+  const history = useHistory();
   const {
     mainIngredients, draggingMainIngredients, bun, totalPrice,
   } = useSelector((state) => state.burgerConstructor);
@@ -36,30 +40,36 @@ function BurgerConstructor() {
 
   const onDropHandler = (item) => {
     if (item._id === bun._id) {
-      return item;
+      return null;
     }
     if (item.type === 'bun') {
-      dispatch({ type: DECREASE_INGREDIENT, payload: bun });
-      dispatch({ type: INCREASE_INGREDIENT, payload: item });
-      return dispatch({ type: REPLACE_BUN_IN_CONSTRUCTOR, payload: item });
+      dispatch(decreaseIngredient(bun));
+      dispatch(increaseIngredient(item));
+      dispatch(replaceBunInConstructor(item));
+      return item;
     }
     if (!bun._id) {
-      return dispatch({ type: OPEN_ERROR_POPUP, payload: { message: BUN_REQUIRED_ERR_MSG } });
+      dispatch(openErrorPopup({ message: BUN_REQUIRED_ERR_MSG }));
+      return null;
     }
-    dispatch({ type: INCREASE_INGREDIENT, payload: item });
-    return dispatch(addIngredient(item));
+    dispatch(increaseIngredient(item));
+    dispatch(addIngredientToConstructor(item));
+    return item;
   };
 
   useEffect(() => {
     if (!Object.keys(orderDetailsContent).length) {
       return;
     }
-    dispatch({ type: RESET_CONSTRUCTOR });
-    dispatch({ type: RESET_INGREDIENT_COUNT });
+    dispatch(resetConstructor());
+    dispatch(resetIngredientsCount());
   }, [orderDetailsContent]);
 
   const clickOrderBtn = () => {
-    dispatch(getOrderDetails([bun, ...mainIngredients].map((ingr) => ingr._id)));
+    if (refreshToken) {
+      return dispatch(getOrderDetails([bun, ...mainIngredients].map((ingr) => ingr._id)));
+    }
+    return history.push('/login');
   };
 
   const targetList = draggingMainIngredients.length ? draggingMainIngredients : mainIngredients;

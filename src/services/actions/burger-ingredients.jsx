@@ -1,12 +1,27 @@
 import { getIngredientsRequest } from '../norma-api';
-import { OPEN_ERROR_POPUP } from './popups';
+import { openErrorPopup } from './popups';
+import {
+  GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_FAILED,
+  INCREASE_INGREDIENT,
+  DECREASE_INGREDIENT,
+  RESET_INGREDIENTS_COUNT,
+} from './action-types';
 
-export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
-export const INCREASE_INGREDIENT = 'INCREASE_INGREDIENT';
-export const DECREASE_INGREDIENT = 'DECREASE_INGREDIENT';
-export const RESET_INGREDIENT_COUNT = 'RESET_INGREDIENT_COUNT';
+export const increaseIngredient = (ingredient) => ({
+  type: INCREASE_INGREDIENT,
+  payload: ingredient,
+});
+
+export const decreaseIngredient = (ingredient) => ({
+  type: DECREASE_INGREDIENT,
+  payload: ingredient,
+});
+
+export const resetIngredientsCount = () => ({
+  type: RESET_INGREDIENTS_COUNT,
+});
 
 export const getIngredients = () => (dispatch) => {
   dispatch({
@@ -21,9 +36,6 @@ export const getIngredients = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: GET_INGREDIENTS_FAILED });
-      dispatch({
-        type: OPEN_ERROR_POPUP,
-        payload: err.message,
-      });
+      dispatch(openErrorPopup(err));
     });
 };

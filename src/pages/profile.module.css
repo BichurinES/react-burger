@@ -1,0 +1,36 @@
+.section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 120px;
+}
+
+.nav {
+  flex-basis: 320px;
+}
+
+.list {
+  padding: 0;
+  margin-top: 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  padding: 17px 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link_active {
+  color: #f2f2f3;
+}
+
+.caption {
+  margin: 0;
+}
+
+.centering-block {
+  flex-basis: 320px;
+}

@@ -7,7 +7,7 @@ import {
   REPLACE_ITEMS_IN_DRAGGING_CONTAINER,
   RESET_DRAGGING_CONTAINER,
   RESET_CONSTRUCTOR,
-} from '../actions/burger-constructor';
+} from '../actions/action-types';
 
 const initialState = {
   mainIngredients: [],
@@ -18,12 +18,6 @@ const initialState = {
 
 export default function burgerConstructorReducer(state = initialState, { type, payload } = {}) {
   switch (type) {
-    case UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER: {
-      return {
-        ...state,
-        mainIngredients: [...state.draggingMainIngredients],
-      };
-    }
     case ADD_INGREDIENT_TO_CONSTRUCTOR: {
       return {
         ...state,
@@ -47,6 +41,12 @@ export default function burgerConstructorReducer(state = initialState, { type, p
         totalPrice: state.totalPrice
           - (!state.bun.price ? 0 : 2 * state.bun.price)
           + 2 * payload.price,
+      };
+    }
+    case UPDATE_CONSTRUCTOR_FROM_DRAGGING_CONTAINER: {
+      return {
+        ...state,
+        mainIngredients: [...state.draggingMainIngredients],
       };
     }
     case COPY_CONSTRUCTOR_TO_DRAGGING_CONTAINER: {

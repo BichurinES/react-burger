@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+# Проект - Stellar Burgers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Описание проекта
+Сайт бургерной из одной далекой-далекой галактики &#128521;
 
-## Available Scripts
+Ссылка на проект: **https://bichurines.github.io/react-burger/**
 
-In the project directory, you can run:
+## Используемые технологии:
+![](https://img.shields.io/badge/Markdown-HTML5-informational?style=flat&logo=html5&logoColor=white&color=2bbc8a)
+![](https://img.shields.io/badge/Markdown-CSS3-informational?style=flat&logo=css3&logoColor=white&color=2bbc8a)
+![](https://img.shields.io/badge/Framework-React-informational?style=flat&logo=react&logoColor=white&color=2bbc8a)
+![](https://img.shields.io/badge/State%20Management-Redux-informational?style=flat&logo=redux&logoColor=white&color=2bbc8a)
+![](https://img.shields.io/badge/Drag’n’Drop-react%E2%80%90dnd-informational?style=flat&logo=react&logoColor=white&color=2bbc8a)
+
+__FRONTEND__
+* __React__
+  * В проекте используются функциональные компоненты
+  * Управление глобальный состоянием приложения через Redux
+  * Функционал регистрация и входа по логину и паролю, восстановление пароля
+  * Реализован функционал live-валидации форм со стороны клиента
+  * Защищенные роуты для доступа к контенту только зарегистрированных пользователей
+  * Добавление ингредиентов в конструктор бургера через Drag'n'drop (react-dnd)
+  * Отправка заказа и получение его номера от api
+  * Редактирование данных профиля в личном кабинете
+* __HTML5__
+  * Семантические тэги
+  * Валидная разметка
+
+## Команды
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Запуск приложения в режиме разработки.<br/>
+Откройте [http://localhost:3000](http://localhost:3000) для просмотра проекта в браузере.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Сборка проекта.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm run lint`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Проверка проекта линтером.
