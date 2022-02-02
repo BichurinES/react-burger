@@ -8,6 +8,7 @@
 ## Используемые технологии:
 ![](https://img.shields.io/badge/Markdown-HTML5-informational?style=flat&logo=html5&logoColor=white&color=2bbc8a)
 ![](https://img.shields.io/badge/Markdown-CSS3-informational?style=flat&logo=css3&logoColor=white&color=2bbc8a)
+![](https://img.shields.io/badge/APL-TS-informational?style=flat&logo=typescript&logoColor=white&color=2bbc8a)
 ![](https://img.shields.io/badge/Framework-React-informational?style=flat&logo=react&logoColor=white&color=2bbc8a)
 ![](https://img.shields.io/badge/State%20Management-Redux-informational?style=flat&logo=redux&logoColor=white&color=2bbc8a)
 ![](https://img.shields.io/badge/Drag’n’Drop-react%E2%80%90dnd-informational?style=flat&logo=react&logoColor=white&color=2bbc8a)
