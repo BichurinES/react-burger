@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    'airbnb-typescript',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -14,6 +15,7 @@ module.exports = {
     },
     ecmaVersion: 12,
     sourceType: 'module',
+    project: ['./tsconfig.eslint.json'],
   },
   plugins: [
     'react',
@@ -24,7 +26,7 @@ module.exports = {
     'no-use-before-define': 'off',
     'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/no-use-before-define': ['error', { variables: false }],
-    'react/function-component-definition': [2, { namedComponents: 'function-declaration' }],
+    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'no-underscore-dangle': 'off',
     'no-nested-ternary': 'off',
     'no-param-reassign': [2, { props: false }],
