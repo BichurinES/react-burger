@@ -34,7 +34,6 @@ function createRequest(url: string, { method, body, token }: TRequestSettings): 
     Authorization: 'Bearer ',
   };
   let isRequestFailed = false;
-
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }

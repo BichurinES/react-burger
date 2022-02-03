@@ -34,8 +34,7 @@ function useToken() {
 
     const data = await refreshTokenRequest({ token: refreshToken });
     if (data.accessToken) {
-      addTokens({ accessToken: data.accessToken, refreshToken: data.refreshToken });
-      return data;
+      return addTokens({ accessToken: data.accessToken, refreshToken: data.refreshToken });
     }
 
     return null;

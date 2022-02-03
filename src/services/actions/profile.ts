@@ -52,7 +52,12 @@ export const editUser = (form: TProfileForm) => (dispatch: AppDispatch) => {
   dispatch({ type: EDIT_USER_REQUEST });
   const { getToken } = useToken();
   getToken()
-    .then((token) => editUserRequest(form, token))
+    .then((token) => {
+      if (token) {
+        return editUserRequest(form, token);
+      }
+      throw new Error(TOKEN_ERR_MSG);
+    })
     .then(({ user }) => {
       dispatch({ type: EDIT_USER_SUCCESS, payload: user });
     })
