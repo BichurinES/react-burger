@@ -6,7 +6,7 @@ export type TUser = {
 export type TIngredient = {
   _id: string;
   name: string;
-  type: string;
+  type: 'bun' | 'main' | 'sauce';
   proteins: number;
   fat: number;
   carbohydrates: number;
@@ -19,24 +19,12 @@ export type TIngredient = {
   qty?: number;
 };
 
-export type TMainIngredient = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  _cartId: string;
-  qty?: number;
-};
-
+export type TIngredientId = Pick<TIngredient, '_id'>;
+export type TMainIngredient = TIngredient & { _cartId: string };
 export type TBun = (Omit<TIngredient, 'type'> & { type: 'bun' });
+
+export type TRemovedIngredient = Pick<TMainIngredient, '_cartId' | 'price'>;
+export type TReplacingItems = { initialIndex: number, targetIndex: number };
 
 export type TOrderDetails = {
   name: string;

@@ -3,18 +3,19 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
 } from '../actions/action-types';
+import type { TLoginActions } from '../actions/login';
 
 export type TLoginState = {
   loginRequest: boolean,
   loginFailed: boolean,
 };
 
-const initialState: TLoginState = {
+const initState: TLoginState = {
   loginRequest: false,
   loginFailed: false,
 };
 
-export default function loginReducer(state = initialState, action: any = {}) {
+export default function loginReducer(state = initState, action: TLoginActions) {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return {

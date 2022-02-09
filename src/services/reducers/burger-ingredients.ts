@@ -6,6 +6,7 @@ import {
   DECREASE_INGREDIENT,
   RESET_INGREDIENTS_COUNT,
 } from '../actions/action-types';
+import type { TIngredientsActions } from '../actions/burger-ingredients';
 import { TIngredient } from '../types/data';
 
 export type TBurgerIngredientsState = {
@@ -14,13 +15,13 @@ export type TBurgerIngredientsState = {
   ingredientsFailed: boolean,
 };
 
-const initialState: TBurgerIngredientsState = {
+const initState: TBurgerIngredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
 
-export default function burgerIngredientsReducer(state = initialState, action: any = {}) {
+export default function burgerIngredientsReducer(state = initState, action: TIngredientsActions) {
   switch (action.type) {
     case INCREASE_INGREDIENT: {
       return {

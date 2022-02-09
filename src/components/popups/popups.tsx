@@ -4,7 +4,9 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ErrorPopup from '../error-popup/error-popup';
-import { closeOrderDetails, closeErrorPopup, closeSuccessPopup } from '../../services/actions/popups';
+import {
+  closeOrderDetailsAction, closeErrorPopupAction, closeSuccessPopupAction,
+} from '../../services/actions/popups';
 import SuccessPopup from '../success-popup/success-popup';
 import { useDispatch, useSelector, useLocation } from '../../services/hooks';
 
@@ -26,9 +28,9 @@ const Popups = () => {
 
   const handleClosePopup = useCallback(
     () => {
-      dispatch(closeOrderDetails());
-      dispatch(closeErrorPopup());
-      dispatch(closeSuccessPopup());
+      dispatch(closeOrderDetailsAction());
+      dispatch(closeErrorPopupAction());
+      dispatch(closeSuccessPopupAction());
     },
     [],
   );

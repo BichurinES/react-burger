@@ -11,7 +11,7 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
 } from '../actions/action-types';
-
+import type { TProfileActions } from '../actions/profile';
 import { TUser } from '../types/data';
 
 export type TProfilesState = {
@@ -24,7 +24,7 @@ export type TProfilesState = {
   logoutFailed: boolean,
 };
 
-const initialState: TProfilesState = {
+const initState: TProfilesState = {
   user: null,
   getUserRequest: false,
   getUserFailed: false,
@@ -34,7 +34,7 @@ const initialState: TProfilesState = {
   logoutFailed: false,
 };
 
-export default function profileReducer(state = initialState, action: any = {}) {
+export default function profileReducer(state = initState, action: TProfileActions) {
   switch (action.type) {
     case SET_USER: {
       return {
@@ -45,7 +45,7 @@ export default function profileReducer(state = initialState, action: any = {}) {
     case CLEAR_USER: {
       return {
         ...state,
-        user: initialState.user,
+        user: initState.user,
       };
     }
     case GET_USER_REQUEST: {

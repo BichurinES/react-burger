@@ -1,5 +1,5 @@
 import { getIngredientsRequest } from '../norma-api';
-import { openErrorPopup } from './popups';
+import { openErrorPopupAction } from './popups';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -8,36 +8,81 @@ import {
   DECREASE_INGREDIENT,
   RESET_INGREDIENTS_COUNT,
 } from './action-types';
-import { TIngredient } from '../types/data';
-import { AppDispatch } from '../store';
+import { TIngredient, TIngredientId } from '../types/data';
+import { AppDispatch, AppThunk } from '../store';
 
-export const increaseIngredient = (ingredient: Pick<TIngredient, '_id'>) => ({
+export interface IGetIngredientsAction {
+  readonly type: typeof GET_INGREDIENTS_REQUEST;
+}
+
+export interface IGetIngredientsSuccessAction {
+  readonly type: typeof GET_INGREDIENTS_SUCCESS;
+  readonly payload: ReadonlyArray<TIngredient>;
+}
+
+export interface IGetIngredientsFailedAction {
+  readonly type: typeof GET_INGREDIENTS_FAILED;
+}
+
+export interface IIncreaseIngredientAction {
+  readonly type: typeof INCREASE_INGREDIENT;
+  readonly payload: TIngredientId;
+}
+
+export interface IDecreaseIngredientAction {
+  readonly type: typeof DECREASE_INGREDIENT;
+  readonly payload: TIngredientId;
+}
+
+export interface IResetIngredientCountAction {
+  readonly type: typeof RESET_INGREDIENTS_COUNT;
+}
+
+export type TIngredientsActions =
+  | IGetIngredientsAction
+  | IGetIngredientsSuccessAction
+  | IGetIngredientsFailedAction
+  | IIncreaseIngredientAction
+  | IDecreaseIngredientAction
+  | IResetIngredientCountAction;
+
+export const getIngredientsAction = (): IGetIngredientsAction => ({
+  type: GET_INGREDIENTS_REQUEST,
+});
+
+export const getIngredientsSuccessAction = (
+  ingredients: ReadonlyArray<TIngredient>,
+): IGetIngredientsSuccessAction => ({
+  type: GET_INGREDIENTS_SUCCESS,
+  payload: ingredients,
+});
+
+export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
+  type: GET_INGREDIENTS_FAILED,
+});
+
+export const increaseIngredientAction = (ingredient: TIngredientId): IIncreaseIngredientAction => ({
   type: INCREASE_INGREDIENT,
   payload: ingredient,
 });
 
-export const decreaseIngredient = (ingredient: Pick<TIngredient, '_id'>) => ({
+export const decreaseIngredientAction = (ingredient: TIngredientId): IDecreaseIngredientAction => ({
   type: DECREASE_INGREDIENT,
   payload: ingredient,
 });
 
-export const resetIngredientsCount = () => ({
+export const resetIngredientCountAction = (): IResetIngredientCountAction => ({
   type: RESET_INGREDIENTS_COUNT,
 });
 
-export const getIngredients = () => (dispatch: AppDispatch) => {
-  dispatch({
-    type: GET_INGREDIENTS_REQUEST,
-  });
+export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch(getIngredientsAction());
   getIngredientsRequest()
     .then((res) => {
-      dispatch({
-        type: GET_INGREDIENTS_SUCCESS,
-        payload: res.data,
-      });
+      dispatch(getIngredientsSuccessAction(res.data));
     })
     .catch((err) => {
-      dispatch({ type: GET_INGREDIENTS_FAILED });
-      dispatch(openErrorPopup(err));
+      dispatch(getIngredientsFailedAction());
+      dispatch(openErrorPopupAction(err));
     });
 };

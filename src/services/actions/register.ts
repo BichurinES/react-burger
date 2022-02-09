@@ -1,6 +1,6 @@
 import { registerRequest } from '../norma-api';
-import { openErrorPopup } from './popups';
-import { setUser } from './profile';
+import { openErrorPopupAction } from './popups';
+import { setUserAction } from './profile';
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -10,19 +10,48 @@ import useToken from '../token';
 import { AppDispatch } from '../store';
 import { TRegisterForm, TCallback } from '../types';
 
+export interface IRegisterAction {
+  readonly type: typeof REGISTER_REQUEST;
+}
+
+export interface IRegisterSuccessAction {
+  readonly type: typeof REGISTER_SUCCESS;
+}
+
+export interface IRegisterFailedAction {
+  readonly type: typeof REGISTER_FAILED;
+}
+
+export type TRegisterActions =
+  | IRegisterAction
+  | IRegisterSuccessAction
+  | IRegisterFailedAction;
+
+export const registerAction = (): IRegisterAction => ({
+  type: REGISTER_REQUEST,
+});
+
+export const registerSuccessAction = (): IRegisterSuccessAction => ({
+  type: REGISTER_SUCCESS,
+});
+
+export const registerFailedAction = (): IRegisterFailedAction => ({
+  type: REGISTER_FAILED,
+});
+
 export const signUp = (form: TRegisterForm, cb: TCallback) => (dispatch: AppDispatch) => {
-  dispatch({ type: REGISTER_REQUEST });
+  dispatch(registerAction());
   const { addTokens } = useToken();
   registerRequest(form)
     .then((data) => {
       const { user, accessToken, refreshToken } = data;
       addTokens({ accessToken, refreshToken });
-      dispatch(setUser(user));
-      dispatch({ type: REGISTER_SUCCESS });
+      dispatch(setUserAction(user));
+      dispatch(registerSuccessAction());
       cb();
     })
     .catch((err) => {
-      dispatch({ type: REGISTER_FAILED });
-      dispatch(openErrorPopup(err));
+      dispatch(registerFailedAction());
+      dispatch(openErrorPopupAction(err));
     });
 };

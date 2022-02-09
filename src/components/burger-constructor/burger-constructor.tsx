@@ -6,10 +6,10 @@ import BunConstructorElement from '../bun-constructor-element/bun-constructor-el
 import MainConstructorElement from '../main-constructor-element/main-constructor-element';
 import styles from './burger-constructor.module.css';
 import {
-  addIngredientToConstructor, replaceBunInConstructor, resetConstructor,
+  addIngredientAction, replaceBunAction, resetConstructorAction,
 } from '../../services/actions/burger-constructor';
-import { increaseIngredient, decreaseIngredient, resetIngredientsCount } from '../../services/actions/burger-ingredients';
-import { getOrderDetails, openErrorPopup } from '../../services/actions/popups';
+import { increaseIngredientAction, decreaseIngredientAction, resetIngredientCountAction } from '../../services/actions/burger-ingredients';
+import { getOrderDetails, openErrorPopupAction } from '../../services/actions/popups';
 import {
   BUN_REQUIRED_ERR_MSG,
   CONSTRUCTOR_DEFAULT_TEXT,
@@ -19,7 +19,7 @@ import {
 import ModalLoader from '../modal-loader/modal-loader';
 import useToken from '../../services/token';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { TIngredient } from '../../services/types/data';
+import { TMainIngredient, TBun } from '../../services/types/data';
 
 const BurgerConstructor = () => {
   const { refreshToken } = useToken();
@@ -34,29 +34,34 @@ const BurgerConstructor = () => {
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
-    drop(card: TIngredient) {
-      onDropHandler(card);
+    drop(card: any) {
+      if (card.type === 'bun') {
+        onDropBunHandler(card);
+      } else {
+        onDropMainHandler(card);
+      }
     },
   });
 
-  const onDropHandler = (item: TIngredient) => {
+  const onDropBunHandler = (item: TBun) => {
     if (bun && item._id === bun._id) {
       return null;
     }
-    if (item.type === 'bun') {
-      if (bun) {
-        dispatch(decreaseIngredient(bun));
-      }
-      dispatch(replaceBunInConstructor(item));
-      dispatch(increaseIngredient({ _id: item._id }));
-      return item;
+    if (bun) {
+      dispatch(decreaseIngredientAction(bun));
     }
+    dispatch(replaceBunAction(item));
+    dispatch(increaseIngredientAction({ _id: item._id }));
+    return item;
+  };
+
+  const onDropMainHandler = (item: TMainIngredient) => {
     if (!bun) {
-      dispatch(openErrorPopup({ message: BUN_REQUIRED_ERR_MSG }));
+      dispatch(openErrorPopupAction(new Error(BUN_REQUIRED_ERR_MSG)));
       return null;
     }
-    dispatch(increaseIngredient({ _id: item._id }));
-    dispatch(addIngredientToConstructor(item));
+    dispatch(increaseIngredientAction({ _id: item._id }));
+    dispatch(addIngredientAction(item));
     return item;
   };
 
@@ -64,8 +69,8 @@ const BurgerConstructor = () => {
     if (!orderDetailsContent) {
       return;
     }
-    dispatch(resetConstructor());
-    dispatch(resetIngredientsCount());
+    dispatch(resetConstructorAction());
+    dispatch(resetIngredientCountAction());
   }, [orderDetailsContent]);
 
   const clickOrderBtn = () => {
