@@ -22,6 +22,7 @@ export type TIngredient = {
 export type TIngredientId = Pick<TIngredient, '_id'>;
 export type TMainIngredient = TIngredient & { _cartId: string };
 export type TBun = (Omit<TIngredient, 'type'> & { type: 'bun' });
+export type TFeedIngredient = Pick<TIngredient, '_id' | 'name' | 'price' | 'image_mobile'>;
 
 export type TRemovedIngredient = Pick<TMainIngredient, '_cartId' | 'price'>;
 export type TReplacingItems = { initialIndex: number, targetIndex: number };
@@ -41,4 +42,27 @@ export type TInfoTooltip = {
 export type TSuccessResetPassword = {
   success: boolean;
   message: string;
+};
+
+export type TOrderCard = {
+  _id: string;
+  ingredients: ReadonlyArray<string>;
+  status: 'created' | 'pending' | 'done';
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+};
+
+export type TOrderUpdatedCard = Omit<TOrderCard, 'ingredients'>
+& {
+  ingredients: Array<TFeedIngredient>,
+  totalPrice: number,
+};
+
+export type TFeed = {
+  success: boolean;
+  orders: ReadonlyArray<TOrderCard>;
+  total: number;
+  totalToday: number;
 };

@@ -1,0 +1,20 @@
+.container {
+  width: 100%;
+}
+
+.title {
+  align-self: flex-start;
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.orders-list {
+  width: 600px;
+  height: calc(100vh - 188px);
+  min-height: 262px;
+  overflow-y: auto;
+}

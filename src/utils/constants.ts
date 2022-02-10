@@ -21,3 +21,5 @@ export const HEADER_PROFILE_BUTTON_TEXT = 'Личный кабинет';
 export const CONSTRUCTOR_DEFAULT_TEXT = 'Пожалуйста, выберете булку бургера для создания заказа';
 export const CONSTRUCTOR_BUTTON_TEXT = 'Оформить заказ';
 export const CONSTRUCTOR_LOADING_BUTTON_TEXT = 'Оформляем...';
+
+export const MAX_INGREDIETNS_IN_CARD = 6;

@@ -5,8 +5,9 @@ import ForgotPassword from './forgot-password';
 import ResetPassword from './reset-password';
 import Profile from './profile';
 import Ingredients from './ingredients';
+import Feed from './feed';
 import NotFound from './not-found';
 
 export {
-  Home, Login, Register, ForgotPassword, ResetPassword, Profile, Ingredients, NotFound,
+  Home, Login, Register, ForgotPassword, ResetPassword, Profile, Ingredients, Feed, NotFound,
 };

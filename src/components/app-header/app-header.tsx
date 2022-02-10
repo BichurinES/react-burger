@@ -23,7 +23,7 @@ const AppHeader = () => {
               <HeaderButton path="/" text={HEADER_CONSTRUCTOR_BUTTON_TEXT}><BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} /></HeaderButton>
             </li>
             <li>
-              <HeaderButton path="/orders" text={HEADER_ORDERS_BUTTON_TEXT}><ListIcon type={pathname === '/orders' ? 'primary' : 'secondary'} /></HeaderButton>
+              <HeaderButton path="/feed" text={HEADER_ORDERS_BUTTON_TEXT}><ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} /></HeaderButton>
             </li>
           </ul>
         </nav>

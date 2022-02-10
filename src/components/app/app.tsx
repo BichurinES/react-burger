@@ -8,7 +8,7 @@ import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import Popups from '../popups/popups';
 import {
-  Home, Login, Register, ForgotPassword, ResetPassword, Profile, Ingredients, NotFound,
+  Home, Login, Register, ForgotPassword, ResetPassword, Profile, Ingredients, Feed, NotFound,
 } from '../../pages';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { getUser } from '../../services/actions/profile';
@@ -37,6 +37,9 @@ const App = () => {
           <Switch location={background || location}>
             <Route path="/" exact>
               <Home />
+            </Route>
+            <Route path="/feed" exact>
+              <Feed />
             </Route>
             <ProtectedFromAuthRoute path="/login">
               <Login />
