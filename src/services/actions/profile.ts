@@ -17,7 +17,7 @@ import {
 } from './action-types';
 import useToken from '../token';
 import { TUser } from '../types/data';
-import { AppThunk, AppDispatch } from '../store';
+import { AppThunk } from '../store';
 import { TProfileForm, TCallback, TToken } from '../types';
 
 export interface IUpdateTokenAction {
@@ -138,7 +138,7 @@ export const logoutFailedAction = (): ILogoutFailedAction => ({
   type: LOGOUT_FAILED,
 });
 
-export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
+export const getUser: AppThunk = () => (dispatch) => {
   dispatch(getUserAction());
   const { getToken } = useToken();
   return getToken()
@@ -159,7 +159,7 @@ export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const editUser: AppThunk = (form: TProfileForm) => (dispatch: AppDispatch) => {
+export const editUser: AppThunk = (form: TProfileForm) => (dispatch) => {
   dispatch(editUserAction());
   const { getToken } = useToken();
   getToken()
@@ -178,7 +178,7 @@ export const editUser: AppThunk = (form: TProfileForm) => (dispatch: AppDispatch
     });
 };
 
-export const signOut: AppThunk = (cb: TCallback) => (dispatch: AppDispatch) => {
+export const signOut: AppThunk = (cb: TCallback) => (dispatch) => {
   dispatch(logoutAction());
   const { refreshToken, clearAllTokens } = useToken();
   logoutRequest({ token: refreshToken })

@@ -10,7 +10,7 @@ import {
   RESET_CONSTRUCTOR,
 } from './action-types';
 import {
-  TIngredient, TMainIngredient, TBun, TRemovedIngredient, TReplacingItems,
+  TIngredient, TMainIngredient, TRemovedIngredient, TReplacingItems,
 } from '../types/data';
 
 export interface IAddIngredientAction {
@@ -25,7 +25,7 @@ export interface IRemoveIngredientAction {
 
 export interface IReplaceBunAction {
   readonly type: typeof REPLACE_BUN_IN_CONSTRUCTOR;
-  readonly payload: TBun;
+  readonly payload: TIngredient;
 }
 
 export interface IUpdateConstructorFromDraggingContainerAction {
@@ -73,7 +73,7 @@ export const removeIngredientAction = (
   payload: ingredient,
 });
 
-export const replaceBunAction = (bun: TBun): IReplaceBunAction => ({
+export const replaceBunAction = (bun: TIngredient): IReplaceBunAction => ({
   type: REPLACE_BUN_IN_CONSTRUCTOR,
   payload: bun,
 });

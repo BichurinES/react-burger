@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Logo, ProfileIcon, BurgerIcon, ListIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 import HeaderButton from '../header-button/header-button';
 import styles from './app-header.module.css';
 import {
@@ -31,7 +32,9 @@ const AppHeader = () => {
           </ul>
         </nav>
         <div className={styles.logo}>
-          <Logo />
+          <Link to={MAIN_PATH}>
+            <Logo />
+          </Link>
         </div>
 
         <HeaderButton path={PROFILE_PATH} text={HEADER_PROFILE_BUTTON_TEXT}><ProfileIcon type={pathname === PROFILE_PATH ? 'primary' : 'secondary'} /></HeaderButton>

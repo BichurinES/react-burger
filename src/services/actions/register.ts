@@ -7,7 +7,7 @@ import {
   REGISTER_FAILED,
 } from './action-types';
 import useToken from '../token';
-import { AppDispatch } from '../store';
+import { AppThunk } from '../store';
 import { TRegisterForm, TCallback } from '../types';
 
 export interface IRegisterAction {
@@ -39,7 +39,7 @@ export const registerFailedAction = (): IRegisterFailedAction => ({
   type: REGISTER_FAILED,
 });
 
-export const signUp = (form: TRegisterForm, cb: TCallback) => (dispatch: AppDispatch) => {
+export const signUp: AppThunk = (form: TRegisterForm, cb: TCallback) => (dispatch) => {
   dispatch(registerAction());
   const { addTokens } = useToken();
   registerRequest(form)

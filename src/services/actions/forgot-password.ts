@@ -6,7 +6,7 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
 } from './action-types';
-import { AppDispatch } from '../store';
+import { AppThunk } from '../store';
 import { TForgotPasswordForm, TCallback } from '../types';
 
 export interface IForgotPasswordAction {
@@ -38,8 +38,8 @@ export const forgotPasswordFailedAction = (): IForgotPasswordFailedAction => ({
   type: FORGOT_PASSWORD_FAILED,
 });
 
-export const sendResetEmail = (
-  (form: TForgotPasswordForm, cb: TCallback) => (dispatch: AppDispatch) => {
+export const sendResetEmail: AppThunk = (
+  (form: TForgotPasswordForm, cb: TCallback) => (dispatch) => {
     dispatch(forgotPasswordAction());
 
     return forgotPasswordRequest(form)

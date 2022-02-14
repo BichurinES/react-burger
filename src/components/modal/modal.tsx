@@ -11,7 +11,7 @@ type TModal = {
 
 const Modal: FC<TModal> = ({ children, title, handleClosePopup }) => {
   useEffect(() => {
-    const closeByEscape: (e: any) => void = (e) => {
+    const closeByEscape: (e: KeyboardEvent) => void = (e) => {
       if (e.key === 'Escape') {
         handleClosePopup();
       }

@@ -26,7 +26,7 @@ import {
   WS_FEED_CONNECTION_STOP,
   WS_USER_ORDERS_CONNECTION_STOP,
 } from './actions/action-types';
-import { SocketMiddleware } from './middleware/socket-middleware';
+import { socketMiddleware } from './middleware/socket-middleware';
 import { WS_FEED_URL, WS_MY_ORDERS_URL } from '../utils/constants';
 
 declare global {
@@ -75,8 +75,8 @@ export const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || c
 const enchancer = composeEnhancers(
   applyMiddleware(
     thunk,
-    SocketMiddleware(WS_FEED_URL, wsFeedActionNames, false),
-    SocketMiddleware(WS_MY_ORDERS_URL, wsUserOrdersActionNames, true),
+    socketMiddleware(WS_FEED_URL, wsFeedActionNames, false),
+    socketMiddleware(WS_MY_ORDERS_URL, wsUserOrdersActionNames, true),
   ),
 );
 
@@ -95,5 +95,5 @@ export type TApplicationActions =
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<TReturn = void> = ActionCreator<
-ThunkAction<TReturn, Action, RootState, TApplicationActions>
+ThunkAction<TReturn, RootState, Action, TApplicationActions>
 >;

@@ -12,7 +12,7 @@ import {
 import type { TSuccessResetPassword, TOrderDetails } from '../types/data';
 import { TOKEN_ERR_MSG } from '../../utils/constants';
 import useToken from '../token';
-import type { AppDispatch } from '../store';
+import type { AppThunk } from '../store';
 
 export interface IGetOrderDetailsAction {
   readonly type: typeof GET_ORDER_DETAILS_REQUEST;
@@ -98,8 +98,8 @@ export const closeSuccessPopupAction = (): ICloseSuccessPopupAction => ({
   type: CLOSE_SUCCESS_POPUP,
 });
 
-export const getOrderDetails = (ingredients: ReadonlyArray<string>) => (
-  dispatch: AppDispatch,
+export const getOrderDetails: AppThunk = (ingredients: ReadonlyArray<string>) => (
+  dispatch,
 ) => {
   dispatch(getOrderDetailsAction());
   const { getToken } = useToken();

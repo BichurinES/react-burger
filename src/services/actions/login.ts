@@ -7,7 +7,7 @@ import {
   LOGIN_FAILED,
 } from './action-types';
 import useToken from '../token';
-import { AppDispatch } from '../store';
+import { AppThunk } from '../store';
 import { TLoginForm, TCallback } from '../types';
 
 export interface ILoginAction {
@@ -39,7 +39,7 @@ export const loginFailedAction = (): ILoginFailedAction => ({
   type: LOGIN_FAILED,
 });
 
-export const signIn = (form: TLoginForm, cb: TCallback) => (dispatch: AppDispatch) => {
+export const signIn: AppThunk = (form: TLoginForm, cb: TCallback) => (dispatch) => {
   dispatch(loginAction());
   const { addTokens } = useToken();
   loginRequest(form)

@@ -7,7 +7,7 @@ import EditUser from '../components/edit-user/edit-user';
 import Orders from '../components/orders/orders';
 import ModalLoader from '../components/modal-loader/modal-loader';
 import { useSelector, useDispatch } from '../services/hooks';
-import { wsUserOrdersConnectionStartAction } from '../services/actions/ws-actions';
+import { wsUserOrdersConnectionStartAction, wsUserOrdersConnectionStopAction } from '../services/actions/ws-actions';
 import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from '../utils/constants';
 
 const Profile = () => {
@@ -29,6 +29,9 @@ const Profile = () => {
     if (accessToken) {
       dispatch(wsUserOrdersConnectionStartAction());
     }
+    return () => {
+      dispatch(wsUserOrdersConnectionStopAction());
+    };
   }, []);
 
   return (

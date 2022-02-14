@@ -1,23 +1,42 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useParams, useRouteMatch } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './past-order-details.module.css';
-import { useSelector } from '../../services/hooks';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { TFeedIngredient } from '../../services/types/data';
 import { FEED_ID_PATH, PROFILE_ORDERS_ID_PATH } from '../../utils/constants';
+import { wsUserOrdersConnectionStartAction, wsUserOrdersConnectionStopAction } from '../../services/actions/ws-actions';
 
 const PastOrderDetails = () => {
   const { path } = useRouteMatch();
   const { id } = useParams<{ id: string }>();
-  const order = useSelector((state) => {
-    if (path === FEED_ID_PATH) {
-      return state.ws.feed?.orders.find((feedOrder) => feedOrder._id === id);
+  const dispatch = useDispatch();
+  const { ws, profile } = useSelector((state) => state);
+  const { accessToken } = profile;
+
+  const order = useMemo(
+    () => {
+      if (path === FEED_ID_PATH) {
+        return ws.feed?.orders.find((feedOrder) => feedOrder._id === id);
+      }
+      if (path === PROFILE_ORDERS_ID_PATH) {
+        return ws.userOrders?.orders.find((userOrder) => userOrder._id === id);
+      }
+      return null;
+    },
+    [ws, path],
+  );
+
+  useEffect(() => {
+    if (accessToken && path === PROFILE_ORDERS_ID_PATH) {
+      dispatch(wsUserOrdersConnectionStartAction());
+    } else {
+      return undefined;
     }
-    if (path === PROFILE_ORDERS_ID_PATH) {
-      return state.ws.userOrders?.orders.find((userOrder) => userOrder._id === id);
-    }
-    return null;
-  });
+    return () => {
+      dispatch(wsUserOrdersConnectionStopAction());
+    };
+  }, [accessToken]);
 
   const formatedIngredients = useMemo(
     () => {

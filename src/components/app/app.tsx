@@ -53,7 +53,7 @@ const App = () => {
     if (refreshToken && !user) {
       dispatch(getUser());
     }
-    if (!refreshToken && !feed) {
+    if (!feed) {
       dispatch(getFeed());
     }
   }, [user]);

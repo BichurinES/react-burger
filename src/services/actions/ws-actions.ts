@@ -16,7 +16,7 @@ import {
   FEED_FAILED,
 } from './action-types';
 import { TOrderCard, TUpdatedFeed } from '../types/data';
-import { AppDispatch, RootState } from '../store';
+import { AppThunk } from '../store';
 import { getFeedRequest } from '../norma-api';
 import { openErrorPopupAction } from './popups';
 import { getCardData } from '../../utils/utils';
@@ -176,7 +176,7 @@ export const feedFailedAction = (): IFeedFailedAction => ({
   type: FEED_FAILED,
 });
 
-export const getFeed = () => (dispatch: AppDispatch, getState: () => RootState) => {
+export const getFeed: AppThunk = () => (dispatch, getState) => {
   getFeedRequest()
     .then((data) => {
       const { ingredients } = getState();

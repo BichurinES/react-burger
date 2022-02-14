@@ -5,7 +5,7 @@ import type {
 import { openErrorPopupAction } from '../actions/popups';
 import { getCardData } from '../../utils/utils';
 
-export const SocketMiddleware = (wsUrl: string, wsActions:
+export const socketMiddleware = (wsUrl: string, wsActions:
 TWsFeedActionNames | TWsUserOrdersActionNames, isToken: boolean): Middleware => (
   store: MiddlewareAPI<AppDispatch, RootState>,
 ) => {

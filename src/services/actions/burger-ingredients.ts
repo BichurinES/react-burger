@@ -9,7 +9,7 @@ import {
   RESET_INGREDIENTS_COUNT,
 } from './action-types';
 import { TIngredient, TIngredientId } from '../types/data';
-import { AppDispatch, AppThunk } from '../store';
+import { AppThunk } from '../store';
 
 export interface IGetIngredientsAction {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -75,7 +75,7 @@ export const resetIngredientCountAction = (): IResetIngredientCountAction => ({
   type: RESET_INGREDIENTS_COUNT,
 });
 
-export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
+export const getIngredients: AppThunk = () => (dispatch) => {
   dispatch(getIngredientsAction());
   getIngredientsRequest()
     .then((res) => {

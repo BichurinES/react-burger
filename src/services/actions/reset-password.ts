@@ -5,7 +5,7 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
 } from './action-types';
-import { AppDispatch } from '../store';
+import { AppThunk } from '../store';
 import { TCallback, TResetPasswordForm } from '../types';
 
 export interface IResetPasswordAction {
@@ -37,8 +37,8 @@ export const resetPasswordFailedAction = (): IResetPasswordFailedAction => ({
   type: RESET_PASSWORD_FAILED,
 });
 
-export const resetPassword = (
-  (form: TResetPasswordForm, cb: TCallback) => (dispatch: AppDispatch) => {
+export const resetPassword: AppThunk = (
+  (form: TResetPasswordForm, cb: TCallback) => (dispatch) => {
     dispatch(resetPasswordAction());
     resetPasswordRequest(form)
       .then((data) => {

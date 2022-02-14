@@ -20,7 +20,7 @@ import {
 import ModalLoader from '../modal-loader/modal-loader';
 import useToken from '../../services/token';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { TMainIngredient, TBun } from '../../services/types/data';
+import { TIngredient } from '../../services/types/data';
 
 const BurgerConstructor = () => {
   const { refreshToken } = useToken();
@@ -35,7 +35,7 @@ const BurgerConstructor = () => {
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
-    drop(card: any) {
+    drop(card: TIngredient) {
       if (card.type === 'bun') {
         onDropBunHandler(card);
       } else {
@@ -44,7 +44,7 @@ const BurgerConstructor = () => {
     },
   });
 
-  const onDropBunHandler = (item: TBun) => {
+  const onDropBunHandler = (item: TIngredient) => {
     if (bun && item._id === bun._id) {
       return null;
     }
@@ -56,7 +56,7 @@ const BurgerConstructor = () => {
     return item;
   };
 
-  const onDropMainHandler = (item: TMainIngredient) => {
+  const onDropMainHandler = (item: TIngredient) => {
     if (!bun) {
       dispatch(openErrorPopupAction(new Error(BUN_REQUIRED_ERR_MSG)));
       return null;
