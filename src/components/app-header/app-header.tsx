@@ -5,6 +5,9 @@ import {
 import HeaderButton from '../header-button/header-button';
 import styles from './app-header.module.css';
 import {
+  MAIN_PATH,
+  FEED_PATH,
+  PROFILE_PATH,
   HEADER_CONSTRUCTOR_BUTTON_TEXT,
   HEADER_ORDERS_BUTTON_TEXT,
   HEADER_PROFILE_BUTTON_TEXT,
@@ -20,10 +23,10 @@ const AppHeader = () => {
         <nav>
           <ul className={styles.menu}>
             <li className="mr-2">
-              <HeaderButton path="/" text={HEADER_CONSTRUCTOR_BUTTON_TEXT}><BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} /></HeaderButton>
+              <HeaderButton path={MAIN_PATH} text={HEADER_CONSTRUCTOR_BUTTON_TEXT}><BurgerIcon type={pathname === MAIN_PATH ? 'primary' : 'secondary'} /></HeaderButton>
             </li>
             <li>
-              <HeaderButton path="/feed" text={HEADER_ORDERS_BUTTON_TEXT}><ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} /></HeaderButton>
+              <HeaderButton path={FEED_PATH} text={HEADER_ORDERS_BUTTON_TEXT}><ListIcon type={pathname === FEED_PATH ? 'primary' : 'secondary'} /></HeaderButton>
             </li>
           </ul>
         </nav>
@@ -31,7 +34,7 @@ const AppHeader = () => {
           <Logo />
         </div>
 
-        <HeaderButton path="/profile" text={HEADER_PROFILE_BUTTON_TEXT}><ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} /></HeaderButton>
+        <HeaderButton path={PROFILE_PATH} text={HEADER_PROFILE_BUTTON_TEXT}><ProfileIcon type={pathname === PROFILE_PATH ? 'primary' : 'secondary'} /></HeaderButton>
       </div>
     </header>
   );

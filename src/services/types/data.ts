@@ -3,6 +3,11 @@ export type TUser = {
   name: string;
 };
 
+export type TUserResponse = {
+  accessToken: string;
+  user: TUser;
+};
+
 export type TIngredient = {
   _id: string;
   name: string;
@@ -22,7 +27,7 @@ export type TIngredient = {
 export type TIngredientId = Pick<TIngredient, '_id'>;
 export type TMainIngredient = TIngredient & { _cartId: string };
 export type TBun = (Omit<TIngredient, 'type'> & { type: 'bun' });
-export type TFeedIngredient = Pick<TIngredient, '_id' | 'name' | 'price' | 'image_mobile'>;
+export type TFeedIngredient = Pick<TIngredient, '_id' | 'name' | 'price' | 'image_mobile' | 'type'>;
 
 export type TRemovedIngredient = Pick<TMainIngredient, '_cartId' | 'price'>;
 export type TReplacingItems = { initialIndex: number, targetIndex: number };
@@ -66,3 +71,5 @@ export type TFeed = {
   total: number;
   totalToday: number;
 };
+
+export type TUpdatedFeed = Omit<TFeed, 'orders'> & { orders: ReadonlyArray<TOrderUpdatedCard> };

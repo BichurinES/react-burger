@@ -7,57 +7,91 @@ import ProtectedFromAuthRoute from '../protected-from-auth-route/protected-from-
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import Popups from '../popups/popups';
-import {
-  Home, Login, Register, ForgotPassword, ResetPassword, Profile, Ingredients, Feed, NotFound,
-} from '../../pages';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { getUser } from '../../services/actions/profile';
+import { getFeed } from '../../services/actions/ws-actions';
 import useToken from '../../services/token';
 import { useDispatch, useSelector, useLocation } from '../../services/hooks';
+import {
+  MAIN_PATH,
+  FEED_PATH,
+  FEED_ID_PATH,
+  PROFILE_PATH,
+  PROFILE_ORDERS_ID_PATH,
+  LOGIN_PATH,
+  REGISTER_PATH,
+  FORGOT_PASSWORD_PATH,
+  RESET_PASSWORD_PATH,
+  INGREDIENTS_ID_PATH,
+} from '../../utils/constants';
+import {
+  Home,
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Profile,
+  Ingredients,
+  Feed,
+  OrderPage,
+  NotFound,
+} from '../../pages';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { ingredients, profile } = useSelector((state) => state);
+  const { ingredients, profile, ws } = useSelector((state) => state);
   const { ingredientsRequest } = ingredients;
   const { user, getUserRequest } = profile;
+  const { feedRequest, feed } = ws;
   const location = useLocation();
   const background = location.state ? location.state.background : null;
   useEffect(() => {
-    const { refreshToken } = useToken();
     dispatch(getIngredients());
+  }, []);
+  useEffect(() => {
+    const { refreshToken } = useToken();
     if (refreshToken && !user) {
       dispatch(getUser());
+    }
+    if (!refreshToken && !feed) {
+      dispatch(getFeed());
     }
   }, [user]);
   return (
     <>
       <AppHeader />
-      <Main isLoading={ingredientsRequest || getUserRequest}>
+      <Main isLoading={ingredientsRequest || getUserRequest || feedRequest}>
         <DndProvider backend={HTML5Backend}>
           <Switch location={background || location}>
-            <Route path="/" exact>
+            <Route path={MAIN_PATH} exact>
               <Home />
             </Route>
-            <Route path="/feed" exact>
+            <Route path={FEED_PATH} exact>
               <Feed />
             </Route>
-            <ProtectedFromAuthRoute path="/login">
+            <ProtectedFromAuthRoute path={LOGIN_PATH}>
               <Login />
             </ProtectedFromAuthRoute>
-            <ProtectedFromAuthRoute path="/register">
+            <ProtectedFromAuthRoute path={REGISTER_PATH}>
               <Register />
             </ProtectedFromAuthRoute>
-            <ProtectedFromAuthRoute path="/forgot-password">
+            <ProtectedFromAuthRoute path={FORGOT_PASSWORD_PATH}>
               <ForgotPassword />
             </ProtectedFromAuthRoute>
-            <ProtectedFromAuthRoute path="/reset-password">
+            <ProtectedFromAuthRoute path={RESET_PASSWORD_PATH}>
               <ResetPassword />
             </ProtectedFromAuthRoute>
-            <ProtectedRoute path="/profile">
+            <ProtectedRoute path={PROFILE_ORDERS_ID_PATH} exact>
+              <OrderPage />
+            </ProtectedRoute>
+            <ProtectedRoute path={PROFILE_PATH}>
               <Profile />
             </ProtectedRoute>
-            <Route path="/ingredients/:id">
+            <Route path={INGREDIENTS_ID_PATH}>
               <Ingredients />
+            </Route>
+            <Route path={FEED_ID_PATH}>
+              <OrderPage />
             </Route>
             <Route>
               <NotFound />

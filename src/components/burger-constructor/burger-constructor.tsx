@@ -15,6 +15,7 @@ import {
   CONSTRUCTOR_DEFAULT_TEXT,
   CONSTRUCTOR_BUTTON_TEXT,
   CONSTRUCTOR_LOADING_BUTTON_TEXT,
+  LOGIN_PATH,
 } from '../../utils/constants';
 import ModalLoader from '../modal-loader/modal-loader';
 import useToken from '../../services/token';
@@ -77,7 +78,7 @@ const BurgerConstructor = () => {
     if (refreshToken && bun) {
       return dispatch(getOrderDetails([bun, ...mainIngredients].map((ingr) => ingr._id)));
     }
-    return history.push('/login');
+    return history.push(LOGIN_PATH);
   };
 
   const targetList = draggingMainIngredients.length ? draggingMainIngredients : mainIngredients;

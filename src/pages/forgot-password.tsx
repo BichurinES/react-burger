@@ -4,6 +4,7 @@ import CredentialsForm from '../components/credentials-form/credentials-form';
 import { sendResetEmail } from '../services/actions/forgot-password';
 import { useSelector, useDispatch } from '../services/hooks';
 import { TCredentialsForm, TSubmitEvent, TInputCnangeEvent } from '../services/types';
+import { LOGIN_PATH, RESET_PASSWORD_PATH } from '../utils/constants';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const ForgotPassword = () => {
     evt.preventDefault();
     dispatch(sendResetEmail(
       { email },
-      () => history.push({ pathname: '/reset-password', state: { from: history.location } }),
+      () => history.push({ pathname: RESET_PASSWORD_PATH, state: { from: history.location } }),
     ));
   }
 
@@ -33,7 +34,7 @@ const ForgotPassword = () => {
     ],
     buttonText: 'Восстановить',
     navs: [
-      { captionText: 'Вспомнили пароль?', linkTo: '/login', linkText: 'Войти' },
+      { captionText: 'Вспомнили пароль?', linkTo: LOGIN_PATH, linkText: 'Войти' },
     ],
     onSubmit,
     isLoading: forgotPasswordRequest,

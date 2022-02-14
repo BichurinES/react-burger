@@ -1,6 +1,6 @@
 import { loginRequest } from '../norma-api';
 import { openErrorPopupAction } from './popups';
-import { setUserAction } from './profile';
+import { setUserAction, updateTokenAction } from './profile';
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -47,6 +47,7 @@ export const signIn = (form: TLoginForm, cb: TCallback) => (dispatch: AppDispatc
       const { user, accessToken, refreshToken } = data;
       addTokens({ accessToken, refreshToken });
       dispatch(setUserAction(user));
+      dispatch(updateTokenAction(accessToken.split('Bearer ')[1]));
       dispatch(loginSuccessAction());
       cb();
     })

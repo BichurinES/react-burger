@@ -16,6 +16,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
     project: ['./tsconfig.eslint.json'],
+    createDefaultProgram: true,
   },
   plugins: [
     'react',

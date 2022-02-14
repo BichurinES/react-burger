@@ -1,6 +1,6 @@
 import { registerRequest } from '../norma-api';
 import { openErrorPopupAction } from './popups';
-import { setUserAction } from './profile';
+import { setUserAction, updateTokenAction } from './profile';
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -47,6 +47,7 @@ export const signUp = (form: TRegisterForm, cb: TCallback) => (dispatch: AppDisp
       const { user, accessToken, refreshToken } = data;
       addTokens({ accessToken, refreshToken });
       dispatch(setUserAction(user));
+      dispatch(updateTokenAction(accessToken.split('Bearer ')[1]));
       dispatch(registerSuccessAction());
       cb();
     })

@@ -9,8 +9,10 @@ import {
   OPEN_SUCCESS_POPUP,
   CLOSE_SUCCESS_POPUP,
 } from './action-types';
-import { TSuccessResetPassword, TOrderDetails } from '../types/data';
-import { AppDispatch } from '../store';
+import type { TSuccessResetPassword, TOrderDetails } from '../types/data';
+import { TOKEN_ERR_MSG } from '../../utils/constants';
+import useToken from '../token';
+import type { AppDispatch } from '../store';
 
 export interface IGetOrderDetailsAction {
   readonly type: typeof GET_ORDER_DETAILS_REQUEST;
@@ -100,7 +102,14 @@ export const getOrderDetails = (ingredients: ReadonlyArray<string>) => (
   dispatch: AppDispatch,
 ) => {
   dispatch(getOrderDetailsAction());
-  sendOrderRequest({ ingredients })
+  const { getToken } = useToken();
+  getToken()
+    .then((token) => {
+      if (token) {
+        return sendOrderRequest({ ingredients }, token);
+      }
+      throw new Error(TOKEN_ERR_MSG);
+    })
     .then((res) => {
       dispatch(getOrderDetailsSuccessAction(res));
     })

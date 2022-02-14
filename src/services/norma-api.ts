@@ -2,6 +2,7 @@ import {
   NORMA_API_URL,
   INGREDIENTS_URL,
   ORDERS_URL,
+  FEED_URL,
   FORGOT_PASSWORD_URL,
   PASSWORD_RESET_URL,
   REGISTER_URL,
@@ -70,8 +71,8 @@ export function getIngredientsRequest() {
   return createRequest(`${NORMA_API_URL}${INGREDIENTS_URL}`, { method: 'GET' });
 }
 
-export function sendOrderRequest(ingredientsId: TIngredientsId) {
-  return createRequest(`${NORMA_API_URL}${ORDERS_URL}`, { method: 'POST', body: ingredientsId });
+export function sendOrderRequest(ingredientsId: TIngredientsId, token: TToken) {
+  return createRequest(`${NORMA_API_URL}${ORDERS_URL}`, { method: 'POST', body: ingredientsId, token });
 }
 
 export function forgotPasswordRequest(form: TForgotPasswordForm) {
@@ -104,4 +105,8 @@ export function getUserRequest(token: TToken) {
 
 export function editUserRequest(form: TProfileForm, token: TToken) {
   return createRequest(`${NORMA_API_URL}${USER_URL}`, { method: 'PATCH', body: form, token });
+}
+
+export function getFeedRequest() {
+  return createRequest(`${NORMA_API_URL}${FEED_URL}`, { method: 'GET' });
 }

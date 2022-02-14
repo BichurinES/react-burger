@@ -1,4 +1,5 @@
 import {
+  UPDATE_TOKEN,
   SET_USER,
   CLEAR_USER,
   GET_USER_REQUEST,
@@ -16,6 +17,7 @@ import { TUser } from '../types/data';
 
 export type TProfilesState = {
   user: TUser | null,
+  accessToken: string,
   getUserRequest: boolean,
   getUserFailed: boolean,
   editUserRequest: boolean,
@@ -26,6 +28,7 @@ export type TProfilesState = {
 
 const initState: TProfilesState = {
   user: null,
+  accessToken: '',
   getUserRequest: false,
   getUserFailed: false,
   editUserRequest: false,
@@ -36,6 +39,12 @@ const initState: TProfilesState = {
 
 export default function profileReducer(state = initState, action: TProfileActions) {
   switch (action.type) {
+    case UPDATE_TOKEN: {
+      return {
+        ...state,
+        accessToken: action.payload,
+      };
+    }
     case SET_USER: {
       return {
         ...state,
@@ -46,6 +55,7 @@ export default function profileReducer(state = initState, action: TProfileAction
       return {
         ...state,
         user: initState.user,
+        accessToken: initState.accessToken,
       };
     }
     case GET_USER_REQUEST: {

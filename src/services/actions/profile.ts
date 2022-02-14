@@ -2,6 +2,7 @@ import { getUserRequest, editUserRequest, logoutRequest } from '../norma-api';
 import { openErrorPopupAction } from './popups';
 import { TOKEN_ERR_MSG } from '../../utils/constants';
 import {
+  UPDATE_TOKEN,
   SET_USER,
   CLEAR_USER,
   GET_USER_REQUEST,
@@ -16,8 +17,13 @@ import {
 } from './action-types';
 import useToken from '../token';
 import { TUser } from '../types/data';
-import { AppDispatch } from '../store';
-import { TProfileForm, TCallback } from '../types';
+import { AppThunk, AppDispatch } from '../store';
+import { TProfileForm, TCallback, TToken } from '../types';
+
+export interface IUpdateTokenAction {
+  readonly type: typeof UPDATE_TOKEN;
+  readonly payload: TToken;
+}
 
 export interface ISetUserAction {
   readonly type: typeof SET_USER;
@@ -67,6 +73,7 @@ export interface ILogoutFailedAction {
 }
 
 export type TProfileActions =
+  | IUpdateTokenAction
   | ISetUserAction
   | IClearUserAction
   | IGetUserAction
@@ -78,6 +85,11 @@ export type TProfileActions =
   | ILogoutAction
   | ILogoutSuccessAction
   | ILogoutFailedAction;
+
+export const updateTokenAction = (token: TToken): IUpdateTokenAction => ({
+  type: UPDATE_TOKEN,
+  payload: token,
+});
 
 export const setUserAction = (user: TUser): ISetUserAction => ({
   type: SET_USER,
@@ -126,12 +138,13 @@ export const logoutFailedAction = (): ILogoutFailedAction => ({
   type: LOGOUT_FAILED,
 });
 
-export const getUser = () => (dispatch: AppDispatch) => {
+export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch(getUserAction());
   const { getToken } = useToken();
   return getToken()
     .then((token) => {
       if (token) {
+        dispatch(updateTokenAction(token));
         return getUserRequest(token);
       }
       throw new Error(TOKEN_ERR_MSG);
@@ -146,7 +159,7 @@ export const getUser = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const editUser = (form: TProfileForm) => (dispatch: AppDispatch) => {
+export const editUser: AppThunk = (form: TProfileForm) => (dispatch: AppDispatch) => {
   dispatch(editUserAction());
   const { getToken } = useToken();
   getToken()
@@ -165,7 +178,7 @@ export const editUser = (form: TProfileForm) => (dispatch: AppDispatch) => {
     });
 };
 
-export const signOut = (cb: TCallback) => (dispatch: AppDispatch) => {
+export const signOut: AppThunk = (cb: TCallback) => (dispatch: AppDispatch) => {
   dispatch(logoutAction());
   const { refreshToken, clearAllTokens } = useToken();
   logoutRequest({ token: refreshToken })

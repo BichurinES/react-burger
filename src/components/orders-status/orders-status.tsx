@@ -1,29 +1,29 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from './orders-status.module.css';
-import { TFeed, TOrderCard } from '../../services/types/data';
+import { useSelector } from '../../services/hooks';
 
-type TOrdersStatus = {
-  feedData: TFeed;
-};
+const OrdersStatus = () => {
+  const { feed } = useSelector((state) => state.ws);
 
-const OrdersStatus: FC<TOrdersStatus> = ({ feedData }) => {
-  const filterOrders = useCallback(
-    (orders: ReadonlyArray<TOrderCard>) => {
+  const filteredOrders = useMemo(
+    () => {
+      if (!feed) {
+        return { done: [], pending: [] };
+      }
+
       const done: Array<number> = [];
       const pending: Array<number> = [];
-      orders.forEach((order) => {
-        if (order.status === 'done' && done.length <= 10) {
+      feed.orders.forEach((order) => {
+        if (order.status === 'done' && done.length < 10) {
           done.push(order.number);
-        } else if (order.status === 'pending' && pending.length <= 10) {
+        } else if (order.status === 'pending' && pending.length < 10) {
           pending.push(order.number);
         }
       });
       return { done, pending };
     },
-    [],
+    [feed],
   );
-
-  const filteredOrders = useMemo(() => filterOrders(feedData.orders), [feedData, filterOrders]);
 
   return (
     <>
@@ -60,11 +60,11 @@ const OrdersStatus: FC<TOrdersStatus> = ({ feedData }) => {
       </div>
       <div className="mt-15">
         <p className="text text_type_main-medium">Выполнено за все время:</p>
-        <p className={`${styles.total} text text_type_digits-large`}>{feedData.total}</p>
+        <p className={`${styles.total} text text_type_digits-large`}>{feed ? feed.total : 0}</p>
       </div>
       <div className="mt-15">
         <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-        <p className={`${styles.total} text text_type_digits-large`}>{feedData.totalToday}</p>
+        <p className={`${styles.total} text text_type_digits-large`}>{feed ? feed.totalToday : 0}</p>
       </div>
     </>
   );
