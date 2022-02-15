@@ -31,6 +31,13 @@
   margin: 0;
 }
 
+.orders {
+  flex-basis: 860px;
+  height: calc(100vh - 208px);
+  min-height: 262px;
+  overflow-y: auto;
+}
+
 .centering-block {
   flex-basis: 320px;
 }

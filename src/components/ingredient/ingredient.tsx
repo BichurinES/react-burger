@@ -5,6 +5,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import styles from './ingredient.module.css';
 import { TIngredient } from '../../services/types/data';
 import { useLocation } from '../../services/hooks';
+import { INGREDIENTS_PATH } from '../../utils/constants';
 
 const Ingredient: FC<{ card: TIngredient }> = ({ card }) => {
   const location = useLocation();
@@ -15,7 +16,7 @@ const Ingredient: FC<{ card: TIngredient }> = ({ card }) => {
 
   return (
     <li ref={dragRef}>
-      <Link className={styles.card} to={{ pathname: `/ingredients/${card._id}`, state: { background: location, id: card._id } }}>
+      <Link className={styles.card} to={{ pathname: `${INGREDIENTS_PATH}/${card._id}`, state: { background: location, id: card._id } }}>
         <img src={card.image} alt={card.name} className={styles.image} />
         <p className={`${styles.price} text text_type_digits-default mt-2 mb-2`}>
           <span className="mr-2">{card.price}</span>

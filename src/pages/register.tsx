@@ -4,6 +4,7 @@ import CredentialsForm from '../components/credentials-form/credentials-form';
 import { signUp } from '../services/actions/register';
 import { useSelector, useDispatch, useLocation } from '../services/hooks';
 import { TCredentialsForm, TSubmitEvent, TInputCnangeEvent } from '../services/types';
+import { LOGIN_PATH, MAIN_PATH } from '../utils/constants';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Register = () => {
 
   function onSubmit(e: TSubmitEvent) {
     e.preventDefault();
-    dispatch(signUp({ name, email, password }, () => history.replace(state?.from || '/')));
+    dispatch(signUp({ name, email, password }, () => history.replace(state?.from || MAIN_PATH)));
   }
 
   const formConfig: TCredentialsForm = {
@@ -49,7 +50,7 @@ const Register = () => {
     ],
     buttonText: 'Зарегистрироваться',
     navs: [
-      { captionText: 'Уже зарегистрированы?', linkTo: '/login', linkText: 'Войти' },
+      { captionText: 'Уже зарегистрированы?', linkTo: LOGIN_PATH, linkText: 'Войти' },
     ],
     onSubmit,
     isLoading: registerRequest,

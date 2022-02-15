@@ -4,13 +4,13 @@ import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './main-constructor-element.module.css';
 import {
-  updateConstructorFromDraggingContainer,
-  removeIngredientFromConstructor,
-  copyConstructorToDraggingContainer,
-  replaceItemsInDraggingContainer,
-  resetDraggingContainer,
+  removeIngredientAction,
+  updateConstructorFromDraggingContainerAction,
+  copyConstructorToDraggingContainerAction,
+  replaceItemsInDraggingContainerAction,
+  resetDraggingContainerAction,
 } from '../../services/actions/burger-constructor';
-import { decreaseIngredient } from '../../services/actions/burger-ingredients';
+import { decreaseIngredientAction } from '../../services/actions/burger-ingredients';
 import { useDispatch, useSelector } from '../../services/hooks';
 import { TConstructorElement } from '../../services/types/ui-components';
 import { TMainIngredient } from '../../services/types/data';
@@ -28,16 +28,16 @@ const MainConstructorElement: FC<TMainConstructorElement> = ({
   const [{ isDragging }, drag] = useDrag({
     type: 'constructor',
     item: () => {
-      dispatch(copyConstructorToDraggingContainer());
+      dispatch(copyConstructorToDraggingContainerAction());
       return { _cartId };
     },
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
     end(item, monitor) {
       const didDrop = monitor.didDrop();
       if (didDrop) {
-        dispatch(updateConstructorFromDraggingContainer());
+        dispatch(updateConstructorFromDraggingContainerAction());
       }
-      dispatch(resetDraggingContainer());
+      dispatch(resetDraggingContainerAction());
     },
   });
 
@@ -65,7 +65,7 @@ const MainConstructorElement: FC<TMainConstructorElement> = ({
         (index < hoverIndex && hoverClientY >= hoverBottomBound)
         || (index > hoverIndex && hoverClientY <= hoverTopBound)
       ) {
-        dispatch(replaceItemsInDraggingContainer({
+        dispatch(replaceItemsInDraggingContainerAction({
           initialIndex: index,
           targetIndex: hoverIndex,
         }));
@@ -74,8 +74,8 @@ const MainConstructorElement: FC<TMainConstructorElement> = ({
   });
 
   const handleDeleteElement = () => {
-    dispatch(removeIngredientFromConstructor({ _cartId, price }));
-    dispatch(decreaseIngredient({ _id }));
+    dispatch(removeIngredientAction({ _cartId, price }));
+    dispatch(decreaseIngredientAction({ _id }));
   };
   drag(drop(ref));
 

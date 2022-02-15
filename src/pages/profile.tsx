@@ -1,22 +1,38 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { NavLink, useHistory, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import styles from './profile.module.css';
 import { signOut } from '../services/actions/profile';
 import EditUser from '../components/edit-user/edit-user';
+import Orders from '../components/orders/orders';
+import ModalLoader from '../components/modal-loader/modal-loader';
+import { useSelector, useDispatch } from '../services/hooks';
+import { wsUserOrdersConnectionStartAction, wsUserOrdersConnectionStopAction } from '../services/actions/ws-actions';
+import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from '../utils/constants';
 
 const Profile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { ws, profile } = useSelector((state) => state);
+  const { userOrders } = ws;
+  const { accessToken } = profile;
 
   const onLogoutBtnClick = useCallback(
     (evt) => {
       evt.preventDefault();
-      dispatch(signOut(() => history.replace('/login')));
+      dispatch(signOut(() => history.replace(LOGIN_PATH)));
     },
     [history],
   );
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(wsUserOrdersConnectionStartAction());
+    }
+    return () => {
+      dispatch(wsUserOrdersConnectionStopAction());
+    };
+  }, []);
 
   return (
     <section className={styles.section}>
@@ -24,7 +40,7 @@ const Profile = () => {
         <ul className={styles.list}>
           <li>
             <NavLink
-              to="/profile"
+              to={PROFILE_PATH}
               exact
               className={`${styles.link} text text_type_main-medium text_color_inactive`}
               activeClassName={styles.link_active}
@@ -34,7 +50,7 @@ const Profile = () => {
           </li>
           <li>
             <NavLink
-              to="/profile/orders"
+              to={PROFILE_ORDERS_PATH}
               exact
               className={`${styles.link} text text_type_main-medium text_color_inactive`}
               activeClassName={styles.link_active}
@@ -45,7 +61,7 @@ const Profile = () => {
           </li>
           <li>
             <NavLink
-              to="/login"
+              to={LOGIN_PATH}
               className={`${styles.link} text text_type_main-medium text_color_inactive`}
               activeClassName={styles.link_active}
               onClick={onLogoutBtnClick}
@@ -59,13 +75,16 @@ const Profile = () => {
           изменить свои персональные данные
         </p>
       </nav>
-      <Route path="/profile" exact>
+      <Route path={PROFILE_PATH} exact>
         <EditUser />
+        <div className={styles['centering-block']} />
       </Route>
-      <Route path="/profile/orders" exact>
-        <></>
+      <Route path={PROFILE_ORDERS_PATH} exact>
+        <div className={styles.orders}>
+          <Orders ordersData={userOrders ? [...userOrders.orders].reverse() : []} />
+        </div>
       </Route>
-      <div className={styles['centering-block']} />
+      {!userOrders ? <ModalLoader /> : null}
     </section>
   );
 };

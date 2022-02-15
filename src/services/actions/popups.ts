@@ -9,44 +9,112 @@ import {
   OPEN_SUCCESS_POPUP,
   CLOSE_SUCCESS_POPUP,
 } from './action-types';
-import { TSuccessResetPassword } from '../types/data';
-import { AppDispatch } from '../store';
+import type { TSuccessResetPassword, TOrderDetails } from '../types/data';
+import { TOKEN_ERR_MSG } from '../../utils/constants';
+import useToken from '../token';
+import type { AppThunk } from '../store';
 
-export const closeOrderDetails = () => ({
+export interface IGetOrderDetailsAction {
+  readonly type: typeof GET_ORDER_DETAILS_REQUEST;
+}
+
+export interface IGetOrderDetailsSuccessAction {
+  readonly type: typeof GET_ORDER_DETAILS_SUCCESS;
+  readonly payload: TOrderDetails;
+}
+
+export interface IGetOrderDetailsFailedAction {
+  readonly type: typeof GET_ORDER_DETAILS_FAILED;
+}
+
+export interface ICloseOrderDetailsAction {
+  readonly type: typeof CLOSE_ORDER_DETAILS;
+}
+
+export interface IOpenErrorPopupAction {
+  readonly type: typeof OPEN_ERROR_POPUP;
+  readonly payload: Error;
+}
+
+export interface ICloseErrorPopupAction {
+  readonly type: typeof CLOSE_ERROR_POPUP;
+}
+
+export interface IOpenSuccessPopupAction {
+  readonly type: typeof OPEN_SUCCESS_POPUP;
+  readonly payload: TSuccessResetPassword;
+}
+
+export interface ICloseSuccessPopupAction {
+  readonly type: typeof CLOSE_SUCCESS_POPUP;
+}
+
+export type TPopupActions =
+  | IGetOrderDetailsAction
+  | IGetOrderDetailsSuccessAction
+  | IGetOrderDetailsFailedAction
+  | ICloseOrderDetailsAction
+  | IOpenErrorPopupAction
+  | ICloseErrorPopupAction
+  | IOpenSuccessPopupAction
+  | ICloseSuccessPopupAction;
+
+export const getOrderDetailsAction = (): IGetOrderDetailsAction => ({
+  type: GET_ORDER_DETAILS_REQUEST,
+});
+
+export const getOrderDetailsSuccessAction = (
+  orderDetails: TOrderDetails,
+): IGetOrderDetailsSuccessAction => ({
+  type: GET_ORDER_DETAILS_SUCCESS,
+  payload: orderDetails,
+});
+
+export const getOrderDetailsFailedAction = (): IGetOrderDetailsFailedAction => ({
+  type: GET_ORDER_DETAILS_FAILED,
+});
+
+export const closeOrderDetailsAction = (): ICloseOrderDetailsAction => ({
   type: CLOSE_ORDER_DETAILS,
 });
 
-export const openErrorPopup = (error: { message?: string }) => ({
+export const openErrorPopupAction = (error: Error): IOpenErrorPopupAction => ({
   type: OPEN_ERROR_POPUP,
-  payload: { message: error.message },
+  payload: error,
 });
 
-export const closeErrorPopup = () => ({
+export const closeErrorPopupAction = (): ICloseErrorPopupAction => ({
   type: CLOSE_ERROR_POPUP,
 });
 
-export const openSuccessPopup = (successData: TSuccessResetPassword) => ({
+export const openSuccessPopupAction = (
+  successData: TSuccessResetPassword,
+): IOpenSuccessPopupAction => ({
   type: OPEN_SUCCESS_POPUP,
-  payload: { message: successData.message },
+  payload: successData,
 });
 
-export const closeSuccessPopup = () => ({
+export const closeSuccessPopupAction = (): ICloseSuccessPopupAction => ({
   type: CLOSE_SUCCESS_POPUP,
 });
 
-export const getOrderDetails = (ingredients: ReadonlyArray<string>) => (
-  dispatch: AppDispatch,
+export const getOrderDetails: AppThunk = (ingredients: ReadonlyArray<string>) => (
+  dispatch,
 ) => {
-  dispatch({ type: GET_ORDER_DETAILS_REQUEST });
-  sendOrderRequest({ ingredients })
+  dispatch(getOrderDetailsAction());
+  const { getToken } = useToken();
+  getToken()
+    .then((token) => {
+      if (token) {
+        return sendOrderRequest({ ingredients }, token);
+      }
+      throw new Error(TOKEN_ERR_MSG);
+    })
     .then((res) => {
-      dispatch({
-        type: GET_ORDER_DETAILS_SUCCESS,
-        payload: res,
-      });
+      dispatch(getOrderDetailsSuccessAction(res));
     })
     .catch((err) => {
-      dispatch({ type: GET_ORDER_DETAILS_FAILED });
-      dispatch(openErrorPopup(err));
+      dispatch(getOrderDetailsFailedAction());
+      dispatch(openErrorPopupAction(err));
     });
 };
