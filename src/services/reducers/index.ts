@@ -9,6 +9,7 @@ import forgotPasswordReducer from './forgot-password';
 import resetPasswordReducer from './reset-password';
 import wsReducer from './ws-reducer';
 
+// eslint-disable-next-line import/prefer-default-export
 export const rootReducer = combineReducers({
   ingredients: burgerIngredientsReducer,
   burgerConstructor: burgerConstructorReducer,

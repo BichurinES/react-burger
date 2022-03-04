@@ -9,7 +9,6 @@ const IngredientDetails = () => {
   const ingredient = useSelector((state) => (
     state.ingredients.ingredients.find(({ _id }) => id === _id)
   ));
-
   const {
     image_large,
     name,
@@ -18,7 +17,6 @@ const IngredientDetails = () => {
     fat,
     carbohydrates,
   } = ingredient || {};
-
   return (
     <>
       <img src={image_large} alt={name} className={styles.image} />

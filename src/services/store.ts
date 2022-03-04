@@ -44,7 +44,7 @@ export type TWsFeedActionNames = {
   onMessage: typeof WS_GET_FEED;
 };
 
-const wsFeedActionNames: TWsFeedActionNames = {
+export const wsFeedActionNames: TWsFeedActionNames = {
   wsInit: WS_FEED_CONNECTION_START,
   wsStop: WS_FEED_CONNECTION_STOP,
   onOpen: WS_FEED_CONNECTION_SUCCESS,
@@ -62,7 +62,7 @@ export type TWsUserOrdersActionNames = {
   onMessage: typeof WS_GET_USER_ORDERS;
 };
 
-const wsUserOrdersActionNames: TWsUserOrdersActionNames = {
+export const wsUserOrdersActionNames: TWsUserOrdersActionNames = {
   wsInit: WS_USER_ORDERS_CONNECTION_START,
   wsStop: WS_USER_ORDERS_CONNECTION_STOP,
   onOpen: WS_USER_ORDERS_CONNECTION_SUCCESS,

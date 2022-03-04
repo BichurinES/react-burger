@@ -12,6 +12,7 @@ import {
 import {
   TIngredient, TMainIngredient, TRemovedIngredient, TReplacingItems,
 } from '../types/data';
+import { IDefaultAction } from '.';
 
 export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT_TO_CONSTRUCTOR;
@@ -50,6 +51,7 @@ export interface IResetConstructorAction {
 }
 
 export type TConstructorActions =
+  | IDefaultAction
   | IAddIngredientAction
   | IRemoveIngredientAction
   | IReplaceBunAction
@@ -63,7 +65,7 @@ export const addIngredientAction = (
   ingredient: TIngredient,
 ): IAddIngredientAction => ({
   type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-  payload: { ...ingredient, _cartId: uniqid() },
+  payload: { ...ingredient, type: ingredient.type === 'main' ? 'main' : 'sauce', _cartId: uniqid() },
 });
 
 export const removeIngredientAction = (

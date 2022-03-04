@@ -17,6 +17,7 @@ import {
 } from '../actions/action-types';
 import type { TWsActions } from '../actions/ws-actions';
 import { TUpdatedFeed } from '../types/data';
+import { defaultAction } from '../actions';
 
 export type TWSState = {
   wsRequest: boolean;
@@ -30,7 +31,7 @@ export type TWSState = {
   feedFailed: boolean;
 };
 
-const initState: TWSState = {
+export const initialState: TWSState = {
   wsRequest: false,
   wsFeedConnected: false,
   feed: null,
@@ -40,7 +41,10 @@ const initState: TWSState = {
   feedFailed: false,
 };
 
-export default function wsReducer(state = initState, action: TWsActions): TWSState {
+export default function wsReducer(
+  state = initialState,
+  action: TWsActions = defaultAction(),
+): TWSState {
   switch (action.type) {
     case WS_FEED_CONNECTION_START: {
       return {

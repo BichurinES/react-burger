@@ -1,3 +1,4 @@
+import { ThunkAction } from 'redux-thunk';
 import { getIngredientsRequest } from '../norma-api';
 import { openErrorPopupAction } from './popups';
 import {
@@ -9,7 +10,8 @@ import {
   RESET_INGREDIENTS_COUNT,
 } from './action-types';
 import { TIngredient, TIngredientId } from '../types/data';
-import { AppThunk } from '../store';
+import { IDefaultAction } from '.';
+import { AppDispatch, RootState, TApplicationActions } from '../store';
 
 export interface IGetIngredientsAction {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -39,6 +41,7 @@ export interface IResetIngredientCountAction {
 }
 
 export type TIngredientsActions =
+  | IDefaultAction
   | IGetIngredientsAction
   | IGetIngredientsSuccessAction
   | IGetIngredientsFailedAction
@@ -74,15 +77,17 @@ export const decreaseIngredientAction = (ingredient: TIngredientId): IDecreaseIn
 export const resetIngredientCountAction = (): IResetIngredientCountAction => ({
   type: RESET_INGREDIENTS_COUNT,
 });
-
-export const getIngredients: AppThunk = () => (dispatch) => {
-  dispatch(getIngredientsAction());
-  getIngredientsRequest()
-    .then((res) => {
-      dispatch(getIngredientsSuccessAction(res.data));
-    })
-    .catch((err) => {
-      dispatch(getIngredientsFailedAction());
-      dispatch(openErrorPopupAction(err));
-    });
-};
+export type TAppThunk<TReturn = void> = ThunkAction<TReturn, RootState, {}, TApplicationActions>;
+export function getIngredients(): TAppThunk<Promise<void>> {
+  return function (dispatch: AppDispatch): Promise<void> {
+    dispatch(getIngredientsAction());
+    return getIngredientsRequest()
+      .then((res) => {
+        dispatch(getIngredientsSuccessAction(res.data));
+      })
+      .catch((err) => {
+        dispatch(getIngredientsFailedAction());
+        dispatch(openErrorPopupAction(err));
+      });
+  };
+}

@@ -16,6 +16,7 @@ import {
   FEED_FAILED,
 } from './action-types';
 import { TOrderCard, TUpdatedFeed } from '../types/data';
+import { IDefaultAction } from '.';
 import { AppThunk } from '../store';
 import { getFeedRequest } from '../norma-api';
 import { openErrorPopupAction } from './popups';
@@ -87,6 +88,7 @@ interface IFeedFailedAction {
 }
 
 export type TWsActions =
+  | IDefaultAction
   | IWsFeedConnectionStartAction
   | IWsFeedConnectionStopAction
   | IWsFeedConnectionSuccessAction
@@ -156,7 +158,7 @@ export const wsUserOrdersConnectionClosedAction = (): IWsUserOrdersConnectionClo
   type: WS_USER_ORDERS_CONNECTION_CLOSED,
 });
 
-export const wsUserOrdersGetMyFeedAction = (
+export const wsGetUserOrdersAction = (
   feedData: TUpdatedFeed,
 ): IWsGetUserOrdersAction => ({
   type: WS_GET_USER_ORDERS,

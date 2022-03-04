@@ -12,7 +12,7 @@ const BunConstructorElement: FC<TBunConstructorElement> = ({
   price,
   thumbnail,
 }) => (
-  <li className={`${className} ${styles['list-item']}`}>
+  <li className={`${styles['list-item']} ${className}`}>
     <ConstructorElement
       type={type}
       isLocked

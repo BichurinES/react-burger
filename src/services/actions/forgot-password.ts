@@ -6,6 +6,7 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
 } from './action-types';
+import { IDefaultAction } from '.';
 import { AppThunk } from '../store';
 import { TForgotPasswordForm, TCallback } from '../types';
 
@@ -22,6 +23,7 @@ export interface IForgotPasswordFailedAction {
 }
 
 export type TForgotPasswordActions =
+  | IDefaultAction
   | IForgotPasswordAction
   | IForgotPasswordSuccessAction
   | IForgotPasswordFailedAction;

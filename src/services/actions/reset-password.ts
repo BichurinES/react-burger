@@ -5,6 +5,7 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
 } from './action-types';
+import { IDefaultAction } from '.';
 import { AppThunk } from '../store';
 import { TCallback, TResetPasswordForm } from '../types';
 
@@ -21,6 +22,7 @@ export interface IResetPasswordFailedAction {
 }
 
 export type TResetPasswordActions =
+  | IDefaultAction
   | IResetPasswordAction
   | IResetPasswordSuccessAction
   | IResetPasswordFailedAction;

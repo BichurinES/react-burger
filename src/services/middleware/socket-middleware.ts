@@ -5,6 +5,7 @@ import type {
 import { openErrorPopupAction } from '../actions/popups';
 import { getCardData } from '../../utils/utils';
 
+// eslint-disable-next-line import/prefer-default-export
 export const socketMiddleware = (wsUrl: string, wsActions:
 TWsFeedActionNames | TWsUserOrdersActionNames, isToken: boolean): Middleware => (
   store: MiddlewareAPI<AppDispatch, RootState>,

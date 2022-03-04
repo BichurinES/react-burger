@@ -10,6 +10,7 @@ import {
 } from '../actions/action-types';
 import type { TPopupActions } from '../actions/popups';
 import { TOrderDetails, TInfoTooltip } from '../types/data';
+import { defaultAction } from '../actions';
 
 export type TPopupsState = {
   orderRequest: boolean,
@@ -21,7 +22,7 @@ export type TPopupsState = {
   successPopupContent: TInfoTooltip | null,
 };
 
-const initState: TPopupsState = {
+export const initialState: TPopupsState = {
   orderRequest: false,
   isOrderDetailsOpen: false,
   orderDetailsContent: null,
@@ -31,7 +32,10 @@ const initState: TPopupsState = {
   successPopupContent: null,
 };
 
-export default function popupsReducer(state = initState, action: TPopupActions) {
+export default function popupsReducer(
+  state = initialState,
+  action: TPopupActions = defaultAction(),
+) {
   switch (action.type) {
     case GET_ORDER_DETAILS_REQUEST: {
       return {
@@ -56,8 +60,8 @@ export default function popupsReducer(state = initState, action: TPopupActions) 
     case CLOSE_ORDER_DETAILS: {
       return {
         ...state,
-        isOrderDetailsOpen: initState.isOrderDetailsOpen,
-        orderDetailsContent: initState.orderDetailsContent,
+        isOrderDetailsOpen: initialState.isOrderDetailsOpen,
+        orderDetailsContent: initialState.orderDetailsContent,
       };
     }
     case OPEN_ERROR_POPUP: {
@@ -70,8 +74,8 @@ export default function popupsReducer(state = initState, action: TPopupActions) 
     case CLOSE_ERROR_POPUP: {
       return {
         ...state,
-        isErrorPopupOpen: initState.isErrorPopupOpen,
-        errorPopupContent: initState.errorPopupContent,
+        isErrorPopupOpen: initialState.isErrorPopupOpen,
+        errorPopupContent: initialState.errorPopupContent,
       };
     }
     case OPEN_SUCCESS_POPUP: {
@@ -84,8 +88,8 @@ export default function popupsReducer(state = initState, action: TPopupActions) 
     case CLOSE_SUCCESS_POPUP: {
       return {
         ...state,
-        isSuccessPopupOpen: initState.isSuccessPopupOpen,
-        successPopupContent: initState.successPopupContent,
+        isSuccessPopupOpen: initialState.isSuccessPopupOpen,
+        successPopupContent: initialState.successPopupContent,
       };
     }
     default: {

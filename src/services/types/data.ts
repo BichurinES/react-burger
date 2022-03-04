@@ -25,7 +25,7 @@ export type TIngredient = {
 };
 
 export type TIngredientId = Pick<TIngredient, '_id'>;
-export type TMainIngredient = TIngredient & { _cartId: string };
+export type TMainIngredient = TIngredient & { type: 'main' | 'sauce', _cartId: string };
 export type TFeedIngredient = Pick<TIngredient, '_id' | 'name' | 'price' | 'image_mobile' | 'type'>;
 
 export type TRemovedIngredient = Pick<TMainIngredient, '_cartId' | 'price'>;

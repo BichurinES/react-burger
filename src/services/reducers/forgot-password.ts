@@ -3,6 +3,7 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
 } from '../actions/action-types';
+import { defaultAction } from '../actions';
 import type { TForgotPasswordActions } from '../actions/forgot-password';
 
 export type TForgotPasswordState = {
@@ -10,19 +11,21 @@ export type TForgotPasswordState = {
   forgotPasswordFailed: boolean,
 };
 
-const initState: TForgotPasswordState = {
+export const initialState: TForgotPasswordState = {
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
 };
 
-export default function forgotPasswordReducer(state = initState, action: TForgotPasswordActions) {
+export default function forgotPasswordReducer(
+  state = initialState,
+  action: TForgotPasswordActions = defaultAction(),
+) {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST: {
       return {
         ...state,
         forgotPasswordRequest: true,
         forgotPasswordFailed: false,
-        forgotPasswordSuccess: false,
       };
     }
     case FORGOT_PASSWORD_SUCCESS: {

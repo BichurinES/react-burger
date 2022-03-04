@@ -32,6 +32,5 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'no-nested-ternary': 'off',
     'no-param-reassign': [2, { props: false }],
-    'import/prefer-default-export': 'off',
   },
 };

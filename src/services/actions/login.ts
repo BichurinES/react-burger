@@ -7,6 +7,7 @@ import {
   LOGIN_FAILED,
 } from './action-types';
 import useToken from '../token';
+import { IDefaultAction } from '.';
 import { AppThunk } from '../store';
 import { TLoginForm, TCallback } from '../types';
 
@@ -23,6 +24,7 @@ export interface ILoginFailedAction {
 }
 
 export type TLoginActions =
+  | IDefaultAction
   | ILoginAction
   | ILoginSuccessAction
   | ILoginFailedAction;

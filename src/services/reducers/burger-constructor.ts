@@ -10,6 +10,7 @@ import {
 } from '../actions/action-types';
 import { TConstructorActions } from '../actions/burger-constructor';
 import { TMainIngredient, TIngredient } from '../types/data';
+import { defaultAction } from '../actions';
 
 export type TBurgerConstructorState = {
   mainIngredients: ReadonlyArray<TMainIngredient>,
@@ -18,15 +19,17 @@ export type TBurgerConstructorState = {
   totalPrice: number,
 };
 
-const initState: TBurgerConstructorState = {
+export const initialState: TBurgerConstructorState = {
   mainIngredients: [],
   draggingMainIngredients: [],
   bun: null,
   totalPrice: 0,
 };
 
-export default function burgerConstructorReducer(state = initState, action: TConstructorActions)
-  : TBurgerConstructorState {
+export default function burgerConstructorReducer(
+  state = initialState,
+  action: TConstructorActions = defaultAction(),
+): TBurgerConstructorState {
   switch (action.type) {
     case ADD_INGREDIENT_TO_CONSTRUCTOR: {
       return {
@@ -77,12 +80,12 @@ export default function burgerConstructorReducer(state = initState, action: TCon
     case RESET_DRAGGING_CONTAINER: {
       return {
         ...state,
-        draggingMainIngredients: [...initState.draggingMainIngredients],
+        draggingMainIngredients: [...initialState.draggingMainIngredients],
       };
     }
     case RESET_CONSTRUCTOR: {
       return {
-        ...initState,
+        ...initialState,
       };
     }
     default: {

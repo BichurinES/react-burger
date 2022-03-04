@@ -8,6 +8,7 @@ import {
 } from '../actions/action-types';
 import type { TIngredientsActions } from '../actions/burger-ingredients';
 import { TIngredient } from '../types/data';
+import { defaultAction } from '../actions';
 
 export type TBurgerIngredientsState = {
   ingredients: ReadonlyArray<TIngredient>,
@@ -15,13 +16,16 @@ export type TBurgerIngredientsState = {
   ingredientsFailed: boolean,
 };
 
-const initState: TBurgerIngredientsState = {
+export const initialState: TBurgerIngredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
 
-export default function burgerIngredientsReducer(state = initState, action: TIngredientsActions) {
+export default function burgerIngredientsReducer(
+  state = initialState,
+  action: TIngredientsActions = defaultAction(),
+) {
   switch (action.type) {
     case INCREASE_INGREDIENT: {
       return {

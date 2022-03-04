@@ -7,6 +7,7 @@ import {
   REGISTER_FAILED,
 } from './action-types';
 import useToken from '../token';
+import { IDefaultAction } from '.';
 import { AppThunk } from '../store';
 import { TRegisterForm, TCallback } from '../types';
 
@@ -23,6 +24,7 @@ export interface IRegisterFailedAction {
 }
 
 export type TRegisterActions =
+  | IDefaultAction
   | IRegisterAction
   | IRegisterSuccessAction
   | IRegisterFailedAction;

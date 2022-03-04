@@ -12,6 +12,7 @@ import {
 import type { TSuccessResetPassword, TOrderDetails } from '../types/data';
 import { TOKEN_ERR_MSG } from '../../utils/constants';
 import useToken from '../token';
+import { IDefaultAction } from '.';
 import type { AppThunk } from '../store';
 
 export interface IGetOrderDetailsAction {
@@ -50,6 +51,7 @@ export interface ICloseSuccessPopupAction {
 }
 
 export type TPopupActions =
+  | IDefaultAction
   | IGetOrderDetailsAction
   | IGetOrderDetailsSuccessAction
   | IGetOrderDetailsFailedAction

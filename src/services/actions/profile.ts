@@ -17,6 +17,7 @@ import {
 } from './action-types';
 import useToken from '../token';
 import { TUser } from '../types/data';
+import { IDefaultAction } from '.';
 import { AppThunk } from '../store';
 import { TProfileForm, TCallback, TToken } from '../types';
 
@@ -73,6 +74,7 @@ export interface ILogoutFailedAction {
 }
 
 export type TProfileActions =
+  | IDefaultAction
   | IUpdateTokenAction
   | ISetUserAction
   | IClearUserAction
