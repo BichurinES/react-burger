@@ -77,8 +77,10 @@ export const decreaseIngredientAction = (ingredient: TIngredientId): IDecreaseIn
 export const resetIngredientCountAction = (): IResetIngredientCountAction => ({
   type: RESET_INGREDIENTS_COUNT,
 });
+
 export type TAppThunk<TReturn = void> = ThunkAction<TReturn, RootState, {}, TApplicationActions>;
 export function getIngredients(): TAppThunk<Promise<void>> {
+  // eslint-disable-next-line func-names
   return function (dispatch: AppDispatch): Promise<void> {
     dispatch(getIngredientsAction());
     return getIngredientsRequest()

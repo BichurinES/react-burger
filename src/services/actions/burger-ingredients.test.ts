@@ -3,13 +3,13 @@ import fetchMock from 'fetch-mock';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { socketMiddleware } from '../middleware/socket-middleware';
 import {
-  wsFeedActionNames, wsUserOrdersActionNames, TApplicationActions,
+  wsFeedActionNames, wsUserOrdersActionNames, TApplicationActions, RootState, store,
 } from '../store';
 import {
   WS_FEED_URL, WS_MY_ORDERS_URL, NORMA_API_URL, INGREDIENTS_URL, TEST_MAIN_INGREDIENT,
 } from '../../utils/constants';
 import { getIngredientsAction, getIngredientsSuccessAction, getIngredients } from './burger-ingredients';
-import { initialState, TBurgerIngredientsState } from '../reducers/burger-ingredients';
+import { initialState } from '../reducers/burger-ingredients';
 
 const middlewares = [
   thunk,
@@ -17,8 +17,8 @@ const middlewares = [
   socketMiddleware(WS_MY_ORDERS_URL, wsUserOrdersActionNames, true),
 ];
 
-const mockStore = configureMockStore<TBurgerIngredientsState,
-ThunkDispatch<TBurgerIngredientsState, {}, TApplicationActions>>(middlewares);
+const mockStore = configureMockStore<RootState,
+ThunkDispatch<RootState, {}, TApplicationActions>>(middlewares);
 
 describe('burger ingredients async actions', () => {
   afterEach(() => fetchMock.restore());
@@ -33,10 +33,13 @@ describe('burger ingredients async actions', () => {
       getIngredientsAction(),
       getIngredientsSuccessAction([TEST_MAIN_INGREDIENT]),
     ];
-    const store = mockStore({ ...initialState, ingredients: [TEST_MAIN_INGREDIENT] });
+    const newStore = mockStore({
+      ...store.getState(),
+      ingredients: { ...initialState, ingredients: [TEST_MAIN_INGREDIENT] },
+    });
 
-    return store.dispatch(getIngredients()).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
+    return newStore.dispatch(getIngredients()).then(() => {
+      expect(newStore.getActions()).toEqual(expectedActions);
     });
   });
 });

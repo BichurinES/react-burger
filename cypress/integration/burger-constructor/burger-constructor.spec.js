@@ -4,12 +4,13 @@ describe('Burger constructor', () => {
   it('should open page of ingredient details', () => {
     // Кликаем по ингредиенту
     cy.get('[class^=ingredient_card__]').first().as('ingredient');
+
     cy.get('@ingredient').click();
     // Проверяем, что информация открылась
     cy.contains('Детали ингредиента');
-    cy.contains('булка');
+    cy.get('[class^=ingredient-details_title__]').contains('булка');
     // Закрываем окно
-    cy.get('body').type('{esc}');
+    cy.get('[class^=modal_header__').find('svg').click();
   });
 
   it('should add ingredients to the cart', () => {
