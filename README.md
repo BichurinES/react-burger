@@ -12,6 +12,8 @@
 ![](https://img.shields.io/badge/Framework-React-informational?style=flat&logo=react&logoColor=white&color=2bbc8a)
 ![](https://img.shields.io/badge/State%20Management-Redux-informational?style=flat&logo=redux&logoColor=white&color=2bbc8a)
 ![](https://img.shields.io/badge/Drag’n’Drop-react%E2%80%90dnd-informational?style=flat&logo=react&logoColor=white&color=2bbc8a)
+![](https://img.shields.io/badge/Unit_test-jest-informational?style=flat&logo=jest&logoColor=white&color=2bbc8a)
+![](https://img.shields.io/badge/E2E%20Test-Cypress-informational?style=flat&logo=cypress&logoColor=white&color=2bbc8a)
 
 __FRONTEND__
 * __React__
@@ -21,11 +23,18 @@ __FRONTEND__
   * Реализован функционал live-валидации форм со стороны клиента
   * Защищенные роуты для доступа к контенту только зарегистрированных пользователей
   * Добавление ингредиентов в конструктор бургера через Drag'n'drop (react-dnd)
+  * Перемещение ингредиентов внутри заказа
   * Отправка заказа и получение его номера от api
   * Редактирование данных профиля в личном кабинете
+  * Просмотр всех заказов в реальном времени через протокол WebSocket
 * __HTML5__
   * Семантические тэги
   * Валидная разметка
+* __CSS3__
+  * Стилизация компонентов через css-modules
+* __Test__
+  * Реализовано unit-тестирование всех редьюсеров через библиотеку Jest
+  * С помощью Cypress реализовано e2e-тестирование пользовательского функционала по просмотру ингредиентов, созданию нового заказа, регистрации пользователя с его последующим входом в систему
 
 ## Команды
 
@@ -37,6 +46,14 @@ __FRONTEND__
 ### `npm run build`
 
 Сборка проекта.
+
+### `npm run test`
+
+Unit-тестирование редьюсеров
+
+### `npx cypress open`
+
+Запуск оболочки Cypress для e2e-тестирования
 
 ### `npm run lint`
 
