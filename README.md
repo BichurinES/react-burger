@@ -32,7 +32,7 @@ __FRONTEND__
 ### `npm start`
 
 Запуск приложения в режиме разработки.<br/>
-Откройте [http://localhost:3000](http://localhost:3000) для просмотра проекта в браузере.
+Откройте [http://localhost:3000/react-burger](http://localhost:3000/react-burger) для просмотра проекта в браузере.
 
 ### `npm run build`
 
